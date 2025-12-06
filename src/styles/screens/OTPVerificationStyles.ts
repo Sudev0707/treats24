@@ -1,0 +1,126 @@
+import { StyleSheet } from 'react-native';
+import colors from '../../theme/colors';
+import fonts from '../../theme/fonts';
+
+const OTPVerificationStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
+  header: {
+    height: '42%',
+    backgroundColor: colors.brandPrimary,
+    overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingBottom: 32,
+  },
+  headerBrandText: {
+    fontSize: fonts.size['3xl'],
+    fontWeight: fonts.weight.bold,
+    color: colors.textOnBrand,
+    letterSpacing: 1.2,
+  },
+  headerDecorRow: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '100%',
+  },
+  contentWrapper: {
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    borderTopLeftRadius: 32,
+    borderTopRightRadius: 32,
+    backgroundColor: colors.background,
+  },
+  card: {
+    backgroundColor: colors.card,
+    borderRadius: 24,
+    paddingHorizontal: 20,
+    paddingTop: 24,
+    paddingBottom: 20,
+    // marginTop: -48,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 8 },
+    // shadowOpacity: 0.08,
+    // shadowRadius: 16,
+    // elevation: 6,
+  },
+  title: {
+    fontSize: fonts.size.lg,
+    fontWeight: fonts.weight.bold,
+    color: colors.textPrimary,
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: fonts.size.sm,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    marginBottom: 32,
+  },
+  otpContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 32,
+  },
+  otpInput: {
+    width: 50,
+    height: 50,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.borderMuted,
+    backgroundColor: colors.background,
+    textAlign: 'center',
+    fontSize: fonts.size.xl,
+    fontWeight: fonts.weight.medium,
+    color: colors.textPrimary,
+  },
+  otpInputFocused: {
+    borderColor: colors.brandPrimary,
+  },
+  resendContainer: {
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  resendText: {
+    fontSize: fonts.size.sm,
+    color: colors.textSecondary,
+    marginBottom: 8,
+  },
+  resendButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+  resendButtonText: {
+    fontSize: fonts.size.sm,
+    color: colors.brandPrimary,
+    fontWeight: fonts.weight.medium,
+  },
+  primaryButton: {
+    backgroundColor: colors.brandPrimary,
+    paddingVertical: 14,
+    borderRadius: 999,
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  primaryButtonText: {
+    color: colors.textOnBrand,
+    fontSize: fonts.size.lg,
+    fontWeight: fonts.weight.semibold,
+  },
+  footerText: {
+    fontSize: fonts.size.xs,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    marginTop: 12,
+  },
+});
+
+export default OTPVerificationStyles;
