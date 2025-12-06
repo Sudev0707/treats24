@@ -42,7 +42,7 @@ const InputField: React.FC<Props> = ({
       inputRange: [0, 1],
       outputRange: [16, 12],
     }),
-    color: focused ? '#FF7A00' : '#A3A3A3',
+    color: focused ? colors.brandPrimary : '#A3A3A3',
   };
   /** ⬆⬆ END */
 

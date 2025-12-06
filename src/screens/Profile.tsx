@@ -36,6 +36,7 @@ const Profile: React.FC = () => {
           <InputField
             label="Email"
             placeholder="Email"
+            
             value={email}
             onChangeText={setEmail}
           />
