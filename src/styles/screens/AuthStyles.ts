@@ -23,13 +23,38 @@ const AuthStyles = StyleSheet.create({
   header: {
     height: '42%',
     backgroundColor: colors.brandPrimary,
-    // borderBottomLeftRadius: 32,
-    // borderBottomRightRadius: 32,
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'flex-end',
     paddingBottom: 32,
-    // borderWidth:1
+  },
+headerBgImg: {
+  opacity: 0.32,
+},
+  // Background moving design
+  headerDecorRow: {
+    position: 'absolute',
+    top: -80,
+    left: -120,
+    width: 350,
+    height: 350,
+    backgroundColor: '#ffffff15',
+    borderRadius: 200,
+    transform: [{ rotate: '15deg' }],
+  },
+
+  headerImage: {
+    position: 'absolute',
+    top: 15,
+    right: -10,
+    width: 210,
+    height: 210,
+    opacity: 0.93,
+  },
+
+  headerContent: {
+    alignItems: 'center',
+    zIndex: 2,
   },
   headerBrandText: {
     fontSize: fonts.size['3xl'],
@@ -37,20 +62,39 @@ const AuthStyles = StyleSheet.create({
     color: colors.textOnBrand,
     letterSpacing: 1.2,
   },
-  headerDecorRow: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '100%',
+  appTagline: {
+    marginTop: 4,
+    fontSize: fonts.size.md,
+    fontWeight: fonts.weight.medium,
+    color: colors.textOnBrand,
   },
+  appSubTagline: {
+    fontSize: fonts.size.sm,
+    fontWeight: fonts.weight.regular,
+    color: colors.textOnBrand + 'AA',
+  },
+
+  //  appTagline: {
+  //   fontSize: fonts.size.lg,
+  //   fontWeight: fonts.weight.bold,
+  //   color: colors.textPrimary,
+  //   textAlign: 'center',
+  //   marginBottom: 4,
+  // },
+  // appSubTagline: {
+  //   fontSize: fonts.size.lg,
+  //   fontWeight: fonts.weight.bold,
+  //   color: colors.textPrimary,
+  //   textAlign: 'center',
+  //   marginBottom: 20,
+  // },
   contentWrapper: {
-  paddingHorizontal: 24,
-  paddingTop: 24,
-  paddingBottom: 40,     // important for scroll spacing
-  borderTopLeftRadius: 32,
-  borderTopRightRadius: 32,
-  backgroundColor: colors.background,
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    paddingBottom: 40, // important for scroll spacing
+    borderTopLeftRadius: 32,
+    borderTopRightRadius: 32,
+    backgroundColor: colors.background,
   },
   card: {
     backgroundColor: colors.card,
@@ -65,20 +109,7 @@ const AuthStyles = StyleSheet.create({
     shadowRadius: 16,
     elevation: 6,
   },
-  appTagline: {
-    fontSize: fonts.size.lg,
-    fontWeight: fonts.weight.bold,
-    color: colors.textPrimary,
-    textAlign: 'center',
-    marginBottom: 4,
-  },
-  appSubTagline: {
-    fontSize: fonts.size.lg,
-    fontWeight: fonts.weight.bold,
-    color: colors.textPrimary,
-    textAlign: 'center',
-    marginBottom: 20,
-  },
+
   authSubtitle: {
     fontSize: fonts.size.sm,
     color: colors.textSecondary,

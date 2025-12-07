@@ -12,6 +12,7 @@ import styles from '../styles/screens/DashboardStyles';
 import { useScrollToHideTabBar } from '../hooks/useScrollToHideTabBar';
 import { useNavigation } from '@react-navigation/native';
 import DashboardHeader from '../components/common/DashboardHeader';
+import colors from '../theme/colors';
 
 const featuredRestaurants = [
   {
@@ -49,21 +50,17 @@ const Dashboard: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar
-        translucent
-        backgroundColor="transparent"
-        barStyle="dark-content"
-      />
+      <StatusBar backgroundColor="" barStyle="dark-content" />
       {/* Header */}
       <DashboardHeader />
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: colors.background }}>
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
           {...scrollProps}
         >
           {/* Search */}
-          <View style={styles.searchBar}>
+          {/* <View style={styles.searchBar}>
             <TextInput
               style={{
                 flex: 1,
@@ -78,7 +75,7 @@ const Dashboard: React.FC = () => {
               placeholderTextColor="#9CA3AF"
               editable
             />
-          </View>
+          </View> */}
 
           {/* Header Demos */}
           <View>

@@ -5,8 +5,49 @@ import fonts from '../../theme/fonts';
 const DashboardStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundSoft,
+    backgroundColor: colors.background,
     // borderWidth:1
+  },
+ headerWrapper: {
+  backgroundColor: colors.background, // same as root background
+  paddingTop: 0,
+  // bottom shadow here
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 6 },
+  shadowOpacity: 0.12,
+  shadowRadius: 8,
+  elevation: 8, // Android shadow
+},
+
+mainDashboardHeader: {
+  paddingTop: 6,
+  paddingBottom: 18,
+  paddingHorizontal: 16,
+  backgroundColor: colors.background,
+
+  borderBottomLeftRadius: 20,
+  borderBottomRightRadius: 20,
+},
+
+  dashboardHeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    // paddingHorizontal: 16,
+    paddingVertical: 12,
+    // backgroundColor: 'red',
+    // borderBottomWidth: 1,
+    marginBottom: 9,
+    borderBottomColor: colors.borderMuted,
+  },
+  dashboardHeaderLeft: {
+    flex: 1,
+    alignItems: 'flex-start',
+  },
+  dashboardHeaderRight: {
+    flex: 1,
+    alignItems: 'flex-end',
   },
   scrollContent: {
     paddingHorizontal: 16,
@@ -183,6 +224,10 @@ const DashboardStyles = StyleSheet.create({
     alignSelf: 'flex-start',
     backgroundColor: colors.successSoft,
   },
+
+  addressWrapper: {
+    flex: 1,
+  },
   deliveryTagText: {
     fontSize: fonts.size.xs,
     color: colors.success,
@@ -194,8 +239,38 @@ const DashboardStyles = StyleSheet.create({
   nearbyList: {
     marginBottom: 8,
   },
+  addressRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  addressText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000',
+    marginRight: 4,
+  },
+
+  deliverySubtitle: {
+    fontSize: 13,
+    color: '#6D6D6D',
+    marginTop: -2,
+  },
+
+  // avatar: {
+  //   width: 42,
+  //   height: 42,
+  //   borderRadius: 21,
+  //   backgroundColor: '#FF7A00',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  // },
+
+  // avatarText: {
+  //   fontSize: 18,
+  //   fontWeight: 'bold',
+  //   color: '#fff',
+  // },
 });
 
 export default DashboardStyles;
-
-

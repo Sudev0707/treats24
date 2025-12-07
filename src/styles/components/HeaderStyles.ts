@@ -9,8 +9,8 @@ const HeaderStyles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     // paddingTop: StatusBar.currentHeight || 20,
-    // backgroundColor: '#ff0808ff',
-    // borderBottomWidth: 1,
+    backgroundColor: '#ffffffff',
+    borderBottomWidth: 1,
     borderBottomColor: '#dededeff',
   },
   leftContainer: {

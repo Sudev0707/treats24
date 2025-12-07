@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
   Animated,
   Keyboard,
+  ImageBackground,
 } from 'react-native';
 import styles from '../styles/screens/AuthStyles';
 import { useNavigation } from '@react-navigation/native';
@@ -61,12 +62,38 @@ const Auth: React.FC = () => {
     <View style={styles.container}>
       {/* <StatusBar hidden={Platform.OS === 'android'} /> */}
 
-      <View style={styles.header}>
+      <ImageBackground
+        source={{
+          uri: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=1200', // high-quality food background
+        }}
+        style={styles.header}
+        resizeMode="cover"
+        imageStyle={styles.headerBgImg}
+      >
         <View style={styles.headerDecorRow} />
-        <Text style={styles.headerBrandText}>treats24</Text>
-        <Text style={styles.appTagline}>India&apos;s #1 Food Delivery</Text>
-        <Text style={styles.appSubTagline}>and Dining App</Text>
-      </View>
+
+        <View style={styles.headerContent}>
+          <Text style={styles.headerBrandText}>treats24</Text>
+          <Text style={styles.appTagline}>India's #1 Food Delivery</Text>
+          <Text style={styles.appSubTagline}>and Dining App</Text>
+        </View>
+      </ImageBackground>
+
+      {/* <View style={styles.header}>
+        <Image
+          source={{
+            uri: 'https://cdn-icons-png.flaticon.com/512/3595/3595455.png',
+          }}
+          style={styles.headerImage}
+          resizeMode="contain"
+        />
+
+        <View style={styles.headerContent}>
+          <Text style={styles.headerBrandText}>treats24</Text>
+          <Text style={styles.appTagline}>India's #1 Food Delivery</Text>
+          <Text style={styles.appSubTagline}>and Dining App</Text>
+        </View>
+      </View> */}
 
       {/* <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -108,9 +135,7 @@ const Auth: React.FC = () => {
             >
               <Text style={styles.primaryButtonText}>Continue</Text>
             </TouchableOpacity>
-           
-         
-          
+
             <View style={styles.orRow}>
               <View style={styles.orDivider} />
               <Text style={styles.orText}>Or, login with</Text>
@@ -126,7 +151,7 @@ const Auth: React.FC = () => {
                 <Image source={mailIcon} style={styles.socialIcon} />
               </TouchableOpacity>
             </View>
-            
+
             {/* footer content */}
             <Text style={styles.footerText}>
               By continuing, you agree to our

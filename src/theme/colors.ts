@@ -1,14 +1,14 @@
 const colors = {
   // Brand
-  brandPrimary :"#0F172A",
+  brandPrimary: '#0F172A',
   brandSecondary: '#F97316',
   brandPrimarySoft: '#FEF3C7',
   brandDark: '#0F172A',
 
   // Backgrounds
-  backgroundPrimary:'#0F172A',
+  backgroundPrimary: '#0F172A',
   background: '#FFFFFF',
-  backgroundSoft: '#F9FAFB',
+  backgroundSoft: '#f3f3f3ff',
   card: '#FFFFFF',
   muted: '#F3F4F6',
 
@@ -32,5 +32,3 @@ const colors = {
 };
 
 export default colors;
-
-
