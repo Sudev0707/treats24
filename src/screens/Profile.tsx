@@ -45,9 +45,11 @@ const Profile: React.FC = () => {
         barStyle="dark-content"
       />
       <Header
-        title={showProfileInfo ? 'My Profile' : ''}
+        title={showProfileInfo ? 'Edit Profile' : ''}
         showBackButton={true}
-        onBackPress={showProfileInfo ? () => setShowProfileInfo(false) : undefined}
+        onBackPress={
+          showProfileInfo ? () => setShowProfileInfo(false) : undefined
+        }
       />
       {showProfileInfo ? (
         <ProfileInfo />
@@ -61,8 +63,11 @@ const Profile: React.FC = () => {
             <View style={styles.avatar}>
               <Text style={styles.avatarText}>S</Text>
             </View>
-            <Text style={styles.userName}>Sudev</Text>
-            <Text style={styles.userEmail}>sudev@example.com</Text>
+            <View style={styles.userDetails}>
+              <Text style={styles.userName}>Sudev</Text>
+              <Text style={styles.userMobile}>7488854660</Text>
+              <Text style={styles.userEmail}>sudev@example.com</Text>
+            </View>
           </View>
 
           {/*  */}
@@ -74,7 +79,7 @@ const Profile: React.FC = () => {
               >
                 <View style={stylesRow.row}>
                   <Icon name="person" size={26} color="#000" />
-                  <Text style={stylesRow.label}>Profile</Text>
+                  <Text style={stylesRow.label}>Edit Profile</Text>
                 </View>
                 <Icon name="chevron-right" size={28} color="#666" />
               </TouchableOpacity>

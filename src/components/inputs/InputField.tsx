@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Animated,
   Text,
+  KeyboardTypeOptions,
 } from 'react-native';
 import { TextStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
@@ -19,6 +20,8 @@ interface Props {
   onChangeText: (text: string) => void;
   type?: 'text' | 'password' | 'number' | 'email';
   validateType?: InputType;
+  keyboardType?: KeyboardTypeOptions;
+  variant?: 'floating' | 'standard';
 }
 
 const InputField: React.FC<Props> = ({
@@ -28,6 +31,8 @@ const InputField: React.FC<Props> = ({
   onChangeText,
   type = 'text',
   validateType,
+  keyboardType,
+  variant = 'floating',
 }) => {
   const [focused, setFocused] = useState(false);
   const [hidePassword, setHidePassword] = useState(type === 'password');
@@ -79,34 +84,47 @@ const InputField: React.FC<Props> = ({
   };
 
   return (
-    <View style={[styles.container, focused && styles.active]}>
-      <Animated.Text style={[styles.label, labelStyle]}>{label}</Animated.Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder={!focused ? placeholder : ''}
-        placeholderTextColor="#A8A8A8"
-        secureTextEntry={isPassword && hidePassword}
-        value={value}
-        onChangeText={onChangeText}
-        onFocus={() => setFocused(true)}
-       onBlur={handleBlur}
-      />
-
-      {isPassword && (
-        <TouchableOpacity
-          style={styles.icon}
-          onPress={() => setHidePassword(!hidePassword)}
-        >
-          <Icon
-            name={hidePassword ? 'eye-off' : 'eye'}
-            size={20}
-            color="#8E8E8E"
-          />
-        </TouchableOpacity>
+    <>
+      {variant === 'standard' && (
+        <Text style={styles.staticLabel}>{label}</Text>
       )}
-      {/* {error !== '' && <Text style={styles.errorText}>{error}</Text>} */}
-    </View>
+
+      <View style={[styles.container, focused && styles.active]}>
+        {variant === 'floating' && (
+          <Animated.Text style={[styles.label, labelStyle]}>
+            {label}
+          </Animated.Text>
+        )}
+        <TextInput
+          style={styles.input}
+          // placeholder={!focused ? placeholder : ''}
+          placeholder={
+            variant === 'standard' ? placeholder : !focused ? placeholder : ''
+          }
+          placeholderTextColor="#A8A8A8"
+          secureTextEntry={isPassword && hidePassword}
+          value={value}
+          onChangeText={onChangeText}
+          onFocus={() => setFocused(true)}
+          onBlur={handleBlur}
+          keyboardType={keyboardType}
+        />
+
+        {isPassword && (
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => setHidePassword(!hidePassword)}
+          >
+            <Icon
+              name={hidePassword ? 'eye-off' : 'eye'}
+              size={20}
+              color="#8E8E8E"
+            />
+          </TouchableOpacity>
+        )}
+        {/* {error !== '' && <Text style={styles.errorText}>{error}</Text>} */}
+      </View>
+    </>
   );
 };
 

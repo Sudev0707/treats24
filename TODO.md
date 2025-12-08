@@ -1,4 +1,4 @@
-# TODO
-
-- [x] Fix back navigation from Profile screen to Dashboard
-  - Modified Profile.tsx to conditionally handle back press: toggle ProfileInfo view when in ProfileInfo, otherwise use default navigation back to Dashboard
+- [ ] Replace TouchableOpacity in DOB section with InputField wrapped in TouchableOpacity
+- [ ] Set variant="floating", label="Date of Birth", value={dob || 'Select Date of Birth'}, editable={false}
+- [ ] Ensure onPress opens the modal
+- [ ] Test the UI for floating label animation

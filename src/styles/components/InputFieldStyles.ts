@@ -7,21 +7,23 @@ export default StyleSheet.create({
     borderWidth: 1.5,
     borderColor: '#DADADA',
     borderRadius: 12,
-    height: 58,
+    height: 55,
     paddingHorizontal: 14,
     justifyContent: 'center',
     backgroundColor: '#FFF',
-    marginVertical: 10,
+    marginBottom: 15,
+    marginTop:4
   },
 
   input: {
     fontSize: 15,
     color: '#000',
-    height: '100%', // ⬅ makes placeholder + text perfectly vertical center
+    height: '100%', 
   },
 
   label: {
-    // borderWidth:1,
+    // borderWidth: 1,
+      fontSize: 14,
     position: 'absolute',
     left: 13,
     backgroundColor: '#FFF',
@@ -29,9 +31,18 @@ export default StyleSheet.create({
     zIndex: 10,
     color: colors.brandPrimary,
   },
+  staticLabel: {
+    fontSize: 14,
+    color: colors.brandPrimary,
+    // marginBottom: 6,
+    paddingLeft: 4,
+    fontWeight: '800',
+    // borderWidth: 1.5,
+    
+  },
 
   active: {
-    borderWidth: 2.5,
+    borderWidth: 1.2,
     borderColor: colors.brandPrimary,
   },
 
@@ -41,9 +52,9 @@ export default StyleSheet.create({
     top: 18,
   },
   errorText: {
-  color: 'red',
-  fontSize: 12,
-  marginTop: 4,
-  marginLeft: 10,
-},
+    color: 'red',
+    fontSize: 12,
+    marginTop: 4,
+    marginLeft: 10,
+  },
 });

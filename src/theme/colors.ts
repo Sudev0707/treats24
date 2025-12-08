@@ -8,7 +8,9 @@ const colors = {
   // Backgrounds
   backgroundPrimary: '#0F172A',
   background: '#FFFFFF',
+  // background: '#FCF8F8',
   backgroundSoft: '#f3f3f3ff',
+  // backgroundSoft: '#FCF8F8',
   card: '#FFFFFF',
   muted: '#F3F4F6',
 

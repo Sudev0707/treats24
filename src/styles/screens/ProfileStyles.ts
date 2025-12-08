@@ -12,12 +12,23 @@ const ProfileStyles = StyleSheet.create({
     // padding: 20,
     paddingBottom: 50,
     backgroundColor: colors.backgroundSoft,
+    // borderTopStartRadius:30,
+    // borderTopEndRadius:30,
+    // borderWidth: 1,
   },
   header: {
-    alignItems: 'center',
+    // alignItems: 'center',
     paddingVertical: 20,
+    paddingHorizontal:20,
     marginBottom: 20,
     // borderWidth: 1,
+    flexDirection: 'row',
+    backgroundColor:colors.background,
+   
+    // justifyContent: 'center',
+    // alignContent:'center'
+     borderBottomStartRadius:30,
+    borderBottomEndRadius:30,
   },
   avatar: {
     width: 80,
@@ -27,6 +38,11 @@ const ProfileStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 16,
+    // borderWidth: 1,
+  },
+  userDetails: {
+    // borderWidth: 1,
+     left:10
   },
   avatarText: {
     fontSize: 32,
@@ -34,8 +50,14 @@ const ProfileStyles = StyleSheet.create({
     color: colors.textOnBrand,
   },
   userName: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: '700',
+    color: colors.textPrimary,
+    marginBottom: 4,
+  },
+  userMobile: {
+    fontSize: 15,
+    fontWeight: '900',
     color: colors.textPrimary,
     marginBottom: 4,
   },
