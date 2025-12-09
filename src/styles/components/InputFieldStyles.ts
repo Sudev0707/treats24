@@ -12,24 +12,25 @@ export default StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#FFF',
     marginBottom: 15,
-    marginTop:4
+    marginTop: 4,
   },
 
   input: {
     fontSize: 15,
     color: '#000',
-    height: '100%', 
+    height: '100%',
   },
 
   label: {
     // borderWidth: 1,
-      fontSize: 14,
+    fontSize: 14,
     position: 'absolute',
     left: 13,
     backgroundColor: '#FFF',
     paddingHorizontal: 6,
     zIndex: 10,
-    color: colors.brandPrimary,
+    // color: colors.brandPrimary,
+    fontWeight: '800',
   },
   staticLabel: {
     fontSize: 14,
@@ -38,7 +39,6 @@ export default StyleSheet.create({
     paddingLeft: 4,
     fontWeight: '800',
     // borderWidth: 1.5,
-    
   },
 
   active: {

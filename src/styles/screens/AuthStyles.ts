@@ -28,9 +28,9 @@ const AuthStyles = StyleSheet.create({
     justifyContent: 'flex-end',
     paddingBottom: 32,
   },
-headerBgImg: {
-  opacity: 0.32,
-},
+  headerBgImg: {
+    opacity: 0.32,
+  },
   // Background moving design
   headerDecorRow: {
     position: 'absolute',
@@ -216,7 +216,7 @@ headerBgImg: {
     fontSize: fonts.size.xs,
     color: colors.textSecondary,
     textAlign: 'center',
-    marginTop: 12,
+    marginTop: 50,
   },
   footerLinksRow: {
     flexDirection: 'row',
@@ -230,6 +230,9 @@ headerBgImg: {
     marginHorizontal: 4,
   },
   //
+  Rememberme: {
+    marginBottom: 15,
+  },
   ForgotPass: {
     width: '100%',
     alignItems: 'flex-end',
@@ -247,7 +250,7 @@ headerBgImg: {
     justifyContent: 'center',
     alignItems: 'center',
     gap: 18,
-    marginTop: 20,
+    marginTop: 15,
   },
   socialBtn: {
     width: 50,
@@ -266,6 +269,12 @@ headerBgImg: {
     width: 24,
     height: 24,
     resizeMode: 'contain',
+  },
+  emailLoginTitle: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: colors.brandPrimary,
+    marginStart:15
   },
 });
 

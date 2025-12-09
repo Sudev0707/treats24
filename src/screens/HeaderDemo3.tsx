@@ -1,17 +1,14 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Header from '../components/common/Header';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HeaderDemo3: React.FC = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header
-        leftContent={
-          <TouchableOpacity style={styles.leftButton}>
-            <Icon name="menu" size={24} color="#000" />
-          </TouchableOpacity>
-        }
+        showBackButton={true}
         centerContent={
           <View style={styles.centerContent}>
             <Text style={styles.title}>Custom Header</Text>
@@ -30,9 +27,13 @@ const HeaderDemo3: React.FC = () => {
         }
       />
       <View style={styles.content}>
-        <Text style={styles.text}>This screen shows a header with custom left content (menu icon), custom center content (title and subtitle), and multiple icons in the right menu.</Text>
+        <Text style={styles.text}>
+          This screen shows a header with custom left content (menu icon),
+          custom center content (title and subtitle), and multiple icons in the
+          right menu.
+        </Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

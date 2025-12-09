@@ -8,7 +8,7 @@ import {
   KeyboardTypeOptions,
 } from 'react-native';
 import { TextStyle } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../../styles/components/InputFieldStyles';
 import colors from '../../theme/colors';
 import { validateInput, InputType } from '../../utils/validation';
@@ -22,6 +22,7 @@ interface Props {
   validateType?: InputType;
   keyboardType?: KeyboardTypeOptions;
   variant?: 'floating' | 'standard';
+  priority?: 'required' | 'none';
 }
 
 const InputField: React.FC<Props> = ({
@@ -33,6 +34,7 @@ const InputField: React.FC<Props> = ({
   validateType,
   keyboardType,
   variant = 'floating',
+  priority = 'none',
 }) => {
   const [focused, setFocused] = useState(false);
   const [hidePassword, setHidePassword] = useState(type === 'password');
@@ -78,22 +80,35 @@ const InputField: React.FC<Props> = ({
       inputRange: [0, 1],
       outputRange: ['#8b8b8b', colors.brandPrimary],
     }) as unknown as string,
-    fontWeight: focused ? '900' : '400',
+    fontWeight: focused ? '900' : '800',
     position: 'absolute',
     left: 10,
+    // borderWidth: 1
   };
 
   return (
     <>
       {variant === 'standard' && (
-        <Text style={styles.staticLabel}>{label}</Text>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={styles.staticLabel}>{label}</Text>
+          {priority === 'required' && (
+            <Icon
+              name="star"
+              size={6}
+              color={colors.required}
+              style={{ marginLeft: 4, top: 4 }}
+            />
+          )}
+        </View>
       )}
 
       <View style={[styles.container, focused && styles.active]}>
         {variant === 'floating' && (
-          <Animated.Text style={[styles.label, labelStyle]}>
-            {label}
-          </Animated.Text>
+          <>
+            <Animated.Text style={[styles.label, labelStyle]}>
+              {label}
+            </Animated.Text>
+          </>
         )}
         <TextInput
           style={styles.input}

@@ -10,8 +10,8 @@ const TextHeaderStyles = StyleSheet.create({
     marginBottom: 12,
   },
   secondary: {
-    fontWeight: '700',
-    fontSize: 16,
+    fontWeight: '800',
+    fontSize: 14,
     color: colors.textPrimary,
     marginBottom: 10,
   },

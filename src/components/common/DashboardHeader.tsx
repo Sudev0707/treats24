@@ -50,8 +50,7 @@ const DashboardHeader: React.FC = () => {
         </View>
       </View>
 
-      {/* 🔥 Add shadow view UNDER the curved header */}
-      {/* <View style={DashboardHeaderStyles.bottomShadow} /> */}
+    
     </>
   );
 };

@@ -8,20 +8,20 @@ const DashboardHeaderStyles = StyleSheet.create({
     borderBottomLeftRadius: 26,
     borderBottomRightRadius: 26,
     // borderBottomWidth:1,
-    elevation:4
+    elevation: 4,
   },
 
   mainDashboardHeader: {
-    //  borderBottomWidth:1,
+    borderBottomWidth: 0.5,
     backgroundColor: colors.background,
-    paddingTop: 6,
+    paddingTop: 9,
     paddingBottom: 18,
     paddingHorizontal: 16,
     // borderBottomLeftRadius: 26,
     // borderBottomRightRadius: 26,
     // elevation:4
   },
-    dashboardHeaderContainer: {
+  dashboardHeaderContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -45,8 +45,6 @@ const DashboardHeaderStyles = StyleSheet.create({
     shadowRadius: 16,
     elevation: 18,
   },
-
-
 
   addressWrapper: {
     flex: 1,

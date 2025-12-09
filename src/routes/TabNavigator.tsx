@@ -1,13 +1,17 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../theme/colors';
 import AnimatedTabBar from '../components/common/AnimatedTabBar';
 import * as Screens from './Screens';
 
 export type TabParamList = {
   Home: undefined;
+  Favorites: undefined;
+  TastyDeals: undefined;
+  MyPlate: undefined;
+
   Orders: undefined;
   Profile: undefined;
 };
@@ -26,16 +30,16 @@ const TabNavigator = () => {
         tabBarLabelStyle: styles.tabBarLabel,
         tabBarItemStyle: styles.tabBarItem,
       }}
-      tabBar={(props) => <AnimatedTabBar {...props} />}
+      tabBar={props => <AnimatedTabBar {...props} />}
     >
       <Tab.Screen
         name="Home"
         component={Screens.Dashboard}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Menu',
           tabBarIcon: ({ color, focused }) => (
             <Icon
-              name={focused ? 'home' : 'home-outline'}
+              name={focused ? 'cutlery' : 'cutlery'}
               size={24}
               color={color}
             />
@@ -43,33 +47,49 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Orders"
-        component={Screens.Orders}
+        name="Favorites"
+        component={Screens.Favorites}
         options={{
-          tabBarLabel: 'Orders',
+          tabBarLabel: 'Favorites',
           tabBarIcon: ({ color, focused }) => (
             <Icon
-              name={focused ? 'bag' : 'bag-outline'}
+              name={focused ? 'heart' : 'heart-o'}
               size={24}
               color={color}
             />
           ),
         }}
       />
-      {/* <Tab.Screen
-        name="Profile"
-        component={Screens.Profile}
+
+      <Tab.Screen
+        name="TastyDeals"
+        component={Screens.Deals}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'Tasty Deals',
           tabBarIcon: ({ color, focused }) => (
             <Icon
-              name={focused ? 'person' : 'person-outline'}
+              name={focused ? 'percent' : 'percent'}
               size={24}
               color={color}
             />
           ),
         }}
-      /> */}
+      />
+
+      <Tab.Screen
+        name="MyPlate"
+        component={Screens.Cart}
+        options={{
+          tabBarLabel: 'My Plate',
+          tabBarIcon: ({ color, focused }) => (
+            <Icon
+              name={focused ? 'spoon' : 'spoon'}
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
@@ -102,4 +122,3 @@ const styles = StyleSheet.create({
 });
 
 export default TabNavigator;
-

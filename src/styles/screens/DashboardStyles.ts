@@ -8,26 +8,26 @@ const DashboardStyles = StyleSheet.create({
     backgroundColor: colors.background,
     // borderWidth:1
   },
- headerWrapper: {
-  backgroundColor: colors.background, // same as root background
-  paddingTop: 0,
-  // bottom shadow here
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 6 },
-  shadowOpacity: 0.12,
-  shadowRadius: 8,
-  elevation: 8, // Android shadow
-},
+  headerWrapper: {
+    backgroundColor: colors.background, // same as root background
+    paddingTop: 0,
+    // bottom shadow here
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.12,
+    shadowRadius: 8,
+    elevation: 8, // Android shadow
+  },
 
-mainDashboardHeader: {
-  paddingTop: 6,
-  paddingBottom: 18,
-  paddingHorizontal: 16,
-  backgroundColor: colors.background,
+  mainDashboardHeader: {
+    paddingTop: 6,
+    paddingBottom: 18,
+    paddingHorizontal: 16,
+    backgroundColor: colors.background,
 
-  borderBottomLeftRadius: 20,
-  borderBottomRightRadius: 20,
-},
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
 
   dashboardHeaderContainer: {
     flexDirection: 'row',
@@ -50,9 +50,11 @@ mainDashboardHeader: {
     alignItems: 'flex-end',
   },
   scrollContent: {
+    // flex: 1,
     paddingHorizontal: 16,
     paddingTop: 40,
     paddingBottom: 24,
+    backgroundColor: colors.backgroundSoft,
   },
   headerRow: {
     flexDirection: 'row',

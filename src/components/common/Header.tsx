@@ -38,7 +38,7 @@ const Header: React.FC<HeaderProps> = ({
         ) : (
           showBackButton && (
             <TouchableOpacity onPress={handleBackPress} style={HeaderStyles.backButton}>
-              <Image source={require('../../assets/icons/iconsback.png')} style={{width: 24, height: 24}} />
+              <Image source={require('../../assets/icons/iconsback.png')} style={{width: 24, height: 24,borderRadius:7}} />
             </TouchableOpacity>
           )
         )}

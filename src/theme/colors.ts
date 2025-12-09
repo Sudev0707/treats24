@@ -10,7 +10,7 @@ const colors = {
   background: '#FFFFFF',
   // background: '#FCF8F8',
   backgroundSoft: '#f3f3f3ff',
-  // backgroundSoft: '#FCF8F8',
+  // backgroundSoft: '#f6f6f6ff',
   card: '#FFFFFF',
   muted: '#F3F4F6',
 
@@ -31,6 +31,9 @@ const colors = {
   successSoft: '#ECFDF5',
   danger: '#DC2626',
   warning: '#FACC15',
+
+  // error
+  required:'#fa1515ff'
 };
 
 export default colors;

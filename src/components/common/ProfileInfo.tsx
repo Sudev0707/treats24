@@ -7,32 +7,48 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 import colors from '../../theme/colors';
 import styles from '../../styles/components/ProfileInfoStyles';
 import Button from './Button';
 import InputField from '../inputs/InputField';
 import DOBInput from '../inputs/DOBInput';
+import CountryCodeInput from '../inputs/CountryCodeInput';
 import Col from '../layout/Col';
 import TextHeader from './TextHeader';
 
 const ProfileInfo: React.FC = () => {
   const [selectedGender, setSelectedGender] = useState<string>('');
   const [dob, setDob] = useState<string>('');
+  const [countryCode, setCountryCode] = useState<{
+    iso: string;
+    code: string;
+  } | null>(null);
   const genderOptions = ['Male', 'Female', 'Other'];
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.header}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>S</Text>
-          </View>
-          <Text style={styles.userName}>Sudev</Text>
-          <Text style={styles.userEmail}>sudev@example.com</Text>
-        </View>
-        {/* <View style={styles.separator} /> */}
-
         <View style={styles.userDetailContainer}>
+          <View
+            style={{
+              alignSelf: 'center',
+              justifyContent: 'center',
+              alignItems: 'center',
+              // borderWidth: 1,
+              width: 130,
+              height: 130,
+              borderRadius: 100,
+              backgroundColor: colors.backgroundSoft,
+              // elevation:1,
+              top: -80,
+            }}
+          >
+            <View style={styles.avatar}>
+              <Text style={styles.avatarText}>S</Text>
+            </View>
+          </View>
+
           <TextHeader type="primary">Basic Details</TextHeader>
           <InputField
             label="First Name"
@@ -42,7 +58,8 @@ const ProfileInfo: React.FC = () => {
               ('');
             }}
             type="text"
-          /><InputField
+          />
+          <InputField
             label="Last Name"
             placeholder="Enter last name"
             value={'Maji'}
@@ -63,15 +80,11 @@ const ProfileInfo: React.FC = () => {
           />
           <View style={styles.roww}>
             <View style={{ width: '35%' }}>
-              <InputField
-                label="Code"
-                placeholder="Enter mobile number"
-                value={'+9'}
-                onChangeText={() => {
-                  ('');
-                }}
-                type="text"
-                keyboardType="phone-pad"
+              {/* country code */}
+              <CountryCodeInput
+                label="Country Code"
+                value={countryCode}
+                onChange={setCountryCode}
               />
             </View>
 
@@ -93,7 +106,7 @@ const ProfileInfo: React.FC = () => {
           <DOBInput label="Date of birth" value={dob} onChange={setDob} />
 
           {/*  */}
-          <TextHeader type="primary">Gender</TextHeader>
+          <TextHeader type="secondary">Gender</TextHeader>
           <View style={styles.genderContainer}>
             {genderOptions.map(gender => (
               <TouchableOpacity
@@ -115,75 +128,6 @@ const ProfileInfo: React.FC = () => {
               </TouchableOpacity>
             ))}
           </View>
-        </View>
-
-        <View style={styles.userDetailContainer}>
-          <TextHeader type="primary">Address</TextHeader>
-
-          <InputField
-            label="House / Flat / Door No."
-            placeholder="Enter house or flat number"
-            value={''}
-            onChangeText={() => ''}
-            type="text"
-            variant="standard"
-          />
-
-          <InputField
-            label="Street / Area / Locality"
-            placeholder="Enter street or area"
-            value={''}
-            onChangeText={() => ''}
-            type="text"
-            variant="standard"
-          />
-
-          <InputField
-            label="Landmark (optional)"
-            placeholder="Near temple / school / mall …"
-            value={''}
-            onChangeText={() => ''}
-            type="text"
-            variant="standard"
-          />
-
-          <InputField
-            label="City"
-            placeholder="Enter city"
-            value={''}
-            onChangeText={() => ''}
-            type="text"
-            variant="standard"
-          />
-
-          <InputField
-            label="State"
-            placeholder="Enter state"
-            value={''}
-            onChangeText={() => ''}
-            type="text"
-            variant="standard"
-          />
-
-          <InputField
-            label="Pincode"
-            placeholder="Enter pincode"
-            value={''}
-            onChangeText={() => ''}
-            keyboardType="numeric"
-            type="text"
-            variant="standard"
-          />
-
-          {/* Address Type */}
-          <InputField
-            label="Address Type"
-            placeholder="Home / Work / Other"
-            value={''}
-            onChangeText={() => ''}
-            type="text"
-            variant="standard"
-          />
         </View>
 
         <View style={{ marginTop: 50 }}>

@@ -10,14 +10,15 @@ const ProfileInfoStyles = StyleSheet.create({
     // justifyContent: 'center',
     // padding: 20,
     // borderWidth: 1,
-    backgroundColor: colors.backgroundSoft,
+    backgroundColor: colors.background,
   },
   scrollContainer: {
     // flex: 1,
     paddingHorizontal: 15,
     // paddingTop: 20,
-    borderRadius: 15,
-    paddingBottom: 150,
+    borderRadius: 20,
+    paddingBottom: 50,
+     backgroundColor: colors.backgroundSoft,
     // borderWidth: 1,
     // height:'100%'
   },
@@ -25,7 +26,7 @@ const ProfileInfoStyles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 20,
     marginBottom: 20,
-    // borderWidth: 1,
+    borderWidth: 1,
   },
   avatar: {
     width: 100,
@@ -34,7 +35,9 @@ const ProfileInfoStyles = StyleSheet.create({
     backgroundColor: colors.brandPrimary,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 20,
+    // marginBottom: 20,
+    //  borderWidth: 1,
+    //  margin:8
   },
   avatarText: {
     fontSize: 40,
@@ -57,7 +60,7 @@ const ProfileInfoStyles = StyleSheet.create({
     marginHorizontal: 16, // keeps gap on both sides like screenshot
   },
   userDetailContainer: {
-    flex: 1,
+    // flex: 1,
     // borderWidth: 1,
     backgroundColor: colors.background,
     paddingVertical: 20,
@@ -67,6 +70,7 @@ const ProfileInfoStyles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20,
     elevation: 1,
+    marginTop:70
   },
   detailHeader: {
     fontWeight: 900,

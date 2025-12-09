@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Header from '../components/common/Header';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HeaderDemo2: React.FC = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header
         title="Back Button Demo"
         showBackButton={true}
@@ -18,7 +19,7 @@ const HeaderDemo2: React.FC = () => {
       <View style={styles.content}>
         <Text style={styles.text}>This screen shows a header with back button, title, and right menu.</Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   StatusBar,
+  Image,
 } from 'react-native';
 import colors from '../theme/colors';
 import { useScrollToHideTabBar } from '../hooks/useScrollToHideTabBar';
@@ -16,6 +17,8 @@ import styles from '../styles/screens/ProfileStyles';
 // import { Icon } from 'react-native-vector-icons/Icon';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ProfileInfo from '../components/common/ProfileInfo';
+import UserAddress from '../components/common/UserAddress';
+import OrderDetails from '../components/common/OrderDetails';
 
 const Profile: React.FC = () => {
   const scrollProps = useScrollToHideTabBar({ threshold: 50 });
@@ -23,6 +26,8 @@ const Profile: React.FC = () => {
   const [password, setPassword] = useState('');
   const [formError, setFormError] = useState('');
   const [showProfileInfo, setShowProfileInfo] = useState(false);
+  const [showUserAddress, setShowUserAddress] = useState(false);
+  const [showOrderDetails, setShowOrderDetails] = useState(false);
 
   const handleSubmit = () => {
     if (!email) {
@@ -45,14 +50,45 @@ const Profile: React.FC = () => {
         barStyle="dark-content"
       />
       <Header
-        title={showProfileInfo ? 'Edit Profile' : ''}
         showBackButton={true}
+        title={
+          showProfileInfo
+            ? 'Edit Profile'
+            : showUserAddress
+            ? 'Saved Address'
+            : showOrderDetails
+            ? 'Orders'
+            : 'Profile'
+        }
         onBackPress={
-          showProfileInfo ? () => setShowProfileInfo(false) : undefined
+          showProfileInfo
+            ? () => setShowProfileInfo(false)
+            : showUserAddress
+            ? () => setShowUserAddress(false)
+            : showOrderDetails
+            ? () => setShowOrderDetails(false)
+            : undefined
+        }
+        rightMenu={
+          showProfileInfo || showUserAddress || showOrderDetails ? (
+            <></>
+          ) : (
+            <TouchableOpacity style={{ padding: 8 }}>
+              <Image
+                source={require('../assets/icons/iconsmenu.png')}
+                style={{ width: 24, height: 24, borderRadius: 7 }}
+              />
+            </TouchableOpacity>
+          )
         }
       />
+      
       {showProfileInfo ? (
         <ProfileInfo />
+      ) : showUserAddress ? (
+        <UserAddress />
+      ) : showOrderDetails ? (
+        <OrderDetails />
       ) : (
         <ScrollView
           contentContainerStyle={styles.scrollContent}
@@ -88,7 +124,7 @@ const Profile: React.FC = () => {
 
               <TouchableOpacity
                 style={stylesRow.container}
-                onPress={() => console.log('Address')}
+                onPress={() => setShowUserAddress(true)}
               >
                 <View style={stylesRow.row}>
                   <Icon name="location-on" size={26} color="#000" />
@@ -101,7 +137,7 @@ const Profile: React.FC = () => {
 
               <TouchableOpacity
                 style={stylesRow.container}
-                onPress={() => console.log('Orders')}
+                onPress={() => setShowOrderDetails(true)}
               >
                 <View style={stylesRow.row}>
                   <Icon name="shopping-bag" size={26} color="#000" />
@@ -179,22 +215,6 @@ const Profile: React.FC = () => {
               <Text style={styles.versionNumber}>1.0.0</Text>
             </View>
           </View>
-
-          {/* <InputField
-            label="Email"
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            validateType="email"
-          />
-
-          <InputField
-            label="Password"
-            placeholder="Password"
-            type="password"
-            value={password}
-            onChangeText={setPassword}
-          /> */}
         </ScrollView>
       )}
     </SafeAreaView>
@@ -218,6 +238,7 @@ const stylesRow = StyleSheet.create({
     borderRadius: 10,
     // paddingVertical:5
     marginBottom: 18,
+    elevation: 1,
   },
   row: {
     flexDirection: 'row',
