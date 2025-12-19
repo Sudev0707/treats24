@@ -4,49 +4,101 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  FlatList,
+  ActivityIndicator,
+  StatusBar,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import locationStyles from '../styles/screens/SetLocationStyles';
 import Header from '../components/common/Header';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
-import { getCurrentLocation } from '../utils/locationService';
+import SavedAddressCard from '../components/common/SavedAddressCard';
+import { savedAddress } from '../data/savedAddress';
+
+import {
+  getCurrentLocation,
+  getCurrentLocationWithAddress,
+} from '../utils/locationService';
+import { useNavigation } from '@react-navigation/native';
+
+interface LocationType {
+  latitude: number;
+  longitude: number;
+  area: string;
+  city: string;
+  state: string;
+  district: string;
+  pincode: string;
+  country: string;
+  country_code: string;
+}
+
+//
 
 const SetLocation: React.FC = () => {
+  const [loading, setLoading] = useState(true);
+  const [location, setLocation] = useState<LocationType | null>(null);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    // simulate API
+    handleCurrentLocation();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+  }, []);
+
+  //
+  const handleCurrentLocation = () => {
+    setLoading(true);
+    getCurrentLocationWithAddress(locationData => {
+      setLocation(locationData);
+      setLoading(false);
+    });
+  };
+
+  //
+  const handleProceed = () => {
+    navigation.navigate('MainTabs' as never);
+  };
+
+  //   ---
   const ActionButton = ({ icon, label, onPress }: any) => {
     return (
-      <TouchableOpacity style={styles.actionButton} onPress={onPress}>
+      <TouchableOpacity style={locationStyles.actionButton} onPress={onPress}>
         {icon}
-        <Text style={styles.actionText}>{label}</Text>
+        <Text style={locationStyles.actionText}>{label}</Text>
       </TouchableOpacity>
     );
   };
 
   return (
     <SafeAreaView style={locationStyles.safeArea}>
-      <Header showBackButton title="Select your location" />
+      <StatusBar backgroundColor="" barStyle="dark-content" />
+      <Header showBackButton={true} title="Select Location" />
 
-      <View style={styles.container}>
-        {/* Search Bar */}
-        <View style={styles.searchContainer}>
+      <View style={locationStyles.container}>
+        <View style={locationStyles.searchContainer}>
+          <Feather name="search" size={20} color="#999" />
           <TextInput
             placeholder="Search an area or address"
             placeholderTextColor="#999"
-            style={styles.searchInput}
+            style={locationStyles.searchInput}
           />
-          <Ionicons name="search" size={20} color="#999" />
         </View>
 
-        {/* Action Buttons */}
-        <View style={styles.actionRow}>
+        <View style={locationStyles.actionRow}>
           <ActionButton
             icon={
               <MaterialIcons name="my-location" size={22} color="#ff6a00" />
             }
             label="Use Current Location"
-             onPress={getCurrentLocation}
+            onPress={handleCurrentLocation}
           />
           <ActionButton
             icon={
@@ -58,33 +110,108 @@ const SetLocation: React.FC = () => {
             }
             label="Add New Address"
           />
-          <ActionButton
+          {/* <ActionButton
             icon={<Ionicons name="logo-whatsapp" size={22} color="#25D366" />}
             label="Request Address"
-          />
+          /> */}
         </View>
 
         {/* Saved Address */}
-        <Text style={styles.sectionTitle}>SAVED ADDRESSES</Text>
+        <Text style={locationStyles.sectionTitle}>SAVED ADDRESSES</Text>
+        <View style={{ flex: 1 }}>
+          <FlatList
+            data={savedAddress}
+            keyExtractor={item => item.id}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 180, paddingTop: 5 }}
+            renderItem={({ item }) => (
+              <SavedAddressCard
+                title={item.title}
+                address={item.address}
+                distance={item.distance}
+                icon={item.icon}
+                onMorePress={() => ''}
+              />
+            )}
+            //   onEndReached={()=> ''}
+            onEndReachedThreshold={0.2}
+            ListEmptyComponent={
+              <View style={{ alignItems: 'center', marginTop: 50 }}>
+                <Feather
+                  name="inbox"
+                  size={60}
+                  color="#ccc"
+                  style={{ marginBottom: 20 }}
+                />
 
-        {/* saved address container */}
-        <View style={styles.addressCard}>
-          <View style={styles.addressLeft}>
-            <View style={styles.homeIcon}>
-              <Feather name="home" size={18}  color="#ff6a00" />
+                <Text
+                  style={{ textAlign: 'center', color: '#999', fontSize: 14 }}
+                >
+                  No saved addresses found
+                </Text>
+              </View>
+            }
+          />
+        </View>
+
+        {/* Current Address Container */}
+        <View style={locationStyles.currentAddressContainer}>
+          {/* <View>
+            {location && (
+              <View style={{ marginTop: 20 }}>
+                <Text>Latitude: {location.latitude}</Text>
+                <Text>Longitude: {location.longitude}</Text>
+                <Text>Area: {location.area}</Text>
+                <Text>City: {location.city}</Text>
+                <Text>State: {location.state}</Text>
+                <Text>District: {location.district}</Text>
+                <Text>Pincode: {location.pincode}</Text>
+                <Text>Country: {location.country}</Text>
+              </View>
+            )}
+          </View> */}
+          <View style={locationStyles.addressRow}>
+            <View style={locationStyles.locationIcon}>
+              <Feather name="map-pin" size={18} color="#ff6a00" />
             </View>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.addressTitle}>Home</Text>
-              <Text style={styles.addressText} numberOfLines={2}>
-                Sudev, Near Krishna Kunj Apartment (white Building), Krishnapur,
-                Kestopur, Kolkata, West...
-              </Text>
-            </View>
+
+            {loading ? (
+              <View style={{ marginStart: 125, justifyContent: 'center' }}>
+                <ActivityIndicator
+                  size="small"
+                  color="#ff6a00"
+                  style={{ marginTop: 15 }}
+                />
+              </View>
+            ) : (
+              <View style={locationStyles.addressTextContainer}>
+                <Text style={locationStyles.currentAddressTitle}>
+                  {location?.city}
+                </Text>
+                <Text
+                  style={locationStyles.currentAddressText}
+                  numberOfLines={2}
+                >
+                  {location?.city}, {location?.state}, {location?.country},{' '}
+                  {location?.pincode}
+                </Text>
+              </View>
+            )}
           </View>
 
-          <View style={styles.addressRight}>
-            <Text style={styles.distance}>202 km</Text>
-            <Feather name="more-vertical" size={18} color="#999" />
+          <View style={locationStyles.buttonRow}>
+            <TouchableOpacity
+              style={locationStyles.confirmBtn}
+              onPress={handleProceed}
+            >
+              <Text style={locationStyles.confirmBtnText}>
+                Confirm & Proceed
+              </Text>
+            </TouchableOpacity>
+
+            {/* <TouchableOpacity style={styles.proceedBtn}>
+              <Text style={styles.proceedBtnText}>Proceed</Text>
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>
@@ -94,113 +221,4 @@ const SetLocation: React.FC = () => {
 
 export default SetLocation;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f7f7f7',
-  },
-
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    margin: 16,
-    paddingHorizontal: 12,
-    borderRadius: 12,
-    height: 48,
-    elevation: 2,
-  },
-
-  searchInput: {
-    flex: 1,
-    fontSize: 14,
-    color: '#000',
-  },
-
-  actionRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: 16,
-    marginTop: 8,
-  },
-
-  actionButton: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingVertical: 14,
-    marginHorizontal: 4,
-    borderRadius: 12,
-    alignItems: 'center',
-    elevation: 2,
-  },
-
-  actionText: {
-    fontSize: 12,
-    marginTop: 6,
-    textAlign: 'center',
-    color: '#333',
-  },
-
-  sectionTitle: {
-    marginHorizontal: 16,
-    marginTop: 24,
-    marginBottom: 8,
-    fontSize: 12,
-    color: '#999',
-    fontWeight: '600',
-  },
-
-  addressCard: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: '#fff',
-    marginHorizontal: 16,
-    padding: 14,
-    borderRadius: 14,
-    elevation: 2,
-  },
-
-  addressLeft: {
-    flexDirection: 'row',
-    flex: 1,
-     alignItems:'center',
-    justifyContent:'center',
-    alignContent:'center'
-
-  },
-
-  homeIcon: {
-    backgroundColor: '#fff2e8',
-    padding: 8,
-    borderRadius: 10,
-    marginRight: 10,
-    // paddingHorizontal:20,
-    // width:18,
-    // height:18
-    // alignItems:'center',
-    // justifyContent:'center',
-    // alignContent:'center'
-  },
-
-  addressTitle: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#000',
-  },
-
-  addressText: {
-    fontSize: 12,
-    color: '#666',
-    marginTop: 4,
-  },
-
-  addressRight: {
-    alignItems: 'flex-end',
-    justifyContent: 'space-between',
-  },
-
-  distance: {
-    fontSize: 12,
-    color: '#999',
-  },
-});
+const styles = StyleSheet.create({});

@@ -13,6 +13,8 @@ import { useNavigation } from '@react-navigation/native';
 import styles from '../styles/screens/OTPVerificationStyles';
 import Header from '../components/common/Header';
 
+
+
 const OTPVerification: React.FC = () => {
   const navigation = useNavigation();
   const [otp, setOtp] = useState(['', '', '', '', '', '']);

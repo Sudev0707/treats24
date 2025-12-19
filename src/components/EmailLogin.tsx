@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import styles from '../styles/components/EmailLoginStyles';
 import InputField from './inputs/InputField';
+import CustomAlert from './common/CustomAlert';
+import Button from './common/Button';
 
 const EmailLogin = ({
   setShowEmailLogin,
@@ -24,10 +26,15 @@ const EmailLogin = ({
   const [otpError, setOtpError] = useState('');
   const inputRefs = useRef<TextInput[]>([]);
 
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMsg, setAlertMsg] = useState('');
+
   // 📩 Send OTP
   const handleSendOtp = () => {
     if (!email || !email.includes('@')) {
-      Alert.alert('Error', 'Please enter a valid email');
+      //   Alert.alert('Error', 'Please enter a valid email');
+      setAlertMsg('Please enter a valid email');
+      setAlertVisible(true);
 
       return;
     }
@@ -143,12 +150,14 @@ const EmailLogin = ({
             variant="floating"
           />
 
-          <TouchableOpacity
+          <Button title="Send OTP" variant="filled" onPress={handleSendOtp} />
+
+          {/* <TouchableOpacity
             style={styles.primaryButton}
             onPress={handleSendOtp}
           >
             <Text style={styles.primaryButtonText}>Send OTP</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </>
       )}
 
@@ -188,6 +197,12 @@ const EmailLogin = ({
           </TouchableOpacity>
         </>
       )}
+      <CustomAlert
+        visible={alertVisible}
+        title="Invalid Email"
+        message={alertMsg}
+        onClose={() => setAlertVisible(false)}
+      />
     </View>
   );
 };

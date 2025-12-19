@@ -14,10 +14,32 @@ import { useNavigation } from '@react-navigation/native';
 import DashboardHeader from '../components/common/DashboardHeader';
 import BannerSlider from '../components/common/BannerSlider';
 import colors from '../theme/colors';
+import { getCurrentLocationWithAddress } from '../utils/locationService';
+import { useState } from 'react';
 
+
+interface LocationType {
+  latitude: number;
+  longitude: number;
+  area: string;
+  city: string;
+  state: string;
+  district: string;
+  pincode: string;
+  country: string;
+  country_code: string;
+}
+// 
 const Dashboard: React.FC = () => {
   const scrollProps = useScrollToHideTabBar();
   const navigation = useNavigation();
+   const [loading, setLoading] = useState(true);
+    const [location, setLocation] = useState<LocationType | null>(null);
+
+   getCurrentLocationWithAddress(locationData => {
+        setLocation(locationData);
+        setLoading(false);
+      });
 
   return (
     <SafeAreaView style={styles.container}>

@@ -15,9 +15,9 @@ const EmailLoginStyles = StyleSheet.create({
     marginBottom: 15,
   },
   primaryButton: {
-    backgroundColor: '#000',
+    backgroundColor: colors.brandPrimary,
     paddingVertical: 14,
-    borderRadius: 10,
+    borderRadius: 999,
     alignItems: 'center',
     marginTop: 20,
   },
