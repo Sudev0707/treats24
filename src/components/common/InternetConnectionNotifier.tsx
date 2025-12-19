@@ -21,6 +21,7 @@ const InternetConnectionNotifier: React.FC = () => {
         duration: 300,
         useNativeDriver: true,
       }).start();
+      
     } else if (isConnected === true) {
       setMessage('Internet connection restored');
       setShowNotification(true);

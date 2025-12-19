@@ -68,7 +68,8 @@ const OTPVerificationStyles = StyleSheet.create({
   otpContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 32,
+    marginBottom: 15,
+      //  borderWidth: 1,
   },
   otpInput: {
     width: 50,
@@ -84,6 +85,15 @@ const OTPVerificationStyles = StyleSheet.create({
   },
   otpInputFocused: {
     borderColor: colors.brandPrimary,
+  },
+  otpInputError: {
+    borderColor: colors.error,
+  },
+  errorText: {
+    color: colors.error,
+    marginTop: 8,
+    textAlign: 'center',
+    fontSize: 14,
   },
   resendContainer: {
     alignItems: 'center',

@@ -70,6 +70,10 @@ def enableProguardInReleaseBuilds = false
  * give correct results when using with locales other than en-US. Note that
  * this variant is about 6MiB larger per architecture than default.
  */
+ project.ext.react = [
+  enableHermes: true
+]
+
 def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
 project.ext.vectoricons = [
@@ -79,6 +83,16 @@ apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 
 android {
+
+    // Remove Unused Architectures (ABI Splits)
+    splits {
+        abi {
+            enable true
+            reset()
+            include "armeabi-v7a", "arm64-v8a"
+            universalApk false
+        }
+    }   
 
    
 
@@ -104,10 +118,18 @@ android {
         }
     }
     buildTypes {
+        
         debug {
             signingConfig signingConfigs.debug
+            minifyEnabled false
+            shrinkResources false
         }
         release {
+            // This removes:
+            // Unused Java/Kotlin code
+            // Dead React Native code
+            // Unused libraries
+          
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug

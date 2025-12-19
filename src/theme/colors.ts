@@ -33,7 +33,8 @@ const colors = {
   warning: '#FACC15',
 
   // error
-  required:'#fa1515ff'
+  required:'#fa1515ff',
+  error:'#FF3B30'
 };
 
 export default colors;

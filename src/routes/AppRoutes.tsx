@@ -10,6 +10,7 @@ export type RootStackParamList = {
   SplashBrand: undefined;
   Auth: undefined;
   OTPVerification: undefined;
+  SetLocation: undefined;
   Profile: undefined;
   Favorites: undefined;
   Deals: undefined;
@@ -36,6 +37,7 @@ const AppRoutes = () => {
             <Stack.Screen name="SplashBrand" component={Screens.SplashBrand} />
             <Stack.Screen name="Auth" component={Screens.Auth} />
             <Stack.Screen name="OTPVerification" component={Screens.OTPVerification} />
+            <Stack.Screen name="SetLocation" component={Screens.SetLocation} />
             <Stack.Screen name="Favorites" component={Screens.Favorites} />
             <Stack.Screen name="Deals" component={Screens.Deals} />
             <Stack.Screen name="Cart" component={Screens.Cart} />

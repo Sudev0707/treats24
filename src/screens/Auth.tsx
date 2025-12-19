@@ -26,6 +26,7 @@ import {
   storeCountryCode,
   storeCountry,
 } from '../services/storage';
+import EmailLogin from '../components/EmailLogin';
 const googleIcon = require('../assets/icons/iconsgoogle.png');
 const mailIcon = require('../assets/icons/iconsmail.png');
 
@@ -210,57 +211,57 @@ const Auth: React.FC = () => {
   );
 };
 
-const EmailLogin = ({
-  setShowEmailLogin,
-  navigation,
-}: {
-  setShowEmailLogin: (value: boolean) => void;
-  navigation: any;
-}) => {
-  const [email, setEmail] = useState('');
+// const EmailLogin = ({
+//   setShowEmailLogin,
+//   navigation,
+// }: {
+//   setShowEmailLogin: (value: boolean) => void;
+//   navigation: any;
+// }) => {
+//   const [email, setEmail] = useState('');
 
-  return (
-    <View>
-      <View style={{ flexDirection: 'row' }}>
-        <TouchableOpacity onPress={() => setShowEmailLogin(false)}>
-          <Image
-            source={require('../assets/icons/iconsback.png')}
-            style={{ width: 24, height: 24, borderRadius: 7 }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.emailLoginTitle}>Login with Email</Text>
-      </View>
+//   return (
+//     <View>
+//       <View style={{ flexDirection: 'row' }}>
+//         <TouchableOpacity onPress={() => setShowEmailLogin(false)}>
+//           <Image
+//             source={require('../assets/icons/iconsback.png')}
+//             style={{ width: 24, height: 24, borderRadius: 7 }}
+//           />
+//         </TouchableOpacity>
+//         <Text style={styles.emailLoginTitle}>Login with Email</Text>
+//       </View>
 
-      <View style={{ marginTop: 30, marginBottom: 10 }}>
-        <Text
-          style={{
-            fontSize: 14,
-            color: '#666',
-          }}
-        >
-          Enter your email to continue ordering
-        </Text>
-      </View>
+//       <View style={{ marginTop: 30, marginBottom: 10 }}>
+//         <Text
+//           style={{
+//             fontSize: 14,
+//             color: '#666',
+//           }}
+//         >
+//           Enter your email to continue ordering
+//         </Text>
+//       </View>
 
-      <View style={{ marginBottom: 15 }}>
-        <InputField
-          label="Email"
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChangeText={setEmail}
-          variant="floating"
-        />
-      </View>
+//       <View style={{ marginBottom: 15 }}>
+//         <InputField
+//           label="Email"
+//           type="email"
+//           placeholder="Enter your email"
+//           value={email}
+//           onChangeText={setEmail}
+//           variant="floating"
+//         />
+//       </View>
 
-      <TouchableOpacity
-        style={styles.primaryButton}
-        onPress={() => navigation.navigate('MainTabs' as never)}
-      >
-        <Text style={styles.primaryButtonText}>Continue</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+//       <TouchableOpacity
+//         style={styles.primaryButton}
+//         onPress={() => navigation.navigate('MainTabs' as never)}
+//       >
+//         <Text style={styles.primaryButtonText}>Continue</Text>
+//       </TouchableOpacity>
+//     </View>
+//   );
+// };
 
 export default Auth;
