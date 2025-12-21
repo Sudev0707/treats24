@@ -21,12 +21,13 @@ const AuthStyles = StyleSheet.create({
     // borderWidth:1
   },
   header: {
-    height: '42%',
-    backgroundColor: colors.brandPrimary,
+    // height: '42%',
+    // backgroundColor: colors.brandPrimary,
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'flex-end',
     paddingBottom: 32,
+    // borderWidth:1
   },
   headerBgImg: {
     opacity: 0.32,

@@ -81,28 +81,22 @@ const Auth: React.FC = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { justifyContent: 'flex-end' }]}>
       {/* <StatusBar hidden={Platform.OS === 'android'} /> */}
 
       <View style={styles.header}>
-        <View style={styles.headerDecorRow} />
+        {/* <View style={styles.headerDecorRow} /> */}
 
         <View style={styles.headerContent}>
-          <LottieView
-            source={{
-              uri: 'https://lottie.host/4db68bbd-31f6-4cd8-84eb-189de081159a/2PkLkjYgT.json',
-            }}
-            autoPlay
-            loop
-            style={{ width: 150, height: 150, marginBottom: 20 }}
-          />
+          
           <Text style={styles.headerBrandText}>treats24</Text>
           <Text style={styles.appTagline}>India's #1 Food Delivery</Text>
           <Text style={styles.appSubTagline}>and Dining App</Text>
         </View>
       </View>
 
-      <Animated.View style={{ flex: 1 }}>
+      {/* auth container */}
+      <Animated.View style={{}}>
         <ScrollView
           automaticallyAdjustKeyboardInsets
           keyboardShouldPersistTaps="handled"
@@ -160,12 +154,12 @@ const Auth: React.FC = () => {
                   <Text style={styles.primaryButtonText}>Continue</Text>
                 </TouchableOpacity>
 
-                <View style={styles.orRow}>
+                {/* <View style={styles.orRow}>
                   <View style={styles.orDivider} />
                   <Text style={styles.orText}>Or, login with</Text>
                   <View style={styles.orDivider} />
                 </View>
-                {/* social login */}
+             
                 <View style={styles.socialLoginContainer}>
                   <TouchableOpacity style={styles.socialBtn}>
                     <Image source={googleIcon} style={styles.socialIcon} />
@@ -177,7 +171,7 @@ const Auth: React.FC = () => {
                   >
                     <Image source={mailIcon} style={styles.socialIcon} />
                   </TouchableOpacity>
-                </View>
+                </View> */}
 
                 {/* footer content */}
                 <Text style={styles.footerText}>

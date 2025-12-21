@@ -1,46 +1,81 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform, StatusBar, Dimensions } from 'react-native';
 import colors from '../../theme/colors';
 import fonts from '../../theme/fonts';
+
+const { width: screenWidth } = Dimensions.get('window');
 
 const DashboardStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    // backgroundColor: colors.backgroundSoft ,
     // borderWidth:1
   },
-  headerWrapper: {
-    backgroundColor: colors.background, // same as root background
-    paddingTop: 0,
-    // bottom shadow here
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.12,
-    shadowRadius: 8,
-    elevation: 8, // Android shadow
+  headerContainer: {
+    position: 'absolute',
+    top: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    // top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: '#ffffff',
+    padding: 14,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
+    elevation: 10, // Android shadow
+    shadowColor: '#000', // iOS shadow
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    paddingBottom: 35,
+    zIndex: 10,
   },
 
-  mainDashboardHeader: {
-    paddingTop: 6,
-    paddingBottom: 18,
-    paddingHorizontal: 16,
-    backgroundColor: colors.background,
-
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+  dashboardBanner: {
+    borderWidth: 0,
+    borderRadius: 15,
+    overflow: 'hidden',
   },
-
-  dashboardHeaderContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  BannerHolder: {
+    width: screenWidth,
+    height: 200,
+  },
+  bannerImage: {
     width: '100%',
-    // paddingHorizontal: 16,
-    paddingVertical: 12,
-    // backgroundColor: 'red',
-    // borderBottomWidth: 1,
-    marginBottom: 9,
-    borderBottomColor: colors.borderMuted,
+    height: '100%',
+    resizeMode: 'cover',
   },
+  // headerWrapper: {
+  //   backgroundColor: colors.background, // same as root background
+  //   paddingTop: 0,
+  //   // bottom shadow here
+  //   shadowColor: '#000',
+  //   shadowOffset: { width: 0, height: 6 },
+  //   shadowOpacity: 0.12,
+  //   shadowRadius: 8,
+  //   elevation: 8, // Android shadow
+  // },
+
+  // mainDashboardHeader: {
+  //   paddingTop: 6,
+  //   paddingBottom: 18,
+  //   paddingHorizontal: 16,
+  //   backgroundColor: colors.background,
+
+  //   borderBottomLeftRadius: 20,
+  //   borderBottomRightRadius: 20,
+  // },
+
+  // dashboardHeaderContainer: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   justifyContent: 'space-between',
+  //   width: '100%',
+  //   // paddingHorizontal: 16,
+  //   paddingVertical: 12,
+  //   // backgroundColor: 'red',
+  //   // borderBottomWidth: 1,
+  //   marginBottom: 9,
+  //   borderBottomColor: colors.borderMuted,
+  // },
+
   dashboardHeaderLeft: {
     flex: 1,
     alignItems: 'flex-start',
@@ -52,7 +87,7 @@ const DashboardStyles = StyleSheet.create({
   scrollContent: {
     // flex: 1,
     paddingHorizontal: 16,
-    paddingTop: 40,
+    paddingTop: 15,
     paddingBottom: 24,
     backgroundColor: colors.backgroundSoft,
   },

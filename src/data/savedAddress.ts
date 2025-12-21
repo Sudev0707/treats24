@@ -5,14 +5,14 @@ export const savedAddress: Array<{
   distance?: string;
   icon?: string;
 }> = [
-  //   {
-  //     id: '1',
-  //     title: 'Home',
-  //     address:
-  //       'Sudev, Near Krishna Kunj Apartment (white Building), Krishnapur, Kestopur, Kolkata, West Bengal',
-  //     distance: '202 km',
-  //     icon: 'home',
-  //   },
+    {
+      id: '1',
+      title: 'Home',
+      address:
+        'Sudev, Near Krishna Kunj Apartment (white Building), Krishnapur, Kestopur, Kolkata, West Bengal',
+      distance: '202 km',
+      icon: 'home',
+    },
   //   {
   //     id: '2',
   //     title: 'Work',

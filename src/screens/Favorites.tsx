@@ -11,8 +11,8 @@ const Favorites: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor="" barStyle="dark-content" />
-        <Header showBackButton={true} />
+      <StatusBar backgroundColor="white" barStyle="dark-content" />
+      <Header showBackButton={true} />
       <View style={{ flex: 1, backgroundColor: colors.backgroundSoft }}>
         <ScrollView
           contentContainerStyle={styles.scrollContent}

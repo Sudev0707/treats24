@@ -1,6 +1,6 @@
 const colors = {
   // Brand
-  brandPrimary: '#0F172A',
+  brandPrimary: '#d21919ff',
   brandSecondary: '#F97316',
   brandPrimarySoft: '#FEF3C7',
   brandDark: '#0F172A',
@@ -8,9 +8,8 @@ const colors = {
   // Backgrounds
   backgroundPrimary: '#0F172A',
   background: '#FFFFFF',
-  // background: '#FCF8F8',
-  backgroundSoft: '#f3f3f3ff',
-  // backgroundSoft: '#f6f6f6ff',
+  // background: '#ffffffff',
+  backgroundSoft: 'rgba(197, 205, 255, 0.1)',
   card: '#FFFFFF',
   muted: '#F3F4F6',
 

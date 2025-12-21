@@ -1,5 +1,5 @@
 
-const featuredRestaurants = [
+export const featuredRestaurants = [
   {
     id: '1',
     name: 'Burger Hub',
@@ -29,7 +29,7 @@ const featuredRestaurants = [
   },
 ];
 
-const popularDishes = [
+export const popularDishes = [
   {
     id: '1',
     name: 'Cheese Burger',
@@ -53,7 +53,7 @@ const popularDishes = [
   },
 ];
 
-const offers = [
+export const offers = [
   {
     id: '1',
     title: '20% Off on Pizzas',
@@ -74,7 +74,7 @@ const offers = [
   },
 ];
 
-const quickBites = [
+export const quickBites = [
   {
     id: '1',
     name: 'Fries',
@@ -100,3 +100,22 @@ const quickBites = [
     price: '$3.49',
   },
 ];
+
+export   const bannerData = [
+    {
+      id: '1',
+      image: require('../assets/images/Black and Yellow Simple Minimalist Burger Promotion Banner.png'),
+    },
+    {
+      id: '2',
+      image: require('../assets/images/Black White Simple Opening Banner.png'),
+    },
+    {
+      id: '3',
+      image: require('../assets/images/Red Modern Fried Chicken Grand Opening Promotion Banner.png'),
+    },
+    {
+      id: '4',
+      image: require('../assets/images/Red White Simple Minimalist Illustrative Pizza Promotion Banner.png'),
+    },
+  ];

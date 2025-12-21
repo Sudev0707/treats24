@@ -3,23 +3,36 @@ import colors from '../../theme/colors';
 import fonts from '../../theme/fonts';
 
 const DashboardHeaderStyles = StyleSheet.create({
-  headerWrapper: {
-    // backgroundColor: 'white',
+  LinearGradientHeader: {
+    // borderWidth: 1,
     borderBottomLeftRadius: 26,
     borderBottomRightRadius: 26,
-    // borderBottomWidth:1,
+    paddingTop: 50,
+
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
     elevation: 4,
+    zIndex:4
   },
 
   mainDashboardHeader: {
-    borderBottomWidth: 0.5,
-    backgroundColor: colors.background,
+    paddingHorizontal: 20,
+    // borderBottomWidth: 0.5,
+    // backgroundColor: colors.background,
+    backgroundColor: 'transparent',
     paddingTop: 9,
-    paddingBottom: 18,
-    paddingHorizontal: 16,
-    // borderBottomLeftRadius: 26,
-    // borderBottomRightRadius: 26,
+    paddingBottom: 25,
+
+    // paddingHorizontal: 16,
+    borderBottomLeftRadius: 26,
+    borderBottomRightRadius: 26,
     // elevation:4
+    shadowColor: '#000',
+    // shadowOffset: { width: 0, height: 12 },
+    // shadowOpacity: 0.12,
+    // shadowRadius: 16,
+    // elevation: 18,
   },
   dashboardHeaderContainer: {
     flexDirection: 'row',
@@ -90,7 +103,7 @@ const DashboardHeaderStyles = StyleSheet.create({
     borderRadius: 7,
     paddingHorizontal: 1,
     paddingVertical: 1,
-    marginBottom: 20,
+    // marginBottom: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.06,
