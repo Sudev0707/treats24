@@ -9,6 +9,7 @@ import * as Screens from './Screens';
 export type RootStackParamList = {
   SplashBrand: undefined;
   Auth: undefined;
+  OTPVerification: { confirmation: any; phone: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -23,6 +24,7 @@ const AuthRoutes: React.FC = () => {
         >
           <Stack.Screen name="SplashBrand" component={Screens.SplashBrand} />
           <Stack.Screen name="Auth" component={Screens.Auth} />
+          <Stack.Screen name="OTPVerification" component={Screens.OTPVerification} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

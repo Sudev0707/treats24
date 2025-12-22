@@ -8,6 +8,9 @@ import {
   Alert,
   StatusBar,
 } from 'react-native';
+// 
+import { useRoute } from '@react-navigation/native';
+import { verifyPhoneOTP } from '../services/fireBaseAuth';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles/screens/OTPVerificationStyles';

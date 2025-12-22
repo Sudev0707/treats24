@@ -18,6 +18,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import LottieView from 'lottie-react-native';
 import styles from '../styles/screens/AuthStyles';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../routes/AuthRoutes';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import PhoneInput from '../components/inputs/PhoneInput';
 import CountryModal from '../components/modals/CountryModals';
@@ -29,14 +31,16 @@ import {
   storeCountry,
 } from '../services/storage';
 import EmailLogin from '../components/EmailLogin';
+import { sendPhoneOTP } from '../services/fireBaseAuth';
 import colors from '../theme/colors';
 import Button from '../components/common/Button';
 const googleIcon = require('../assets/icons/iconsgoogle.png');
 const mailIcon = require('../assets/icons/iconsmail.png');
+
 import { validatePhone } from '../utils/validate';
 
 const Auth: React.FC = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [phone, setPhone] = useState('');
   const [error, setError] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
@@ -83,16 +87,26 @@ const Auth: React.FC = () => {
 
   //
   const isPhoneValid = phone.length >= 10;
-  
-  const handleContinue = () => {
+
+  const handleContinue = async () => {
     const { isValid, error } = validatePhone({ phone, country });
 
     if (!isValid) {
       setError(error);
       return;
     }
+
+    //
+    try {
+      const fullPhone = `${countryCode}${phone}`;
+      const confirmation = await sendPhoneOTP(fullPhone);
+      navigation.navigate('OTPVerification', { confirmation, phone: fullPhone });
+    } catch (error: any) {
+      setError(error?.message || 'Failed to send OTP');
+    }
+
     setError('');
-    navigation.navigate('OTPVerification' as never);
+    // navigation.navigate('OTPVerification' as never);
 
     // → validate phone
     // → call send OTP API
