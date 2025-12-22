@@ -19,12 +19,18 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import SavedAddressCard from '../components/common/SavedAddressCard';
 import { savedAddress } from '../data/savedAddress';
+//
+import { getDBConnection } from '../database/db';
+import { saveLocation } from '../database/queries';
 
+//
 import {
   getCurrentLocation,
   getCurrentLocationWithAddress,
 } from '../utils/locationService';
 import { useNavigation } from '@react-navigation/native';
+import colors from '../theme/colors';
+import Button from '../components/common/Button';
 
 interface LocationType {
   latitude: number;
@@ -48,22 +54,31 @@ const SetLocation: React.FC = () => {
   useEffect(() => {
     // simulate API
     handleCurrentLocation();
+
     setTimeout(() => {
       setLoading(false);
     }, 1500);
   }, []);
 
   //
-  const handleCurrentLocation = () => {
+  const handleCurrentLocation = async () => {
     setLoading(true);
+
     getCurrentLocationWithAddress(locationData => {
       setLocation(locationData);
       setLoading(false);
     });
+    // if (!location) return;
+    // const db = await getDBConnection();
+    // await saveLocation(db, location);
   };
 
   //
-  const handleProceed = () => {
+  const handleProceed = async () => {
+    if (!location) return;
+    const db = await getDBConnection();
+    await saveLocation(db, location);
+
     navigation.navigate('MainTabs' as never);
   };
 
@@ -95,7 +110,11 @@ const SetLocation: React.FC = () => {
         <View style={locationStyles.actionRow}>
           <ActionButton
             icon={
-              <MaterialIcons name="my-location" size={22} color="#ff6a00" />
+              <MaterialIcons
+                name="my-location"
+                size={22}
+                color={colors.brandPrimary}
+              />
             }
             label="Use Current Location"
             onPress={handleCurrentLocation}
@@ -105,7 +124,7 @@ const SetLocation: React.FC = () => {
               <MaterialIcons
                 name="add-location-alt"
                 size={22}
-                color="#ff6a00"
+                color={colors.brandPrimary}
               />
             }
             label="Add New Address"
@@ -172,14 +191,14 @@ const SetLocation: React.FC = () => {
           </View> */}
           <View style={locationStyles.addressRow}>
             <View style={locationStyles.locationIcon}>
-              <Feather name="map-pin" size={18} color="#ff6a00" />
+              <Feather name="map-pin" size={18} color={colors.brandPrimary} />
             </View>
 
             {loading ? (
               <View style={{ marginStart: 125, justifyContent: 'center' }}>
                 <ActivityIndicator
                   size="small"
-                  color="#ff6a00"
+                  color={colors.brandPrimary}
                   style={{ marginTop: 15 }}
                 />
               </View>
@@ -200,14 +219,19 @@ const SetLocation: React.FC = () => {
           </View>
 
           <View style={locationStyles.buttonRow}>
-            <TouchableOpacity
+            <Button
+              title="Confirm & proceed"
+              variant="outlined"
+              onPress={handleProceed}
+            />
+            {/* <TouchableOpacity
               style={locationStyles.confirmBtn}
               onPress={handleProceed}
             >
               <Text style={locationStyles.confirmBtnText}>
                 Confirm & Proceed
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             {/* <TouchableOpacity style={styles.proceedBtn}>
               <Text style={styles.proceedBtnText}>Proceed</Text>

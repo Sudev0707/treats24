@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
+import colors from '../../theme/colors';
 
 type Props = {
   title: string;
@@ -22,7 +23,7 @@ const SavedAddressCard = ({
       {/* LEFT */}
       <View style={styles.addressLeft}>
         <View style={styles.homeIcon}>
-          <Feather name={icon} size={18} color="#ff6a00" />
+          <Feather name={icon} size={18}   color={colors.brandPrimary} />
         </View>
 
         <View style={styles.textContainer}>
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
   },
   homeIcon: {
-    backgroundColor: '#fff2e8',
+     backgroundColor: '#ffe8e8ff',
     padding: 8,
     borderRadius: 10,
     marginRight: 10,

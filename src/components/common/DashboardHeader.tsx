@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -11,9 +11,26 @@ import Icon from 'react-native-vector-icons/Feather';
 import colors from '../../theme/colors';
 import DashboardHeaderStyles from '../../styles/components/DashboardHeaderStyles';
 import LinearGradient from 'react-native-linear-gradient';
+import { getDBConnection } from '../../database/db';
+import { getStoredLocation } from '../../database/queries';
+import { locationdata } from '../../database/types';
 
 const DashboardHeader: React.FC = () => {
   const navigation = useNavigation();
+  const [location, setLocation] = useState<locationdata | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const locationData = async () => {
+      setLoading(true);
+      const db = await getDBConnection();
+      const data = await getStoredLocation(db);
+      setLocation(data);
+      setLoading(false);
+    };
+
+    locationData();
+  }, []);
 
   return (
     <>
@@ -35,7 +52,7 @@ const DashboardHeader: React.FC = () => {
                   style={{ marginRight: 2 }}
                 />
                 <Text style={DashboardHeaderStyles.addressText}>
-                  Bhubaneswar, Odisha
+                  {location?.city}
                 </Text>
                 <Icon
                   name="chevron-down"

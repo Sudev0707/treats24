@@ -12,6 +12,7 @@ const colors = {
   backgroundSoft: 'rgba(197, 205, 255, 0.1)',
   card: '#FFFFFF',
   muted: '#F3F4F6',
+  mutedBackground:'#fff2f2ff',
 
   // Text
   // textPrimary:'#F97316',

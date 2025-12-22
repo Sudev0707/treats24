@@ -7,20 +7,40 @@ interface ButtonProps {
   onPress: () => void;
   variant: 'filled' | 'outlined';
   style?: any;
+  isPhoneValid: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ title, onPress, variant, style }) => {
+const Button: React.FC<ButtonProps> = ({
+  title,
+  onPress,
+  variant,
+  style,
+  isPhoneValid,
+}) => {
   const buttonStyle = [
     ButtonStyles.base,
-    variant === 'filled' ? ButtonStyles.filled : ButtonStyles.outlined,
+    variant === 'filled'
+      ? isPhoneValid
+        ? ButtonStyles.filled
+        : ButtonStyles.filledDisabled
+      : ButtonStyles.outlined,
     style,
   ];
 
   const textStyle =
-    variant === 'filled' ? ButtonStyles.filledText : ButtonStyles.outlinedText;
+    variant === 'filled'
+      ? isPhoneValid
+        ? ButtonStyles.filledText
+        : ButtonStyles.textDisabled
+      : ButtonStyles.outlinedText;
 
   return (
-    <TouchableOpacity style={buttonStyle} onPress={onPress} activeOpacity={0.6}>
+    <TouchableOpacity
+      disabled={!isPhoneValid}
+      style={buttonStyle}
+      onPress={onPress}
+      activeOpacity={0.6}
+    >
       <Text style={textStyle}>{title}</Text>
     </TouchableOpacity>
   );

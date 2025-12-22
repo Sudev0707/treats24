@@ -40,14 +40,4 @@ export const topPicks = [
 export const topOffers = [
   { id: '1', offer: '50% OFF up to ₹100' },
   { id: '2', offer: 'Buy 1 Get 1 Free' },
-  { id: '2', offer: 'Buy 1 Get 1 Free' },
-  { id: '2', offer: 'Buy 1 Get 1 Free' },
-  { id: '2', offer: 'Buy 1 Get 1 Free' },
-  { id: '2', offer: 'Buy 1 Get 1 Free' },
-  { id: '2', offer: 'Buy 1 Get 1 Free' },
-  { id: '2', offer: 'Buy 1 Get 1 Free' },
-  { id: '2', offer: 'Buy 1 Get 1 Free' },
-  { id: '2', offer: 'Buy 1 Get 1 Free' },
-  { id: '2', offer: 'Buy 1 Get 1 Free' },
-  { id: '2', offer: 'Buy 1 Get 1 Free' },
 ];

@@ -9,10 +9,13 @@ const ButtonStyles = StyleSheet.create({
     borderRadius: 999,
     alignItems: 'center',
     justifyContent: 'center',
-    width:'100%'
+    width: '100%',
   },
   filled: {
     backgroundColor: colors.brandPrimary,
+  },
+  filledDisabled: {
+    backgroundColor: colors.mutedBackground,
   },
   outlined: {
     backgroundColor: 'transparent',
@@ -22,6 +25,11 @@ const ButtonStyles = StyleSheet.create({
   filledText: {
     color: colors.textOnBrand,
     fontSize: fonts.size.lg,
+    fontWeight: fonts.weight.semibold,
+  },
+  textDisabled: {
+    color: colors.textMuted,
+     fontSize: fonts.size.lg,
     fontWeight: fonts.weight.semibold,
   },
   outlinedText: {

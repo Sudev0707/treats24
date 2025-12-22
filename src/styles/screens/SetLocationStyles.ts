@@ -92,7 +92,7 @@ const locationStyles = StyleSheet.create({
   },
 
   locationIcon: {
-    backgroundColor: '#fff2e8',
+    backgroundColor: '#ffe8e8ff',
     padding: 8,
     borderRadius: 10,
     marginRight: 12,

@@ -13,6 +13,8 @@ import {
   Keyboard,
   ImageBackground,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import LottieView from 'lottie-react-native';
 import styles from '../styles/screens/AuthStyles';
 import { useNavigation } from '@react-navigation/native';
@@ -27,8 +29,11 @@ import {
   storeCountry,
 } from '../services/storage';
 import EmailLogin from '../components/EmailLogin';
+import colors from '../theme/colors';
+import Button from '../components/common/Button';
 const googleIcon = require('../assets/icons/iconsgoogle.png');
 const mailIcon = require('../assets/icons/iconsmail.png');
+import { validatePhone } from '../utils/validate';
 
 const Auth: React.FC = () => {
   const navigation = useNavigation();
@@ -39,27 +44,21 @@ const Auth: React.FC = () => {
 
   const [country, setCountry] = useState('IN');
   const [countryCode, setCountryCode] = useState('+91');
+  const [rememberMe, setRememberMe] = useState(false);
   const translateY = useRef(new Animated.Value(0)).current;
+  const [keyboardOpen, setKeyboardOpen] = useState(false);
+  console.log('rememberMe', rememberMe);
+  console.log('phone', phone);
 
   useEffect(() => {
     console.log('heyy sudevcvv');
 
-    const showSub = Keyboard.addListener('keyboardDidShow', e => {
-      Animated.timing(translateY, {
-        toValue: -e.endCoordinates.height * 0.4,
-
-        duration: 280,
-        useNativeDriver: true,
-      }).start();
-    });
-
-    const hideSub = Keyboard.addListener('keyboardDidHide', () => {
-      Animated.timing(translateY, {
-        toValue: 0,
-        duration: 260,
-        useNativeDriver: true,
-      }).start();
-    });
+    const showSub = Keyboard.addListener('keyboardDidShow', () =>
+      setKeyboardOpen(true),
+    );
+    const hideSub = Keyboard.addListener('keyboardDidHide', () =>
+      setKeyboardOpen(false),
+    );
 
     // Load stored country code and country on component mount
     const loadStoredData = async () => {
@@ -80,81 +79,133 @@ const Auth: React.FC = () => {
     };
   }, []);
 
+  // ======
+
+  //
+  const isPhoneValid = phone.length >= 10;
+  
+  const handleContinue = () => {
+    const { isValid, error } = validatePhone({ phone, country });
+
+    if (!isValid) {
+      setError(error);
+      return;
+    }
+    setError('');
+    navigation.navigate('OTPVerification' as never);
+
+    // → validate phone
+    // → call send OTP API
+    // → success → navigate to OTP screen
+    // → failure → show error
+  };
+
   return (
-    <View style={[styles.container, { justifyContent: 'flex-end' }]}>
-      {/* <StatusBar hidden={Platform.OS === 'android'} /> */}
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      // keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
+    >
+      <View style={[styles.container, { justifyContent: 'flex-end' }]}>
+        {/* <StatusBar hidden={Platform.OS === 'android'} /> */}
 
-      <View style={styles.header}>
-        {/* <View style={styles.headerDecorRow} /> */}
+        <View style={styles.header}>
+          {/* <View style={styles.headerDecorRow} /> */}
 
-        <View style={styles.headerContent}>
-          
-          <Text style={styles.headerBrandText}>treats24</Text>
-          <Text style={styles.appTagline}>India's #1 Food Delivery</Text>
-          <Text style={styles.appSubTagline}>and Dining App</Text>
+          <View style={styles.headerContent}>
+            <Text style={styles.headerBrandText}>treats24</Text>
+            <Text style={styles.appTagline}>India's #1 Food Delivery</Text>
+            <Text style={styles.appSubTagline}>and Dining App</Text>
+          </View>
         </View>
-      </View>
 
-      {/* auth container */}
-      <Animated.View style={{}}>
-        <ScrollView
-          automaticallyAdjustKeyboardInsets
-          keyboardShouldPersistTaps="handled"
-          keyboardDismissMode="interactive"
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ flexGrow: 1, ...styles.contentWrapper }}
-        >
-          {/* main login  cintainer */}
-          <View>
-            {showEmailLogin ? (
-              <EmailLogin
-                setShowEmailLogin={setShowEmailLogin}
-                navigation={navigation}
-              />
-            ) : (
-              <>
-                <View style={{ alignItems: 'center', marginBottom: 5 }}>
-                  <Text style={styles.authSubtitle}>
-                    Log in to continue and get the best from the app
-                  </Text>
-                </View>
+        {/* auth container */}
+        <View style={{}}>
+          <ScrollView
+            // automaticallyAdjustKeyboardInsets
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="interactive"
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{
+              flexGrow: 1,
+              paddingBottom: keyboardOpen ? 250 : 30,
+              ...styles.contentWrapper,
+            }}
+            // contentContainerStyle={{ flexGrow: 1, ...styles.contentWrapper }}
+          >
+            {/* main login  cintainer */}
+            <View>
+              {showEmailLogin ? (
+                <EmailLogin
+                  setShowEmailLogin={setShowEmailLogin}
+                  navigation={navigation}
+                />
+              ) : (
+                <>
+                  <View style={{ alignItems: 'center', marginBottom: 5 }}>
+                    <Text style={styles.authSubtitle}>
+                      Log in to continue and get the best from the app
+                    </Text>
+                  </View>
 
-                <View style={styles.orRow}>
-                  <View style={styles.orDivider} />
-                  <Text style={styles.orText}>Log in or signup</Text>
-                  <View style={styles.orDivider} />
-                </View>
+                  <View style={styles.orRow}>
+                    <View style={styles.orDivider} />
+                    <Text style={styles.orText}>Log in or signup</Text>
+                    <View style={styles.orDivider} />
+                  </View>
 
-                <View style={{ marginVertical: 15 }}>
-                  <PhoneInput
-                    label=""
-                    country={country}
-                    countryCode={countryCode}
-                    value={phone}
-                    onChange={setPhone}
-                    onCountryPress={() => setModalVisible(true)} // open country picker
-                    error={error}
+                  <View style={{ marginVertical: 15 }}>
+                    <PhoneInput
+                      label=""
+                      country={country}
+                      countryCode={countryCode}
+                      value={phone}
+                      // onChange={setPhone}
+                      onChange={text => {
+                        setPhone(text);
+                        if (error) setError('');
+                      }}
+                      onCountryPress={() => setModalVisible(true)} // open country picker
+                      error={error}
+                    />
+                  </View>
+
+                  <View style={styles.Rememberme}>
+                    <TouchableOpacity
+                      onPress={() => setRememberMe(!rememberMe)}
+                      style={{ flexDirection: 'row', alignItems: 'center' }}
+                    >
+                      <View
+                        style={{
+                          width: 18,
+                          height: 18,
+                          borderRadius: 5,
+                          borderWidth: 0.9,
+                          borderColor: colors.brandPrimary,
+                          marginRight: 10,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          backgroundColor: rememberMe
+                            ? colors.brandPrimary
+                            : 'transparent',
+                        }}
+                      >
+                        {rememberMe && (
+                          <Icon name="check" size={16} color="#fff" />
+                        )}
+                      </View>
+                      <Text style={styles.forgotPassText}>Remember me</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <Button
+                    title="Continue"
+                    variant="filled"
+                    onPress={handleContinue}
+                    isPhoneValid={isPhoneValid}
                   />
-                </View>
 
-                <View style={styles.Rememberme}>
-                  <TouchableOpacity>
-                    <Text style={styles.forgotPassText}>Remember me</Text>
-                  </TouchableOpacity>
-                  {/* <TouchableOpacity>
-                <Text style={styles.forgotPassText}>Forgot Password?</Text>
-              </TouchableOpacity> */}
-                </View>
-                <TouchableOpacity
-                  style={styles.primaryButton}
-                  onPress={() =>
-                    navigation.navigate('OTPVerification' as never)
-                  }
-                >
-                  <Text style={styles.primaryButtonText}>Continue</Text>
-                </TouchableOpacity>
-
-                {/* <View style={styles.orRow}>
+                  {/* <View style={styles.orRow}>
                   <View style={styles.orDivider} />
                   <Text style={styles.orText}>Or, login with</Text>
                   <View style={styles.orDivider} />
@@ -173,89 +224,37 @@ const Auth: React.FC = () => {
                   </TouchableOpacity>
                 </View> */}
 
-                {/* footer content */}
-                <Text style={styles.footerText}>
-                  By continuing, you agree to our
-                </Text>
-                <View style={styles.footerLinksRow}>
-                  <Text style={styles.footerLink}>Terms of Service</Text>
-                  <Text style={styles.footerLink}>Privacy Policy</Text>
-                  <Text style={styles.footerLink}>Content Policies</Text>
-                </View>
-              </>
-            )}
-          </View>
+                  {/* footer content */}
+                  <Text style={styles.footerText}>
+                    By continuing, you agree to our
+                  </Text>
+                  <View style={styles.footerLinksRow}>
+                    <Text style={styles.footerLink}>Terms of Service</Text>
+                    <Text style={styles.footerLink}>Privacy Policy</Text>
+                    <Text style={styles.footerLink}>Content Policies</Text>
+                  </View>
+                </>
+              )}
+            </View>
 
-          {/* otp container */}
-          <View></View>
-        </ScrollView>
-      </Animated.View>
+            {/* otp container */}
+            <View></View>
+          </ScrollView>
+        </View>
 
-      {/* </KeyboardAvoidingView> */}
+        {/* </KeyboardAvoidingView> */}
 
-      <CountryModal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        onSelect={(iso, code) => {
-          setCountry(iso);
-          setCountryCode(code);
-        }}
-      />
-    </View>
+        <CountryModal
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          onSelect={(iso, code) => {
+            setCountry(iso);
+            setCountryCode(code);
+          }}
+        />
+      </View>
+    </KeyboardAvoidingView>
   );
 };
-
-// const EmailLogin = ({
-//   setShowEmailLogin,
-//   navigation,
-// }: {
-//   setShowEmailLogin: (value: boolean) => void;
-//   navigation: any;
-// }) => {
-//   const [email, setEmail] = useState('');
-
-//   return (
-//     <View>
-//       <View style={{ flexDirection: 'row' }}>
-//         <TouchableOpacity onPress={() => setShowEmailLogin(false)}>
-//           <Image
-//             source={require('../assets/icons/iconsback.png')}
-//             style={{ width: 24, height: 24, borderRadius: 7 }}
-//           />
-//         </TouchableOpacity>
-//         <Text style={styles.emailLoginTitle}>Login with Email</Text>
-//       </View>
-
-//       <View style={{ marginTop: 30, marginBottom: 10 }}>
-//         <Text
-//           style={{
-//             fontSize: 14,
-//             color: '#666',
-//           }}
-//         >
-//           Enter your email to continue ordering
-//         </Text>
-//       </View>
-
-//       <View style={{ marginBottom: 15 }}>
-//         <InputField
-//           label="Email"
-//           type="email"
-//           placeholder="Enter your email"
-//           value={email}
-//           onChangeText={setEmail}
-//           variant="floating"
-//         />
-//       </View>
-
-//       <TouchableOpacity
-//         style={styles.primaryButton}
-//         onPress={() => navigation.navigate('MainTabs' as never)}
-//       >
-//         <Text style={styles.primaryButtonText}>Continue</Text>
-//       </TouchableOpacity>
-//     </View>
-//   );
-// };
 
 export default Auth;

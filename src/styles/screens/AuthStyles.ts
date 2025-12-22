@@ -91,11 +91,11 @@ const AuthStyles = StyleSheet.create({
   // },
   contentWrapper: {
     paddingHorizontal: 24,
-    paddingTop: 24,
-    paddingBottom: 40, // important for scroll spacing
+    paddingTop: 24, // important for scroll spacing
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     backgroundColor: colors.background,
+    borderWidth:1
   },
   card: {
     backgroundColor: colors.card,
