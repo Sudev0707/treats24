@@ -10,8 +10,23 @@ const InternetConnectionNotifier: React.FC = () => {
 
   // useRef to avoid re-creating new animation value on every render
   const slideAnim = useRef(new Animated.Value(100)).current;
+  const isFirstRender = useRef(true);
+  // 🔑 Track previous value
+  const prevConnection = useRef<boolean | null>(null);
 
   useEffect(() => {
+    // ⛔ Ignore first render on app launch
+
+    if (isConnected !== null || isConnected !== undefined) {
+      return;
+    }
+
+    // ⛔ Ignore first resolved state (app launch)
+    if (prevConnection.current === null) {
+      prevConnection.current = isConnected;
+      return;
+    }
+
     if (isConnected === false) {
       setMessage('No internet connection');
       setShowNotification(true);
@@ -21,7 +36,6 @@ const InternetConnectionNotifier: React.FC = () => {
         duration: 300,
         useNativeDriver: true,
       }).start();
-      
     } else if (isConnected === true) {
       setMessage('Internet connection restored');
       setShowNotification(true);
@@ -48,10 +62,10 @@ const InternetConnectionNotifier: React.FC = () => {
     <Animated.View
       style={[
         styles.container,
-        { 
+        {
           transform: [{ translateY: slideAnim }],
           backgroundColor: isConnected ? colors.success : colors.danger,
-        }
+        },
       ]}
     >
       <Text style={styles.text}>{message}</Text>
@@ -63,7 +77,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     // top: 0,
-    bottom:0,
+    bottom: 0,
     left: 0,
     right: 0,
     padding: 10,

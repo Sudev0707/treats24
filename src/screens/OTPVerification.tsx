@@ -8,17 +8,20 @@ import {
   Alert,
   StatusBar,
 } from 'react-native';
-// 
+//
 import { useRoute } from '@react-navigation/native';
-import { verifyPhoneOTP } from '../services/fireBaseAuth';
+import { sendPhoneOTP, verifyPhoneOTP } from '../services/fireBaseAuth';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles/screens/OTPVerificationStyles';
 import Header from '../components/common/Header';
-
-
+import CustomAlert from '../components/common/CustomAlert';
 
 const OTPVerification: React.FC = () => {
+  const route = useRoute<any>();
+  const { confirmation, phone } = route.params;
+
+  //
   const navigation = useNavigation();
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   // console.log(otp);
@@ -48,22 +51,37 @@ const OTPVerification: React.FC = () => {
     }
   };
 
-  const handleVerify = () => {
+  const handleVerify = async () => {
     const otpString = otp.join('');
 
     if (otpString.length !== 6) {
       // Alert.alert("error", "please enter a valid 6 digit otp");
       setOtpError('Please enter a valid 6-digit OTP');
-
       return;
     }
-    if (otpString === '123456') {
+
+    try {
       setOtpError('');
-      navigation.navigate('SetLocation' as never);
-    } else {
+
+      const userCredential = await verifyPhoneOTP(confirmation, otpString);
+      const user = userCredential.user;
+      console.log('userrrrrrr', user);
+
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'MainTabs' as never }],
+      });
+    } catch (error) {
       setOtpError('Invalid OTP');
-      // Alert.alert('error', 'Invalid otp');
     }
+
+    // if (otpString === '123456') {
+    //   setOtpError('');
+    //   navigation.navigate('SetLocation' as never);
+    // } else {
+    //   setOtpError('Invalid OTP');
+    //   // Alert.alert('error', 'Invalid otp');
+    // }
 
     //  navigation.navigate('MainTabs' as never);
     // const otpString = otp.join('');
@@ -76,7 +94,17 @@ const OTPVerification: React.FC = () => {
     // }
   };
 
-  const handleResend = () => {
+  const handleResend = async() => {
+    try {
+      const  newConfirmation = await sendPhoneOTP(phone);
+      route.params.confirmation = newConfirmation;
+    } catch (error) {
+      Alert.alert('Error', 'Unable to resend OTP');
+      
+
+    }
+
+
     // Here you would typically resend the OTP
     Alert.alert('OTP Resent', 'A new OTP has been sent to your phone number');
   };
@@ -104,7 +132,7 @@ const OTPVerification: React.FC = () => {
             </Text>
             <Text>{otp}</Text>
 
-{/* phone otp  */}
+            {/* phone otp  */}
             <View style={styles.otpContainer}>
               {otp.map((digit, index) => (
                 <TextInput
@@ -129,7 +157,6 @@ const OTPVerification: React.FC = () => {
               ))}
             </View>
             {otpError ? <Text style={styles.errorText}>{otpError}</Text> : null}
-
 
             <View style={styles.resendContainer}>
               <Text style={styles.resendText}>Didn't receive the code?</Text>

@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import AppRoutes from './src/routes/AppRoutes';
 import AuthRoutes from './src/routes/AuthRoutes';
 import InternetConnectionNotifier from './src/components/common/InternetConnectionNotifier';
+//
+import auth from '@react-native-firebase/auth';
 //
 import { getDBConnection } from './src/database/db';
 import { createLocationTable } from './src/database/tables';
@@ -10,7 +12,20 @@ import { getCurrentLocationWithAddress } from './src/utils/locationService';
 import { saveLocation } from './src/database/queries';
 
 const App: React.FC = () => {
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState<any>(null);
   const token = true;
+  // firebase auth listner
+  useEffect(() => {
+    const unsubscribe = auth().onAuthStateChanged(firebaseUser => {
+      setUser(firebaseUser);
+      if (initializing) setInitializing(false);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  // db
   useEffect(() => {
     const initApp = async () => {
       try {
