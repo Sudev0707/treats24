@@ -7,15 +7,20 @@ import {
   TextInput,
   Alert,
   StatusBar,
+  LogBox,
 } from 'react-native';
 //
 import { useRoute } from '@react-navigation/native';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+
 import { sendPhoneOTP, verifyPhoneOTP } from '../services/fireBaseAuth';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles/screens/OTPVerificationStyles';
 import Header from '../components/common/Header';
 import CustomAlert from '../components/common/CustomAlert';
+import { clearConfirmation, getConfirmation } from '../services/otpSession';
+import { sendEmailOTP, verifyEmailOTP } from '../services/api';
 
 const OTPVerification: React.FC = () => {
   const route = useRoute<any>();
@@ -30,6 +35,10 @@ const OTPVerification: React.FC = () => {
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const inputRefs = useRef<TextInput[]>([]);
 
+  const [verificationMethod, setVerificationMethod] = useState<'phone' | 'email'>('phone');
+  const [email, setEmail] = useState('');
+
+  // -----
   const handleOtpChange = (value: string, index: number) => {
     setOtpError('');
 
@@ -45,12 +54,15 @@ const OTPVerification: React.FC = () => {
     }
   };
 
+  //
   const handleKeyPress = (e: any, index: number) => {
     if (e.nativeEvent.key === 'Backspace' && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
 
+  //
+  console.log('Firebase user:', auth().currentUser);
   const handleVerify = async () => {
     const otpString = otp.join('');
 
@@ -60,20 +72,59 @@ const OTPVerification: React.FC = () => {
       return;
     }
 
-    try {
-      setOtpError('');
+    if (verificationMethod === 'email') {
+      if (!email) {
+        setOtpError('Please enter your email address');
+        return;
+      }
+      try {
+        await verifyEmailOTP(email, otpString);
+        // ✅ Login success → go to app
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'MainTabs' as never }],
+        });
+      } catch (error) {
+        setOtpError('Invalid OTP');
+      }
+    } else {
+      try {
+        const confirmation = getConfirmation();
 
-      const userCredential = await verifyPhoneOTP(confirmation, otpString);
-      const user = userCredential.user;
-      console.log('userrrrrrr', user);
+        if (!confirmation) {
+          setOtpError('OTP session expired. Please retry.');
+          return;
+        }
 
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'MainTabs' as never }],
-      });
-    } catch (error) {
-      setOtpError('Invalid OTP');
+        const userCredential = await verifyPhoneOTP(confirmation, otpString);
+        console.log('userCredential', userCredential);
+
+        clearConfirmation();
+
+        // ✅ Login success → go to app
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'SetLocation' as never }],
+        });
+      } catch (error) {
+        setOtpError('Invalid OTP');
+      }
     }
+
+    // try {
+    //   setOtpError('');
+
+    //   const userCredential = await verifyPhoneOTP(confirmation, otpString);
+    //   const user = userCredential.user;
+    //   console.log('userrrrrrr', user);
+
+    //   navigation.reset({
+    //     index: 0,
+    //     routes: [{ name: 'MainTabs' as never }],
+    //   });
+    // } catch (error) {
+    //   setOtpError('Invalid OTP');
+    // }
 
     // if (otpString === '123456') {
     //   setOtpError('');
@@ -94,19 +145,27 @@ const OTPVerification: React.FC = () => {
     // }
   };
 
-  const handleResend = async() => {
-    try {
-      const  newConfirmation = await sendPhoneOTP(phone);
-      route.params.confirmation = newConfirmation;
-    } catch (error) {
-      Alert.alert('Error', 'Unable to resend OTP');
-      
-
+  const handleResend = async () => {
+    if (verificationMethod === 'email') {
+      if (!email) {
+        setOtpError('Please enter your email address');
+        return;
+      }
+      try {
+        await sendEmailOTP(email);
+        Alert.alert('OTP Sent', 'A new OTP has been sent to your email');
+      } catch (error) {
+        Alert.alert('Error', 'Unable to send OTP to email');
+      }
+    } else {
+      try {
+        const newConfirmation = await sendPhoneOTP(phone);
+        route.params.confirmation = newConfirmation;
+        Alert.alert('OTP Resent', 'A new OTP has been sent to your phone number');
+      } catch (error) {
+        Alert.alert('Error', 'Unable to resend OTP');
+      }
     }
-
-
-    // Here you would typically resend the OTP
-    Alert.alert('OTP Resent', 'A new OTP has been sent to your phone number');
   };
 
   return (
@@ -172,7 +231,7 @@ const OTPVerification: React.FC = () => {
               style={styles.primaryButton}
               onPress={handleVerify}
             >
-              <Text style={styles.primaryButtonText}>Verify</Text>
+              <Text style={styles.primaryButtonText}>Verify OTP</Text>
             </TouchableOpacity>
 
             <Text style={styles.footerText}>

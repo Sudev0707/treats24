@@ -8,6 +8,7 @@ export { default as Profile } from '../screens/Profile';
 export { default as Favorites } from '../screens/Favorites';
 export { default as Deals } from '../screens/Deals';
 export { default as Cart } from '../screens/Cart';
+export { default as RestaurantDetail } from '../screens/RestaurantDetails';
 
 export {default as HeaderDemo1} from '../screens/HeaderDemo1'
 export {default as HeaderDemo2} from '../screens/HeaderDemo2'

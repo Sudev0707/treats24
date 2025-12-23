@@ -38,9 +38,11 @@ const googleIcon = require('../assets/icons/iconsgoogle.png');
 const mailIcon = require('../assets/icons/iconsmail.png');
 
 import { validatePhone } from '../utils/validate';
+import { setConfirmation } from '../services/otpSession';
 
 const Auth: React.FC = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [phone, setPhone] = useState('');
   const [error, setError] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
@@ -49,13 +51,14 @@ const Auth: React.FC = () => {
   const [country, setCountry] = useState('IN');
   const [countryCode, setCountryCode] = useState('+91');
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
   const translateY = useRef(new Animated.Value(0)).current;
   const [keyboardOpen, setKeyboardOpen] = useState(false);
-  console.log('rememberMe', rememberMe);
-  console.log('phone', phone);
+  // console.log('rememberMe', rememberMe);
+  // console.log('phone', phone);
 
   useEffect(() => {
-    console.log('heyy sudevcvv');
+    // console.log('heyy sudevcvv');
 
     const showSub = Keyboard.addListener('keyboardDidShow', () =>
       setKeyboardOpen(true),
@@ -87,32 +90,64 @@ const Auth: React.FC = () => {
 
   //
   const isPhoneValid = phone.length >= 10;
-
   const handleContinue = async () => {
+    console.log();
+
     const { isValid, error } = validatePhone({ phone, country });
+    // console.log("isValid", isValid, error);
 
     if (!isValid) {
       setError(error);
       return;
     }
 
-    //
+    setLoading(true);
     try {
       const fullPhone = `${countryCode}${phone}`;
+      if (fullPhone !== '+917488854261') {
+        setError('Enter valid phone number');
+        return;
+      }
+
       const confirmation = await sendPhoneOTP(fullPhone);
-      navigation.navigate('OTPVerification', { confirmation, phone: fullPhone });
-    } catch (error: any) {
-      setError(error?.message || 'Failed to send OTP');
+      console.log('mcnsdcnkjsdcnskjd', confirmation);
+
+      // ✅ store confirmation globally
+      setConfirmation(confirmation);
+
+      // ✅ now navigate safely
+      navigation.navigate('OTPVerification', {
+        phone: fullPhone,
+      });
+    } catch (err: any) {
+      setError(err?.message || 'Failed to send OTP');
+    } finally {
+      setLoading(false);
     }
-
-    setError('');
-    // navigation.navigate('OTPVerification' as never);
-
-    // → validate phone
-    // → call send OTP API
-    // → success → navigate to OTP screen
-    // → failure → show error
   };
+
+  // const handleContinue = async () => {
+  //   const { isValid, error } = validatePhone({ phone, country });
+
+  //   if (!isValid) {
+  //     setError(error);
+  //     return;
+  //   }
+
+  //   //
+  //   try {
+  //     const fullPhone = `${countryCode}${phone}`;
+  //     const confirmation = await sendPhoneOTP(fullPhone);
+  //     console.log('fullPhone', fullPhone);
+
+  //     navigation.navigate('OTPVerification', { confirmation, phone: fullPhone });
+  //   } catch (error: any) {
+  //     setError(error?.message || 'Failed to send OTP');
+  //   }
+
+  //   setError('');
+
+  // };
 
   return (
     <KeyboardAvoidingView
@@ -217,6 +252,7 @@ const Auth: React.FC = () => {
                     variant="filled"
                     onPress={handleContinue}
                     isPhoneValid={isPhoneValid}
+                    loading={loading}
                   />
 
                   {/* <View style={styles.orRow}>

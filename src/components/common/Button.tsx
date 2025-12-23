@@ -1,6 +1,7 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import ButtonStyles from '../../styles/components/ButtonStyles';
+import colors from '../../theme/colors';
 
 interface ButtonProps {
   title: string;
@@ -8,6 +9,7 @@ interface ButtonProps {
   variant: 'filled' | 'outlined';
   style?: any;
   isPhoneValid: boolean;
+  loading?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -16,32 +18,33 @@ const Button: React.FC<ButtonProps> = ({
   variant,
   style,
   isPhoneValid,
+  loading = false,
 }) => {
   const buttonStyle = [
     ButtonStyles.base,
-    variant === 'filled'
-      ? isPhoneValid
-        ? ButtonStyles.filled
-        : ButtonStyles.filledDisabled
-      : ButtonStyles.outlined,
+    variant === 'filled' ? isPhoneValid  ? ButtonStyles.filled : ButtonStyles.filledDisabled : ButtonStyles.outlined,
     style,
   ];
 
   const textStyle =
     variant === 'filled'
-      ? isPhoneValid
+      ? isPhoneValid && !loading
         ? ButtonStyles.filledText
         : ButtonStyles.textDisabled
       : ButtonStyles.outlinedText;
 
   return (
     <TouchableOpacity
-      disabled={!isPhoneValid}
+      disabled={!isPhoneValid || loading}
       style={buttonStyle}
       onPress={onPress}
       activeOpacity={0.6}
     >
-      <Text style={textStyle}>{title}</Text>
+      {loading ? (
+        <ActivityIndicator size="small" color={variant === 'filled' ? '#fff' : colors.brandPrimary} />
+      ) : (
+        <Text style={textStyle}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
 };

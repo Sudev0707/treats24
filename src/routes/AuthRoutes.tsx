@@ -9,7 +9,7 @@ import * as Screens from './Screens';
 export type RootStackParamList = {
   SplashBrand: undefined;
   Auth: undefined;
-  OTPVerification: { confirmation: any; phone: string };
+  OTPVerification: { phone: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

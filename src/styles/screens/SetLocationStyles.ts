@@ -1,14 +1,13 @@
-
 import { StyleSheet } from 'react-native';
 import colors from '../../theme/colors';
 import fonts from '../../theme/fonts';
 
 const locationStyles = StyleSheet.create({
- safeArea: {
+  safeArea: {
     flex: 1,
     backgroundColor: colors.background,
   },
-   container: {
+  container: {
     flex: 1,
     backgroundColor: '#f7f7f7',
   },
@@ -88,17 +87,17 @@ const locationStyles = StyleSheet.create({
     alignItems: 'flex-start',
     marginBottom: 8,
     // borderWidth:1,
-    height:50
+    height: 50,
   },
 
   locationIcon: {
-    backgroundColor: '#ffe8e8ff',
+    backgroundColor: colors.brandPrimarySoft,
     padding: 8,
     borderRadius: 10,
     marginRight: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop:4
+    marginTop: 4,
   },
 
   addressTextContainer: {
@@ -115,7 +114,7 @@ const locationStyles = StyleSheet.create({
     fontSize: 13,
     color: '#505050ff',
     marginTop: 2,
-    fontWeight:800
+    fontWeight: 800,
   },
 
   changeBtn: {
@@ -166,6 +165,6 @@ const locationStyles = StyleSheet.create({
     color: '#fff',
     fontWeight: '700',
   },
-})
+});
 
 export default locationStyles;

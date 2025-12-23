@@ -76,7 +76,7 @@ const TabNavigator = () => {
         }}
       />
 
-      <Tab.Screen
+      {/* <Tab.Screen
         name="MyPlate"
         component={Screens.Cart}
         options={{
@@ -89,7 +89,7 @@ const TabNavigator = () => {
             />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };

@@ -8,16 +8,19 @@ import {
   StatusBar,
   StyleSheet,
   Image,
+  ImageBackground,
   Platform,
   FlatList,
   ListRenderItem,
   Dimensions,
   ImageSourcePropType,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from '../styles/screens/DashboardStyles';
 import { useScrollToHideTabBar } from '../hooks/useScrollToHideTabBar';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../routes/types';
 import DashboardHeader from '../components/common/DashboardHeader';
 import BannerSlider from '../components/common/BannerSlider';
 import colors from '../theme/colors';
@@ -52,10 +55,11 @@ interface BannerItem {
 //
 const Dashboard: React.FC = () => {
   const scrollProps = useScrollToHideTabBar();
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [loading, setLoading] = useState(true);
   const [location, setLocation] = useState<LocationType | null>(null);
   const sliderRef = useRef<FlatList<BannerItem>>(null);
+  const [selectedCategory, setSelectedCategory] = useState('Burgers');
 
   //  getCurrentLocationWithAddress(locationData => {
   //       setLocation(locationData);
@@ -88,6 +92,8 @@ const Dashboard: React.FC = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+
 
   return (
     <>
@@ -131,54 +137,138 @@ const Dashboard: React.FC = () => {
               <Text style={styles.sectionTitle}>What&apos;s on your mind?</Text>
             </View>
             <View style={styles.chipsRow}>
-              {CATEGORIES.map(item => (
-                <TouchableOpacity
-                  key={item.id}
-                  style={[
-                    styles.chip,
-                    item.name === 'Burgers' && styles.chipActive,
-                  ]}
-                >
-                  <Text
-                    style={[
-                      styles.chipText,
-                      item.name === 'Burgers' && styles.chipTextActive,
-                    ]}
+              <FlatList
+                data={CATEGORIES}
+                keyExtractor={item => item.id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item }) => {
+                  const isActive = item.name === selectedCategory;
+
+                  return (
+                    <TouchableOpacity
+                      onPress={() => setSelectedCategory(item.name)}
+                      style={[styles.chip, isActive && styles.chipActive]}
+                    >
+                      <Text
+                        style={[
+                          styles.chipText,
+                          isActive && styles.chipTextActive,
+                        ]}
+                      >
+                        {item.name}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                }}
+              />
+            </View>
+          </View>
+
+          <View style={{ marginBottom: 20 }}>
+            {/*  */}
+            <View style={styles.sectionHeaderRow}>
+              <Text style={styles.sectionTitle}>Top Restaurants</Text>
+              <TouchableOpacity>
+                <Text style={styles.sectionAction}>See all</Text>
+              </TouchableOpacity>
+            </View>
+            <FlatList
+              data={featuredRestaurants}
+              keyExtractor={(item, index) => index.toString()}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingHorizontal: 16 }}
+              renderItem={({ item }) => (
+                <TouchableOpacity style={Styles.card} activeOpacity={0.85}  onPress={() => navigation.navigate('RestaurantDetails', { restaurantId: item.id })} >
+                  <ImageBackground
+                    source={item.image}
+                    style={Styles.image}
+                    imageStyle={Styles.imageRadius}
                   >
-                    {item.name}
-                  </Text>
+                    {/* <View style={Styles.extraDark} /> */}
+                    <LinearGradient
+                      colors={[
+                        'rgba(0,0,0,0.0)',
+                        'rgba(0,0,0,0.6)',
+                        'rgba(0,0,0,0.85)',
+                        'rgba(0,0,0,1)',
+                        'rgba(0,0,0,1)',
+                      ]}
+                      locations={[0, 0.35, 0.6, 0.85, 1]}
+                      style={Styles.gradient}
+                    >
+                      <View style={Styles.row}>
+                        <Text style={Styles.title}>{item.name}</Text>
+                        <View style={Styles.ratingBox}>
+                          <Text style={Styles.ratingText}>{item.rating} ★</Text>
+                        </View>
+                      </View>
+
+                      <View style={Styles.row}>
+                        <Text style={Styles.placeName}>
+                          Bistupur, Jamshedpur
+                        </Text>
+                        <Text style={Styles.distance}>📍 {item.time}</Text>
+                      </View>
+
+                      <View style={Styles.distanceRow}></View>
+                    </LinearGradient>
+                  </ImageBackground>
                 </TouchableOpacity>
-              ))}
-            </View>
+              )}
+            />
           </View>
 
-          <View>
+          <View style={{ marginBottom: 20 }}>
             <View style={styles.sectionHeaderRow}>
-              <Text style={styles.sectionTitle}>Featured</Text>
-              <Text style={styles.sectionAction}>See all</Text>
-            </View>
-            {featuredRestaurants.map(item => (
-              <View key={item.id} style={Styles.card}>
-                <Text style={Styles.cardTitle}>{item.name}</Text>
-                <Text style={Styles.cardSub}>
-                  ⭐ {item.rating} • {item.time}
-                </Text>
-              </View>
-            ))}
-          </View>
-
-          <View>
-            <View style={styles.sectionHeaderRow}>
-              <Text style={styles.sectionTitle}>Top Picks</Text>
+              <Text style={styles.sectionTitle}>Popular near you</Text>
+              <TouchableOpacity>
+                <Text style={styles.sectionAction}>See all</Text>
+              </TouchableOpacity>
             </View>
 
-            <View style={Styles.horizontalRow}>
-              {topPicks.map(item => (
-                <View key={item.id} style={Styles.smallCard}>
-                  <Text style={Styles.smallCardText}>{item.title}</Text>
+            {topPicks.map(item => (
+              <TouchableOpacity
+                key={item.id}
+                style={Styles.CardContainer}
+                activeOpacity={4}
+              >
+                <ImageBackground
+                  source={item.image}
+                  style={Styles.smallImage}
+                  imageStyle={Styles.smallImageRadius}
+                >
+                  {/* BOTTOM GRADIENT */}
+                  {/* <LinearGradient
+                    colors={[
+                      'rgba(255, 255, 255, 0)',
+                      'rgba(255, 255, 255, 0.65)',
+                      'rgba(255, 255, 255, 0.9)',
+                      'rgba(255, 255, 255, 1)',
+                    ]}
+                    locations={[0, 0.25, 0.45, 0.75, 1]}
+                    style={Styles.smallGradient}
+                  >                   
+                    
+                  </LinearGradient> */}
+                </ImageBackground>
+                <View style={{ paddingHorizontal: 10, paddingBottom: 10 }}>
+                  <View style={Styles.row}>
+                    <Text style={Styles.titleText}>{item.title}</Text>
+                    <View style={Styles.ratingBox}>
+                      <Text style={Styles.ratingText}>{item.rating} ★</Text>
+                    </View>
+                  </View>
+                  <View style={Styles.metaRow}>
+                    <Text style={Styles.metaText}>{item.time}</Text>
+                    <Text style={Styles.dot}>•</Text>
+                    <Text style={Styles.metaText}>{item.distance}</Text>
+                  </View>
+                  <Text style={Styles.offerTexttt}>{item.offer}</Text>
                 </View>
-              ))}
-            </View>
+              </TouchableOpacity>
+            ))}
           </View>
 
           <View>
@@ -244,38 +334,13 @@ const Styles = StyleSheet.create({
 
     overflow: 'hidden', // keeps rounded corners clean
   },
-
+  sectionHeaderRow: {
+    // borderWidth: 1,
+  },
   // -------------------------
-  card: {
-    backgroundColor: '#fff',
-    padding: 14,
-    borderRadius: 14,
-    marginBottom: 12,
-  },
-
-  cardTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-  },
-
-  cardSub: {
-    marginTop: 4,
-    color: '#777',
-  },
 
   horizontalRow: {
     flexDirection: 'row',
-  },
-
-  smallCard: {
-    backgroundColor: '#fff',
-    padding: 16,
-    borderRadius: 14,
-    marginRight: 12,
-  },
-
-  smallCardText: {
-    fontWeight: '600',
   },
 
   offerCard: {
@@ -288,5 +353,172 @@ const Styles = StyleSheet.create({
   offerText: {
     fontWeight: '700',
     color: '#ff6a00',
+  },
+  // ===================================
+  card: {
+    width: 240,
+    height: 240, // ⬅ decreased height
+    marginRight: 16,
+    borderRadius: 18,
+    overflow: 'hidden',
+  },
+
+  image: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+
+  imageRadius: {
+    borderRadius: 18,
+  },
+
+  gradient: {
+    padding: 14,
+    paddingTop: 70, // ⬅ reduced from 90
+  },
+
+  extraDark: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.16)', // slightly reduced
+  },
+
+  title: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '800',
+  },
+
+  placeName: {
+    color: '#ddd',
+    fontSize: 10,
+    fontWeight: 800,
+  },
+
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 6,
+  },
+
+  // ratingBox: {
+  //   backgroundColor: '#1faa59',
+  //   paddingHorizontal: 10,
+  //   paddingVertical: 4,
+  //   borderRadius: 14,
+  // },
+
+  ratingText: {
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 10,
+  },
+
+  distanceRow: {
+    marginTop: 6,
+  },
+
+  distance: {
+    color: '#ccc',
+    fontSize: 10,
+    fontWeight: 800,
+  },
+
+  // ==================
+  CardContainer: {
+    width: '100%',
+    height: 240,
+    borderRadius: 14,
+    overflow: 'hidden',
+    // padding: 4,
+    marginBottom: 15,
+    elevation: 8,
+    borderWidth: 1,
+    borderColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF',
+  },
+
+  smallImage: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    //  borderRadius: 14,
+    // borderWidth: 1,
+    borderColor: '#FFFFFF',
+  },
+
+  smallImageRadius: {
+    // borderRadius: 14,
+    borderTopStartRadius: 14,
+    borderTopEndRadius: 14,
+    borderWidth: 0.1,
+    borderColor: '#FFFFFF',
+  },
+
+  smallExtraDark: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.15)',
+  },
+
+  smallGradient: {
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+  },
+
+  smallCardText: {
+    color: colors.darkBlack,
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  // ===========
+  //   row: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   justifyContent: 'space-between',
+  //   marginBottom: 4,
+  // },
+
+  titleText: {
+    color: colors.darkBlack,
+    fontSize: 18,
+    fontWeight: '800',
+    flex: 1,
+    marginRight: 6,
+  },
+
+  ratingBox: {
+    backgroundColor: '#1faa59',
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    borderRadius: 10,
+  },
+
+  // ratingText: {
+  //   color: '#fff',
+  //   fontSize: 11,
+  //   fontWeight: '700',
+  // },
+
+  metaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+
+  metaText: {
+    color: '#1faa59',
+    fontSize: 12,
+    fontWeight: '800',
+  },
+
+  dot: {
+    color: '#999',
+    marginHorizontal: 6,
+    fontSize: 12,
+  },
+
+  offerTexttt: {
+    color: colors.brandPrimary,
+    fontSize: 12,
+    fontWeight: '800',
   },
 });

@@ -16,6 +16,7 @@ export type RootStackParamList = {
   Deals: undefined;
   Cart: undefined;
   MainTabs: undefined;
+  RestaurantDetails: {restaurantId : string};
 
   HeaderDemo1: undefined;
   HeaderDemo2: undefined;
@@ -45,6 +46,7 @@ const AppRoutes = () => {
             <Stack.Screen name="Deals" component={Screens.Deals} />
             <Stack.Screen name="Cart" component={Screens.Cart} />
             <Stack.Screen name="Profile" component={Screens.Profile} />
+            <Stack.Screen name="RestaurantDetails" component={Screens.RestaurantDetail} />
 
             <Stack.Screen name="HeaderDemo1" component={Screens.HeaderDemo1} />
             <Stack.Screen name="HeaderDemo2" component={Screens.HeaderDemo2} />

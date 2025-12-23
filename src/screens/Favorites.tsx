@@ -1,33 +1,49 @@
 import React from 'react';
 import { View, Text, ScrollView, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import styles from '../styles/screens/DashboardStyles';
+import styles from '../styles/screens/FavoritesStyles';
 import { useScrollToHideTabBar } from '../hooks/useScrollToHideTabBar';
 import colors from '../theme/colors';
 import Header from '../components/common/Header';
+
+const HEADER_HEIGHT = 60;
 
 const Favorites: React.FC = () => {
   const scrollProps = useScrollToHideTabBar();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor="white" barStyle="dark-content" />
-      <Header showBackButton={true} />
+    <>
+      <StatusBar
+        translucent={false}
+        backgroundColor={colors.background}
+        barStyle="dark-content"
+      />
+
+      {/* FIXED HEADER */}
+      <SafeAreaView edges={['top']} style={styles.headerWrapper}>
+        <Header title="Favorites" showBackButton={true} />
+      </SafeAreaView>
+
+      {/* SCREEN CONTENT */}
       <View style={{ flex: 1, backgroundColor: colors.backgroundSoft }}>
         <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
           {...scrollProps}
+          contentContainerStyle={{
+            paddingTop: HEADER_HEIGHT + 12,
+            paddingBottom: 24,
+          }}
+          showsVerticalScrollIndicator={false}
         >
-          <View style={styles.sectionHeaderRow}>
-            <Text style={styles.sectionTitle}>Favorites</Text>
+          <View style={styles.container}>
+            <Text style={styles.emptyText}>No favorites added yet</Text>
+            <Text style={styles.emptyText}>No favorites added yet</Text>
+            <Text style={styles.emptyText}>No favorites added yet</Text>
+            <Text style={styles.emptyText}>No favorites added yet</Text>
+            <Text style={styles.emptyText}>No favorites added yet</Text>
           </View>
-          <Text style={{ padding: 20, textAlign: 'center' }}>
-            Your favorite items will appear here.
-          </Text>
         </ScrollView>
       </View>
-    </SafeAreaView>
+    </>
   );
 };
 

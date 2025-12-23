@@ -232,7 +232,7 @@ const AuthStyles = StyleSheet.create({
   },
   //
   Rememberme: {
-    marginBottom: 15,
+    marginBottom: 22,
   },
   ForgotPass: {
     width: '100%',

@@ -82,7 +82,7 @@ const Profile: React.FC = () => {
           )
         }
       />
-      
+
       {showProfileInfo ? (
         <ProfileInfo />
       ) : showUserAddress ? (
@@ -114,7 +114,10 @@ const Profile: React.FC = () => {
                 onPress={() => setShowProfileInfo(true)}
               >
                 <View style={stylesRow.row}>
-                  <Icon name="person" size={26} color="#000" />
+                  <View style={stylesRow.iconBox}>
+                    <Icon name="person" size={18} color={colors.brandPrimary} />
+                  </View>
+
                   <Text style={stylesRow.label}>Edit Profile</Text>
                 </View>
                 <Icon name="chevron-right" size={28} color="#666" />
@@ -127,7 +130,13 @@ const Profile: React.FC = () => {
                 onPress={() => setShowUserAddress(true)}
               >
                 <View style={stylesRow.row}>
-                  <Icon name="location-on" size={26} color="#000" />
+                  <View style={stylesRow.iconBox}>
+                    <Icon
+                      name="location-on"
+                      size={18}
+                      color={colors.brandPrimary}
+                    />
+                  </View>
                   <Text style={stylesRow.label}>Address</Text>
                 </View>
                 <Icon name="chevron-right" size={28} color="#666" />
@@ -140,7 +149,13 @@ const Profile: React.FC = () => {
                 onPress={() => setShowOrderDetails(true)}
               >
                 <View style={stylesRow.row}>
-                  <Icon name="shopping-bag" size={26} color="#000" />
+                  <View style={stylesRow.iconBox}>
+                    <Icon
+                      name="shopping-bag"
+                      size={18}
+                      color={colors.brandPrimary}
+                    />{' '}
+                  </View>
                   <Text style={stylesRow.label}>Orders</Text>
                 </View>
                 <Icon name="chevron-right" size={28} color="#666" />
@@ -153,7 +168,13 @@ const Profile: React.FC = () => {
                 onPress={() => console.log('Notifications')}
               >
                 <View style={stylesRow.row}>
-                  <Icon name="notifications" size={26} color="#000" />
+                  <View style={stylesRow.iconBox}>
+                    <Icon
+                      name="notifications"
+                      size={18}
+                      color={colors.brandPrimary}
+                    />
+                  </View>
                   <Text style={stylesRow.label}>Notifications</Text>
                 </View>
                 <Icon name="chevron-right" size={28} color="#666" />
@@ -166,7 +187,13 @@ const Profile: React.FC = () => {
                 onPress={() => console.log('Help')}
               >
                 <View style={stylesRow.row}>
-                  <Icon name="help-outline" size={26} color="#000" />
+                  <View style={stylesRow.iconBox}>
+                    <Icon
+                      name="help-outline"
+                      size={18}
+                      color={colors.brandPrimary}
+                    />
+                  </View>
                   <Text style={stylesRow.label}>Help</Text>
                 </View>
                 <Icon name="chevron-right" size={28} color="#666" />
@@ -179,7 +206,13 @@ const Profile: React.FC = () => {
                 onPress={() => console.log('About')}
               >
                 <View style={stylesRow.row}>
-                  <Icon name="info-outline" size={26} color="#000" />
+                  <View style={stylesRow.iconBox}>
+                    <Icon
+                      name="info-outline"
+                      size={18}
+                      color={colors.brandPrimary}
+                    />
+                  </View>
                   <Text style={stylesRow.label}>About</Text>
                 </View>
                 <Icon name="chevron-right" size={28} color="#666" />
@@ -191,7 +224,13 @@ const Profile: React.FC = () => {
                 onPress={() => console.log('Settings')}
               >
                 <View style={stylesRow.row}>
-                  <Icon name="settings" size={26} color="#000" />
+                  <View style={stylesRow.iconBox}>
+                    <Icon
+                      name="settings"
+                      size={18}
+                      color={colors.brandPrimary}
+                    />
+                  </View>
                   <Text style={stylesRow.label}>Settings</Text>
                 </View>
                 <Icon name="chevron-right" size={28} color="#666" />
@@ -203,7 +242,9 @@ const Profile: React.FC = () => {
                 onPress={() => console.log('Logout')}
               >
                 <View style={stylesRow.row}>
-                  <Icon name="logout" size={26} color="#000" />
+                  <View style={stylesRow.iconBox}>
+                    <Icon name="logout" size={18} color={colors.brandPrimary} />
+                  </View>
                   <Text style={stylesRow.label}>Logout</Text>
                 </View>
                 <Icon name="chevron-right" size={28} color="#666" />
@@ -225,7 +266,7 @@ export default Profile;
 
 const stylesRow = StyleSheet.create({
   container: {
-    paddingVertical: 18,
+    paddingVertical: 14,
     paddingHorizontal: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -244,9 +285,14 @@ const stylesRow = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  iconBox: {
+    backgroundColor: colors.brandPrimarySoft,
+    padding: 8,
+    borderRadius: 10,
+  },
   label: {
     marginLeft: 14,
-    fontSize: 18,
+    fontSize: 15,
     color: '#000',
     fontWeight: '500',
   },

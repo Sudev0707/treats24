@@ -60,25 +60,29 @@ const DashboardHeaderStyles = StyleSheet.create({
   },
 
   addressWrapper: {
-    flex: 1,
+    // flex: 1,
+    //  borderWidth:1
   },
 
   addressRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    // borderWidth:1
   },
 
   addressText: {
     fontSize: 18,
-    fontWeight: '600',
-    color: colors.brandPrimary,
+    fontWeight: '800',
+    color: colors.darkBlack,
     marginRight: 2,
+    // paddingTop:0
   },
 
   deliverySubtitle: {
     fontSize: 13,
-    color: '#7B7B7B',
+    color: '#5d5d5dff',
     marginTop: 2,
+    fontWeight: '800',
   },
 
   avatar: {
@@ -99,8 +103,10 @@ const DashboardHeaderStyles = StyleSheet.create({
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.card,
+    // backgroundColor: colors.card,
     borderRadius: 7,
+      backgroundColor: '#f9f9f9ff',
+      overflow:'hidden',
     paddingHorizontal: 1,
     paddingVertical: 1,
     // marginBottom: 20,
@@ -113,8 +119,8 @@ const DashboardHeaderStyles = StyleSheet.create({
 
   searchInput: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
+    backgroundColor: '#f9f9f9ff',
+    // borderRadius: 16,
     paddingHorizontal: 16,
     height: 44,
     fontSize: 16,

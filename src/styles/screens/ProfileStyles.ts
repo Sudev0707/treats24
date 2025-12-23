@@ -34,7 +34,7 @@ const ProfileStyles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: colors.brandPrimary,
+    backgroundColor: colors.brandPrimarySoft,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 16,
@@ -46,8 +46,8 @@ const ProfileStyles = StyleSheet.create({
   },
   avatarText: {
     fontSize: 32,
-    fontWeight: '700',
-    color: colors.textOnBrand,
+    fontWeight: '800',
+    color: colors.brandPrimary,
   },
   userName: {
     fontSize: 20,

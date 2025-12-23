@@ -49,19 +49,19 @@ const DashboardHeader: React.FC = () => {
                   name="map-pin"
                   size={18}
                   color={colors.brandPrimary}
-                  style={{ marginRight: 2 }}
+                  style={{ marginRight: 8 }}
                 />
                 <Text style={DashboardHeaderStyles.addressText}>
-                  {location?.city}
+                  {location?.area}
                 </Text>
                 <Icon
                   name="chevron-down"
                   size={19}
-                  color={colors.brandPrimary}
+                  color={colors.darkBlack}
                 />
               </View>
               <Text style={DashboardHeaderStyles.deliverySubtitle}>
-                Delivering to your saved address
+                {location?.city}, {location?.state}, {location?.pincode}, {location?.country}
               </Text>
             </TouchableOpacity>
 
@@ -72,15 +72,19 @@ const DashboardHeader: React.FC = () => {
             >
               <Text style={DashboardHeaderStyles.avatarText}>S</Text>
             </TouchableOpacity>
-          </View>
+          </View> 
 
-          <View style={DashboardHeaderStyles.searchBar}>
+          <TouchableOpacity
+            style={DashboardHeaderStyles.searchBar}
+            onPress={() => ''}
+          >
             <TextInput
+              editable={false}
               style={DashboardHeaderStyles.searchInput}
               placeholder="Search for dishes or restaurants"
               placeholderTextColor="#9CA3AF"
             />
-          </View>
+          </TouchableOpacity>
         </View>
       </LinearGradient>
     </>

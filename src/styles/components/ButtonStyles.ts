@@ -16,6 +16,7 @@ const ButtonStyles = StyleSheet.create({
   },
   filledDisabled: {
     backgroundColor: colors.mutedBackground,
+    // backgroundColor: colors.brandPrimary,
   },
   outlined: {
     backgroundColor: 'transparent',

@@ -7,7 +7,7 @@ const { width: screenWidth } = Dimensions.get('window');
 const DashboardStyles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: colors.backgroundSoft ,
+    backgroundColor: colors.backgroundLight ,
     // borderWidth:1
   },
   headerContainer: {
@@ -32,6 +32,7 @@ const DashboardStyles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 15,
     overflow: 'hidden',
+    marginBottom: 14
   },
   BannerHolder: {
     width: screenWidth,
@@ -89,7 +90,8 @@ const DashboardStyles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 15,
     paddingBottom: 24,
-    backgroundColor: colors.backgroundSoft,
+    // backgroundColor: colors.backgroundSoft,
+    backgroundColor: colors.backgroundLight,
   },
   headerRow: {
     flexDirection: 'row',
@@ -161,6 +163,7 @@ const DashboardStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 12,
+    // borderWidth:1
   },
   sectionTitle: {
     fontSize: fonts.size.xl,
@@ -170,7 +173,7 @@ const DashboardStyles = StyleSheet.create({
   sectionAction: {
     fontSize: fonts.size.sm,
     color: colors.brandPrimary,
-    fontWeight: fonts.weight.medium,
+    fontWeight: fonts.weight.bold,
   },
   chipsRow: {
     flexDirection: 'row',
@@ -180,11 +183,18 @@ const DashboardStyles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 999,
-    backgroundColor: colors.muted,
+    backgroundColor: colors.background,
     marginRight: 8,
   },
+  
   chipActive: {
     backgroundColor: colors.brandPrimary,
+    shadowColor: '#ffffffff',
+  shadowOffset: { width: 4, height: 4 },
+  shadowOpacity: 0.8,
+  shadowRadius: 6,
+
+  elevation: 2,
   },
   chipText: {
     fontSize: fonts.size.sm,
@@ -193,6 +203,7 @@ const DashboardStyles = StyleSheet.create({
   },
   chipTextActive: {
     color: colors.textOnBrand,
+     fontWeight: '700',
   },
   restaurantCard: {
     width: 220,

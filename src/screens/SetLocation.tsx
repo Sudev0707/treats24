@@ -223,6 +223,7 @@ const SetLocation: React.FC = () => {
               title="Confirm & proceed"
               variant="outlined"
               onPress={handleProceed}
+              isPhoneValid={!!location}
             />
             {/* <TouchableOpacity
               style={locationStyles.confirmBtn}
