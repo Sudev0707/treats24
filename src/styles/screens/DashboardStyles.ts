@@ -206,7 +206,8 @@ const DashboardStyles = StyleSheet.create({
      fontWeight: '700',
   },
   restaurantCard: {
-    width: 220,
+    width: 270,
+    height: 240,
     marginRight: 14,
     borderRadius: 16,
     backgroundColor: colors.card,
