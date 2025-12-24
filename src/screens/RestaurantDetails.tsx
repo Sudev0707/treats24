@@ -77,6 +77,7 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
             colors={['rgba(0, 0, 0, 0.72)', 'rgba(0,0,0,0.45)', 'rgba(0,0,0,0.0)']}
             style={RestaurantScreenStyle.topGradient}
           />
+          
           <LinearGradient
             colors={[
               'rgba(0,0,0,0.0)',
