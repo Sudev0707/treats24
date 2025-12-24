@@ -1,4 +1,4 @@
-// import React, { use } from 'react';
+import React, { useCallback } from 'react';
 import {
   View,
   Text,
@@ -52,6 +52,30 @@ interface BannerItem {
   id: string;
   image: ImageSourcePropType;
 }
+
+interface RestaurantItem {
+  id: string;
+  name: string;
+  rating: number;
+  reviews: number;
+  category: string;
+  time: string;
+  price: string;
+  delivery: string;
+  isOpen: boolean;
+  address: {
+    line1: string;
+    area: string;
+    city: string;
+    pincode: string;
+  };
+  contact: {
+    phone: string;
+  };
+  tags: string[];
+  image: ImageSourcePropType;
+  foods: any[]; // You can define a more specific type if needed
+}
 //
 const Dashboard: React.FC = () => {
   const scrollProps = useScrollToHideTabBar();
@@ -60,6 +84,14 @@ const Dashboard: React.FC = () => {
   const [location, setLocation] = useState<LocationType | null>(null);
   const sliderRef = useRef<FlatList<BannerItem>>(null);
   const [selectedCategory, setSelectedCategory] = useState('Burgers');
+
+  //
+  const handleRestaurantPress = useCallback(
+    (item: RestaurantItem) => {
+      navigation.navigate('RestaurantDetails', { restaurantId: item.id });
+    },
+    [navigation],
+  );
 
   //  getCurrentLocationWithAddress(locationData => {
   //       setLocation(locationData);
@@ -92,8 +124,6 @@ const Dashboard: React.FC = () => {
 
     return () => clearInterval(interval);
   }, []);
-
-
 
   return (
     <>
@@ -180,7 +210,11 @@ const Dashboard: React.FC = () => {
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={{ paddingHorizontal: 16 }}
               renderItem={({ item }) => (
-                <TouchableOpacity style={Styles.card} activeOpacity={0.85}  onPress={() => navigation.navigate('RestaurantDetails', { restaurantId: item.id })} >
+                <TouchableOpacity
+                  style={styles.restaurantCard}
+                  activeOpacity={0.85}
+                  onPress={() => handleRestaurantPress(item)}
+                >
                   <ImageBackground
                     source={item.image}
                     style={Styles.image}
@@ -189,6 +223,7 @@ const Dashboard: React.FC = () => {
                     {/* <View style={Styles.extraDark} /> */}
                     <LinearGradient
                       colors={[
+                      
                         'rgba(0,0,0,0.0)',
                         'rgba(0,0,0,0.6)',
                         'rgba(0,0,0,0.85)',
