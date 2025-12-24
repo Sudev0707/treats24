@@ -98,6 +98,7 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
               </View>
             </View>
 
+
             <View style={RestaurantScreenStyle.row}>
               <Text style={RestaurantScreenStyle.placeName}>
                 {restaurant.address.area}, {restaurant.address.city}
