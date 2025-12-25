@@ -40,6 +40,8 @@ const colors = {
 
   //
   darkBlack: '#000000ff',
+  borderLight: '#dededeff',
+  borderPrimary: '',
 };
 
 export default colors;

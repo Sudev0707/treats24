@@ -1,6 +1,8 @@
-# TODO: Integrate RestaurantItem Interface and Data into RestaurantDetails.tsx
+# TODO: Optimize Restaurant Categories in FlatList
 
-- [x] Define RestaurantItem interface in RestaurantDetails.tsx
-- [x] Import featuredRestaurants from foodData.ts
-- [x] Add logic to find restaurant by id from route params
-- [x] Update UI to display actual restaurant data (name, rating, etc.) instead of placeholders
+- [x] Import FlatList from 'react-native' in RestaurantDetails.tsx
+- [x] Create a filters array with default "Filters" and other filter options
+- [x] Replace the static View with FlatList for chipsRow
+- [x] Implement renderItem to render each filter chip as TouchableOpacity
+- [x] Ensure activeChips state works with FlatList
+- [x] Test the FlatList implementation

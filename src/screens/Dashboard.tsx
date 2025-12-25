@@ -63,18 +63,21 @@ interface RestaurantItem {
   price: string;
   delivery: string;
   isOpen: boolean;
-  address: {
-    line1: string;
-    area: string;
-    city: string;
-    pincode: string;
-  };
-  contact: {
-    phone: string;
-  };
-  tags: string[];
   image: ImageSourcePropType;
-  foods: any[]; // You can define a more specific type if needed
+  foodCategories: {
+    id: string;
+    title: string;
+    type: string;
+    isAvailable: boolean;
+    items: {
+      id: string;
+      name: string;
+      price: number;
+      rating: number;
+      isVeg: boolean;
+      image?: ImageSourcePropType;
+    }[];
+  }[];
 }
 //
 const Dashboard: React.FC = () => {
@@ -209,7 +212,7 @@ const Dashboard: React.FC = () => {
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={{ paddingHorizontal: 16 }}
-              renderItem={({ item }) => (
+              renderItem={({ item }: { item: RestaurantItem }) => (
                 <TouchableOpacity
                   style={styles.restaurantCard}
                   activeOpacity={0.85}

@@ -1,6 +1,6 @@
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../routes/types';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,9 @@ import {
   ImageBackground,
   StyleSheet,
   ImageSourcePropType,
+  TouchableOpacity,
+  Image,
+  FlatList,
 } from 'react-native';
 import colors from '../theme/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -27,18 +30,21 @@ interface RestaurantItem {
   price: string;
   delivery: string;
   isOpen: boolean;
-  address: {
-    line1: string;
-    area: string;
-    city: string;
-    pincode: string;
-  };
-  contact: {
-    phone: string;
-  };
-  tags: string[];
   image: ImageSourcePropType;
-  foods: any[]; // You can define a more specific type if needed
+  foodCategories: {
+    id: string;
+    title: string;
+    type: string;
+    isAvailable: boolean;
+    items: {
+      id: string;
+      name: string;
+      price: number;
+      rating: number;
+      isVeg: boolean;
+      image: ImageSourcePropType;
+    }[];
+  }[];
 }
 
 type Props = {
@@ -47,8 +53,77 @@ type Props = {
 
 const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
   const { restaurantId } = route.params;
+  const [foodCounts, setFoodCounts] = useState<{ [key: string]: number }>({});
+  const [activeChips, setActiveChips] = useState<{ [key: string]: boolean }>(
+    {},
+  );
+  // const [activeChips, setActiveChips] = useState({});
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]); // 👈 store active chips
 
+  // ===============
+  const handleAddFood = (foodId: string) => {
+    setFoodCounts(prev => ({ ...prev, [foodId]: 1 }));
+  };
+
+  const incrementFood = (foodId: string) => {
+    setFoodCounts(prev => ({ ...prev, [foodId]: (prev[foodId] || 0) + 1 }));
+  };
+  const decrementFood = (foodId: string) => {
+    setFoodCounts(prev => {
+      const newCount = (prev[foodId] || 0) - 1;
+      if (newCount <= 0) {
+        const { [foodId]: _, ...rest } = prev;
+        return rest;
+      }
+      return { ...prev, [foodId]: newCount };
+    });
+  };
+
+  // ==================
   const restaurant = featuredRestaurants.find(r => r.id === restaurantId);
+
+  // Filters data - "Filters" is default, others can be added by owner
+  const filters = [
+    { id: 'filters', title: 'Filters', isToggleable: false },
+    { id: 'under99', title: 'under 99', isToggleable: true },
+    // { id: 'food10-15', title: 'Food in 10-15 mins', isToggleable: true },
+    { id: 'veg', title: 'Veg', isToggleable: true },
+    { id: 'nonveg', title: 'Non veg', isToggleable: true },
+    { id: 'spicy', title: 'Spicy', isToggleable: true },
+    { id: 'bestseller', title: 'Best Seller', isToggleable: true },
+  ];
+
+  const activeCount = Object.keys(activeChips).filter(
+    key => activeChips[key] && key !== 'Filters',
+  ).length;
+
+  const handleChipPress = (item: {
+    id: string;
+    title: string;
+    isToggleable: boolean;
+  }) => {
+    setActiveChips(prev => {
+      const isActive = prev[item.title];
+
+      console.log(isActive ? 'DEACTIVATED:' : 'ACTIVATED:', item.title);
+
+      // Store activated chips
+      setSelectedFilters(prevFilters => {
+        if (isActive) {
+          return prevFilters.filter(f => f !== item.title);
+        } else {
+          return [...prevFilters, item.title];
+        }
+      });
+
+      return {
+        ...prev,
+        [item.title]: !isActive,
+      };
+    });
+  };
+
+  //
 
   if (!restaurant) {
     return (
@@ -66,18 +141,24 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
         barStyle="light-content"
       />
       <View style={RestaurantScreenStyle.headerTop}>
-
         <ImageBackground
           imageStyle={RestaurantScreenStyle.headerImage}
           source={restaurant.image}
-          style={[StyleSheet.absoluteFillObject, {borderBottomLeftRadius: 26, borderBottomRightRadius: 26}]}
+          style={[
+            StyleSheet.absoluteFillObject,
+            { borderBottomLeftRadius: 26, borderBottomRightRadius: 26 },
+          ]}
           resizeMode="cover"
         >
           <LinearGradient
-            colors={['rgba(0, 0, 0, 0.72)', 'rgba(0,0,0,0.45)', 'rgba(0,0,0,0.0)']}
+            colors={[
+              'rgba(0, 0, 0, 0.72)',
+              'rgba(0,0,0,0.45)',
+              'rgba(0,0,0,0.0)',
+            ]}
             style={RestaurantScreenStyle.topGradient}
           />
-          
+
           <LinearGradient
             colors={[
               'rgba(0,0,0,0.0)',
@@ -90,7 +171,9 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
             style={RestaurantScreenStyle.gradient}
           >
             <View style={RestaurantScreenStyle.row}>
-              <Text style={RestaurantScreenStyle.title}>{restaurant.name}</Text>
+              <Text style={RestaurantScreenStyle.restauranttitle}>
+                {restaurant.name}
+              </Text>
               <View style={RestaurantScreenStyle.ratingBox}>
                 <Text style={RestaurantScreenStyle.ratingText}>
                   {restaurant.rating} ★
@@ -98,10 +181,9 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
               </View>
             </View>
 
-
             <View style={RestaurantScreenStyle.row}>
               <Text style={RestaurantScreenStyle.placeName}>
-                {restaurant.address.area}, {restaurant.address.city}
+                {restaurant.category}
               </Text>
               <Text style={RestaurantScreenStyle.distance}>
                 📍 {restaurant.time}
@@ -116,7 +198,129 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
       </View>
 
       <View style={RestaurantScreenStyle.container}>
-        <ScrollView style={{ flex: 1, marginTop: 0 }}>
+        <ScrollView style={{ flex: 1, marginTop: 0 }} contentContainerStyle={{ paddingHorizontal:20, paddingTop:15, zIndex:1}}>
+          {/* restaurants category */}
+          <FlatList
+            horizontal
+            data={filters}
+            keyExtractor={item => item.id}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => {
+              const isActive = activeChips[item.title];
+              const isFilterChip = item.title === 'Filters';
+
+              return (
+                <TouchableOpacity activeOpacity={0.6}
+                  style={[
+                    RestaurantScreenStyle.chip,
+                    (item.isToggleable &&
+                      activeChips[item.title] &&
+                      activeCount > 0) ||
+                    (isFilterChip && activeCount > 0)
+                      ? RestaurantScreenStyle.activeChip
+                      : undefined,
+                  ]}
+                  onPress={
+                    item.isToggleable ? () => handleChipPress(item) : undefined
+                  }
+                >
+                  <Text
+                    style={[
+                      (item.isToggleable && activeChips[item.title]) ||
+                      (isFilterChip && activeCount > 0)
+                        ? RestaurantScreenStyle.activeChipText
+                        :  RestaurantScreenStyle.ChipText
+                    ]}
+                  >
+                    {item.title}
+                  </Text>
+                  {isFilterChip && activeCount > 0 && (
+                    <Text style={[RestaurantScreenStyle.countText]}>
+                      ({activeCount})
+                    </Text>
+                  )}
+
+                  {item.isToggleable && activeChips[item.title] && (
+                    <Text style={[RestaurantScreenStyle.crossIcon]}>×</Text>
+                  )}
+                </TouchableOpacity>
+              );
+            }}
+          />
+
+          {/* restaurant foods */}
+          {restaurant.foodCategories
+            .flatMap(category => category.items)
+            .map(food => (
+              <TouchableOpacity
+                key={food.id}
+                style={RestaurantScreenStyle.card}
+                activeOpacity={0.9}
+              >
+                {/* Food Image */}
+                <Image
+                  // source={food.image || require('')}
+                  style={RestaurantScreenStyle.foodimage}
+                />
+
+                {/* Content */}
+                <View style={RestaurantScreenStyle.content}>
+                  {/* Top Row */}
+                  <View style={RestaurantScreenStyle.topRow}>
+                    <Text style={RestaurantScreenStyle.veg}>
+                      {food.isVeg ? '🟢 Veg' : '🔴 Non-Veg'}
+                    </Text>
+                    <Text style={RestaurantScreenStyle.rating}>
+                      ⭐ {food.rating}
+                    </Text>
+                  </View>
+
+                  {/* Food Name */}
+                  <Text style={RestaurantScreenStyle.Foodtitle}>
+                    {food.name}
+                  </Text>
+
+                  {/* Bottom Row */}
+                  <View style={RestaurantScreenStyle.bottomRow}>
+                    <Text style={RestaurantScreenStyle.price}>
+                      ₹{food.price}
+                    </Text>
+
+                    {/* Add Button */}
+                    <View style={RestaurantScreenStyle.actionBox}>
+                      {(foodCounts[food.id] || 0) === 0 ? (
+                        <TouchableOpacity
+                          style={RestaurantScreenStyle.addBtn}
+                          onPress={() => handleAddFood(food.id)}
+                        >
+                          <Text style={RestaurantScreenStyle.addText}>ADD</Text>
+                        </TouchableOpacity>
+                      ) : (
+                        <View style={RestaurantScreenStyle.qtyBox}>
+                          <TouchableOpacity
+                            onPress={() => decrementFood(food.id)}
+                          >
+                            <Text style={RestaurantScreenStyle.qtyBtn}>−</Text>
+                          </TouchableOpacity>
+
+                          <Text style={RestaurantScreenStyle.qty}>
+                            {foodCounts[food.id]}
+                          </Text>
+
+                          <TouchableOpacity
+                            onPress={() => incrementFood(food.id)}
+                          >
+                            <Text style={RestaurantScreenStyle.qtyBtn}>+</Text>
+                          </TouchableOpacity>
+                        </View>
+                      )}
+                    </View>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            ))}
+
+          {/*  */}
           <View style={{ padding: 16 }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>
               About {restaurant.name}
@@ -127,7 +331,6 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
             <Text>Delivery: {restaurant.delivery}</Text>
             <Text>Price Range: {restaurant.price}</Text>
             <Text>Status: {restaurant.isOpen ? 'Open' : 'Closed'}</Text>
-            <Text>Tags: {restaurant.tags.join(', ')}</Text>
           </View>
         </ScrollView>
       </View>
