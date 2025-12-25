@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import HeaderStyles from '../../styles/components/HeaderStyles';
 
@@ -10,6 +10,7 @@ interface HeaderProps {
   leftContent?: React.ReactNode;
   centerContent?: React.ReactNode;
   onBackPress?: () => void;
+  backgroundColor?: string | Animated.AnimatedInterpolation<string>;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -19,6 +20,7 @@ const Header: React.FC<HeaderProps> = ({
   leftContent,
   centerContent,
   onBackPress,
+  backgroundColor,
 }) => {
   const navigation = useNavigation();
 
@@ -31,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <View style={HeaderStyles.container}>
+    <Animated.View style={[HeaderStyles.container, backgroundColor ? { backgroundColor } : {}]}>
       <View style={HeaderStyles.leftContainer}>
         {leftContent ? (
           leftContent
@@ -53,7 +55,7 @@ const Header: React.FC<HeaderProps> = ({
       <View style={HeaderStyles.rightContainer}>
         {rightMenu}
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

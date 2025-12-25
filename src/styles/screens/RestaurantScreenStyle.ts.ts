@@ -6,7 +6,7 @@ export const RestaurantScreenStyle = StyleSheet.create({
   headerTop: {
     paddingTop: 50,
     height: height * 0.35,
-    zIndex: 4,
+    zIndex: -9999,
     borderBottomLeftRadius: 26,
     borderBottomRightRadius: 26,
     overflow: 'hidden',
@@ -63,7 +63,11 @@ export const RestaurantScreenStyle = StyleSheet.create({
     fontSize: 24,
     fontWeight: '800',
   },
-  restauranttitle: {},
+  restauranttitle: {
+    fontSize:28,
+    fontWeight:800,
+    color:colors.background
+  },
   ratingBox: {
     backgroundColor: '#1faa59',
     paddingHorizontal: 7,

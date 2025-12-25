@@ -1,6 +1,6 @@
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../routes/types';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
+  Animated,
 } from 'react-native';
 import colors from '../theme/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -59,6 +60,12 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
   );
   // const [activeChips, setActiveChips] = useState({});
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]); // 👈 store active chips
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const headerBackgroundColor = scrollY.interpolate({
+    inputRange: [0, 100],
+    outputRange: ['transparent', '#ffffffff'],
+    extrapolate: 'clamp',
+  });
 
   // ===============
   const handleAddFood = (foodId: string) => {
@@ -198,7 +205,12 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
       </View>
 
       <View style={RestaurantScreenStyle.container}>
-        <ScrollView style={{ flex: 1, marginTop: 0 }} contentContainerStyle={{ paddingHorizontal:20, paddingTop:15, zIndex:1}}>
+        <ScrollView
+          style={{ flex: 1, marginTop: 0 }}
+          contentContainerStyle={{ paddingHorizontal:20, paddingTop:15, zIndex:1}}
+          onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: false })}
+          scrollEventThrottle={16}
+        >
           {/* restaurants category */}
           <FlatList
             horizontal

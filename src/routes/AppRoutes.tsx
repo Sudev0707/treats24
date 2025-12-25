@@ -32,7 +32,7 @@ const AppRoutes = () => {
       <TabBarProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="SplashBrand"
+            initialRouteName="MainTabs"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen name="SplashBrand" component={Screens.SplashBrand} />
@@ -47,10 +47,6 @@ const AppRoutes = () => {
             <Stack.Screen name="Cart" component={Screens.Cart} />
             <Stack.Screen name="Profile" component={Screens.Profile} />
             <Stack.Screen name="RestaurantDetails" component={Screens.RestaurantDetail} />
-
-            <Stack.Screen name="HeaderDemo1" component={Screens.HeaderDemo1} />
-            <Stack.Screen name="HeaderDemo2" component={Screens.HeaderDemo2} />
-            <Stack.Screen name="HeaderDemo3" component={Screens.HeaderDemo3} />
 
             <Stack.Screen name="MainTabs" component={TabNavigator} />
           </Stack.Navigator>
