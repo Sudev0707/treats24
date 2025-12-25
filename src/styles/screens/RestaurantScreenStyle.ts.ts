@@ -1,17 +1,18 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import colors from '../../theme/colors';
+const { height } = Dimensions.get('window');
 
 export const RestaurantScreenStyle = StyleSheet.create({
   headerTop: {
     paddingTop: 50,
-    height: 400,
+    height: height * 0.35,
     zIndex: 4,
     borderBottomLeftRadius: 26,
     borderBottomRightRadius: 26,
     overflow: 'hidden',
   },
   headerImage: {
-    height: 400,
+    height: height * 0.35,
     borderBottomLeftRadius: 26,
     borderBottomRightRadius: 26,
     // flex: 1,
