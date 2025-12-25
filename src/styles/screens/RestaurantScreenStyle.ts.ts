@@ -5,14 +5,14 @@ const { height } = Dimensions.get('window');
 export const RestaurantScreenStyle = StyleSheet.create({
   headerTop: {
     paddingTop: 50,
-    height: height * 0.35,
+    // height: height * 0.35,
     zIndex: -9999,
     borderBottomLeftRadius: 26,
     borderBottomRightRadius: 26,
     overflow: 'hidden',
   },
   headerImage: {
-    height: height * 0.35,
+    // height: height * 0.35,
     borderBottomLeftRadius: 26,
     borderBottomRightRadius: 26,
     // flex: 1,
@@ -64,9 +64,9 @@ export const RestaurantScreenStyle = StyleSheet.create({
     fontWeight: '800',
   },
   restauranttitle: {
-    fontSize:28,
-    fontWeight:800,
-    color:colors.background
+    fontSize: 28,
+    fontWeight: 800,
+    color: colors.background,
   },
   ratingBox: {
     backgroundColor: '#1faa59',
@@ -249,5 +249,31 @@ export const RestaurantScreenStyle = StyleSheet.create({
   },
   countText: {
     color: colors.brandPrimary,
+  },
+});
+
+export const RestaurantHeaderStyle = StyleSheet.create({
+  headerContainer: {
+    backgroundColor: 'trsnsparent',
+    zIndex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    // paddingTop: StatusBar.currentHeight || 20,
+    // borderBottomWidth: 0.5,
+  },
+  backBtn: {
+    // borderWidth: 1,
+    padding: 6,
+    borderRadius: 50,
+    borderColor:colors.borderLight,
+    backgroundColor:colors.background
+  },
+  backBtnIcon: {
+    width: 24,
+    height: 24,
   },
 });

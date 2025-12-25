@@ -1,4 +1,4 @@
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../routes/types';
 import React, { useState, useRef } from 'react';
 import {
@@ -13,13 +13,20 @@ import {
   Image,
   FlatList,
   Animated,
+  Dimensions,
+  Platform,
+  TextInput,
 } from 'react-native';
 import colors from '../theme/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../components/common/Header';
-import { RestaurantScreenStyle } from '../styles/screens/RestaurantScreenStyle.ts';
+import {
+  RestaurantHeaderStyle,
+  RestaurantScreenStyle,
+} from '../styles/screens/RestaurantScreenStyle.ts';
 import LinearGradient from 'react-native-linear-gradient';
 import { featuredRestaurants } from '../data/foodData';
+import FoodAddedBox from '../components/modals/FoodDetailsModal.tsx';
 
 interface RestaurantItem {
   id: string;
@@ -43,7 +50,7 @@ interface RestaurantItem {
       price: number;
       rating: number;
       isVeg: boolean;
-      image: ImageSourcePropType;
+      image?: ImageSourcePropType;
     }[];
   }[];
 }
@@ -58,17 +65,35 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
   const [activeChips, setActiveChips] = useState<{ [key: string]: boolean }>(
     {},
   );
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedFood, setSelectedFood] = useState<any>(null);
+  const [selectedCount, setSelectedCount] = useState(0);
+  const navigation = useNavigation();
   // const [activeChips, setActiveChips] = useState({});
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]); // 👈 store active chips
   const scrollY = useRef(new Animated.Value(0)).current;
   const headerBackgroundColor = scrollY.interpolate({
-    inputRange: [0, 100],
+    inputRange: [0, 400],
     outputRange: ['transparent', '#ffffffff'],
     extrapolate: 'clamp',
   });
 
+  const { height } = Dimensions.get('window');
+  const imageHeight = height * 0.35 + 20;
+
+  // ==================
+  const restaurant = featuredRestaurants.find(r => r.id === restaurantId);
+
   // ===============
   const handleAddFood = (foodId: string) => {
+    const food = restaurant!.foodCategories
+      .flatMap(category => category.items)
+      .find(f => f.id === foodId);
+    if (food) {
+      setSelectedFood(food);
+      setSelectedCount(1);
+      setModalVisible(true);
+    }
     setFoodCounts(prev => ({ ...prev, [foodId]: 1 }));
   };
 
@@ -85,9 +110,6 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
       return { ...prev, [foodId]: newCount };
     });
   };
-
-  // ==================
-  const restaurant = featuredRestaurants.find(r => r.id === restaurantId);
 
   // Filters data - "Filters" is default, others can be added by owner
   const filters = [
@@ -139,80 +161,120 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
       </View>
     );
   }
+  // ---
+  const handleBackPress = () => {
+    navigation.goBack();
+  };
 
   return (
     <>
       <StatusBar
-        translucent={false}
-        backgroundColor={colors.background}
+        // translucent={false}
+        // backgroundColor={colors.background}
         barStyle="light-content"
       />
-      <View style={RestaurantScreenStyle.headerTop}>
-        <ImageBackground
-          imageStyle={RestaurantScreenStyle.headerImage}
-          source={restaurant.image}
-          style={[
-            StyleSheet.absoluteFillObject,
-            { borderBottomLeftRadius: 26, borderBottomRightRadius: 26 },
-          ]}
-          resizeMode="cover"
+      {/* header  */}
+      <SafeAreaView style={RestaurantHeaderStyle.headerContainer}>
+        {/* left back */}
+        <TouchableOpacity
+          onPress={handleBackPress}
+          style={RestaurantHeaderStyle.backBtn}
         >
-          <LinearGradient
-            colors={[
-              'rgba(0, 0, 0, 0.72)',
-              'rgba(0,0,0,0.45)',
-              'rgba(0,0,0,0.0)',
-            ]}
-            style={RestaurantScreenStyle.topGradient}
+          <Image
+            source={require('../assets/icons/iconsback.png')}
+            style={RestaurantHeaderStyle.backBtnIcon}
           />
+        </TouchableOpacity>
+        {/* center bar*/}
+        <TouchableOpacity>
+          <TextInput></TextInput>
+        </TouchableOpacity>
 
-          <LinearGradient
-            colors={[
-              'rgba(0,0,0,0.0)',
-              'rgba(0,0,0,0.6)',
-              'rgba(0,0,0,0.85)',
-              'rgba(0,0,0,1)',
-              'rgba(0,0,0,1)',
-            ]}
-            locations={[0, 0.35, 0.6, 0.85, 1]}
-            style={RestaurantScreenStyle.gradient}
-          >
-            <View style={RestaurantScreenStyle.row}>
-              <Text style={RestaurantScreenStyle.restauranttitle}>
-                {restaurant.name}
+        {/* right utility button*/}
+        <TouchableOpacity>
+
+        </TouchableOpacity>
+      </SafeAreaView>
+
+      <ImageBackground
+        imageStyle={RestaurantScreenStyle.headerImage}
+        source={restaurant.image}
+        style={[
+          {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: imageHeight,
+            borderBottomLeftRadius: 26,
+            borderBottomRightRadius: 26,
+          },
+        ]}
+        resizeMode="cover"
+      >
+        {/* <LinearGradient
+          colors={[
+            'rgba(0, 0, 0, 0.72)',
+            'rgba(0,0,0,0.45)',
+            'rgba(0,0,0,0.0)',
+          ]}
+          style={RestaurantScreenStyle.topGradient}
+        /> */}
+
+        <LinearGradient
+          colors={[
+            'rgba(0,0,0,0.0)',
+            'rgba(0,0,0,0.6)',
+            'rgba(0,0,0,0.85)',
+            'rgba(0,0,0,1)',
+            'rgba(0,0,0,1)',
+          ]}
+          locations={[0, 0.35, 0.6, 0.85, 1]}
+          style={RestaurantScreenStyle.gradient}
+        >
+          <View style={RestaurantScreenStyle.row}>
+            <Text style={RestaurantScreenStyle.restauranttitle}>
+              {restaurant.name}
+            </Text>
+            <View style={RestaurantScreenStyle.ratingBox}>
+              <Text style={RestaurantScreenStyle.ratingText}>
+                {restaurant.rating} ★
               </Text>
-              <View style={RestaurantScreenStyle.ratingBox}>
-                <Text style={RestaurantScreenStyle.ratingText}>
-                  {restaurant.rating} ★
-                </Text>
-              </View>
             </View>
+          </View>
 
-            <View style={RestaurantScreenStyle.row}>
-              <Text style={RestaurantScreenStyle.placeName}>
-                {restaurant.category}
-              </Text>
-              <Text style={RestaurantScreenStyle.distance}>
-                📍 {restaurant.time}
-              </Text>
-            </View>
+          <View style={RestaurantScreenStyle.row}>
+            <Text style={RestaurantScreenStyle.placeName}>
+              {restaurant.category}
+            </Text>
+            <Text style={RestaurantScreenStyle.distance}>
+              📍 {restaurant.time}
+            </Text>
+          </View>
 
-            {/* <View style={RestaurantScreenStyle.distanceRow}>
-              <Text style={RestaurantScreenStyle.categoryText} >{restaurant.category}</Text>
-            </View> */}
-          </LinearGradient>
-        </ImageBackground>
-      </View>
+          {/* <View style={RestaurantScreenStyle.distanceRow}>
+            <Text style={RestaurantScreenStyle.categoryText} >{restaurant.category}</Text>
+          </View> */}
+        </LinearGradient>
+      </ImageBackground>
 
-      <View style={RestaurantScreenStyle.container}>
+      <View style={{ flex: 1,  }}>
         <ScrollView
-          style={{ flex: 1, marginTop: 0 }}
-          contentContainerStyle={{ paddingHorizontal:20, paddingTop:15, zIndex:1}}
-          onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: false })}
+          style={{ flex: 1}}
+          contentContainerStyle={{
+            // paddingHorizontal: 20,
+            paddingTop: imageHeight - 110,
+            zIndex: 1,
+          }}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+            { useNativeDriver: false },
+          )}
           scrollEventThrottle={16}
         >
-          {/* restaurants category */}
-          <FlatList
+          <View style={{ backgroundColor: colors.background , paddingTop:10,   paddingHorizontal: 20, borderTopLeftRadius:25, borderTopRightRadius:25}}>
+            {/* restaurants category */}
+            <FlatList
             horizontal
             data={filters}
             keyExtractor={item => item.id}
@@ -222,7 +284,8 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
               const isFilterChip = item.title === 'Filters';
 
               return (
-                <TouchableOpacity activeOpacity={0.6}
+                <TouchableOpacity
+                  activeOpacity={0.6}
                   style={[
                     RestaurantScreenStyle.chip,
                     (item.isToggleable &&
@@ -241,7 +304,7 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
                       (item.isToggleable && activeChips[item.title]) ||
                       (isFilterChip && activeCount > 0)
                         ? RestaurantScreenStyle.activeChipText
-                        :  RestaurantScreenStyle.ChipText
+                        : RestaurantScreenStyle.ChipText,
                     ]}
                   >
                     {item.title}
@@ -344,8 +407,16 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
             <Text>Price Range: {restaurant.price}</Text>
             <Text>Status: {restaurant.isOpen ? 'Open' : 'Closed'}</Text>
           </View>
+          </View>
         </ScrollView>
       </View>
+
+      <FoodAddedBox
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        foodCounts={foodCounts}
+        restaurant={restaurant!}
+      />
     </>
   );
 };
