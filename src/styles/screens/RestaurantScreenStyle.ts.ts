@@ -101,7 +101,7 @@ export const RestaurantScreenStyle = StyleSheet.create({
     borderBottomRightRadius: 26,
   },
 
-  //
+  //====
 
   chipsRow: {
     flexDirection: 'row',
