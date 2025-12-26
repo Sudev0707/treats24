@@ -4,15 +4,14 @@ const { height } = Dimensions.get('window');
 
 export const RestaurantScreenStyle = StyleSheet.create({
   headerTop: {
-    paddingTop: 50,
-    // height: height * 0.35,
+    paddingTop: height * 0.35,
     zIndex: -9999,
     borderBottomLeftRadius: 26,
     borderBottomRightRadius: 26,
     overflow: 'hidden',
   },
   headerImage: {
-    // height: height * 0.35,
+    height: height * 0.35,
     borderBottomLeftRadius: 26,
     borderBottomRightRadius: 26,
     // flex: 1,

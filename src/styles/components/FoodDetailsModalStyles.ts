@@ -10,15 +10,17 @@ const FoodDetailsModalStyles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   box: {
-    backgroundColor: colors.background,
+    backgroundColor: colors.brandPrimarySoft,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 20,
-  
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   closeButton: {
     alignSelf: 'center',
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   closeText: {
     fontSize: 18,
@@ -26,7 +28,7 @@ const FoodDetailsModalStyles = StyleSheet.create({
   },
   foodImage: {
     width: '100%',
-    height: 200,
+    // height: 200,
     borderRadius: 10,
     marginBottom: 15,
   },
@@ -50,10 +52,10 @@ const FoodDetailsModalStyles = StyleSheet.create({
     color: colors.textSecondary,
   },
   price: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: colors.brandPrimary,
-    marginBottom: 15,
+    // marginBottom: 15,
   },
   countContainer: {
     flexDirection: 'row',
@@ -63,7 +65,8 @@ const FoodDetailsModalStyles = StyleSheet.create({
   },
   countText: {
     fontSize: 18,
-    marginHorizontal: 20,
+     fontWeight: 'bold',
+    // marginHorizontal: 20,
     color: colors.textPrimary,
   },
 });

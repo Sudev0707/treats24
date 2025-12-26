@@ -191,9 +191,7 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
         </TouchableOpacity>
 
         {/* right utility button*/}
-        <TouchableOpacity>
-
-        </TouchableOpacity>
+        <TouchableOpacity></TouchableOpacity>
       </SafeAreaView>
 
       <ImageBackground
@@ -258,9 +256,9 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
         </LinearGradient>
       </ImageBackground>
 
-      <View style={{ flex: 1,  }}>
+      <View style={{ flex: 1 }}>
         <ScrollView
-          style={{ flex: 1}}
+          style={{ flex: 1 }}
           contentContainerStyle={{
             // paddingHorizontal: 20,
             paddingTop: imageHeight - 110,
@@ -272,151 +270,171 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
           )}
           scrollEventThrottle={16}
         >
-          <View style={{ backgroundColor: colors.background , paddingTop:10,   paddingHorizontal: 20, borderTopLeftRadius:25, borderTopRightRadius:25}}>
+          <View
+            style={{
+              backgroundColor: colors.background,
+              paddingTop: 10,
+              paddingHorizontal: 20,
+              borderTopLeftRadius: 25,
+              borderTopRightRadius: 25,
+            }}
+          >
             {/* restaurants category */}
             <FlatList
-            horizontal
-            data={filters}
-            keyExtractor={item => item.id}
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => {
-              const isActive = activeChips[item.title];
-              const isFilterChip = item.title === 'Filters';
+              horizontal
+              data={filters}
+              keyExtractor={item => item.id}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => {
+                const isActive = activeChips[item.title];
+                const isFilterChip = item.title === 'Filters';
 
-              return (
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  style={[
-                    RestaurantScreenStyle.chip,
-                    (item.isToggleable &&
-                      activeChips[item.title] &&
-                      activeCount > 0) ||
-                    (isFilterChip && activeCount > 0)
-                      ? RestaurantScreenStyle.activeChip
-                      : undefined,
-                  ]}
-                  onPress={
-                    item.isToggleable ? () => handleChipPress(item) : undefined
-                  }
-                >
-                  <Text
+                return (
+                  <TouchableOpacity
+                    activeOpacity={0.6}
                     style={[
-                      (item.isToggleable && activeChips[item.title]) ||
+                      RestaurantScreenStyle.chip,
+                      (item.isToggleable &&
+                        activeChips[item.title] &&
+                        activeCount > 0) ||
                       (isFilterChip && activeCount > 0)
-                        ? RestaurantScreenStyle.activeChipText
-                        : RestaurantScreenStyle.ChipText,
+                        ? RestaurantScreenStyle.activeChip
+                        : undefined,
                     ]}
+                    onPress={
+                      item.isToggleable
+                        ? () => handleChipPress(item)
+                        : undefined
+                    }
                   >
-                    {item.title}
-                  </Text>
-                  {isFilterChip && activeCount > 0 && (
-                    <Text style={[RestaurantScreenStyle.countText]}>
-                      ({activeCount})
+                    <Text
+                      style={[
+                        (item.isToggleable && activeChips[item.title]) ||
+                        (isFilterChip && activeCount > 0)
+                          ? RestaurantScreenStyle.activeChipText
+                          : RestaurantScreenStyle.ChipText,
+                      ]}
+                    >
+                      {item.title}
                     </Text>
-                  )}
+                    {isFilterChip && activeCount > 0 && (
+                      <Text style={[RestaurantScreenStyle.countText]}>
+                        ({activeCount})
+                      </Text>
+                    )}
 
-                  {item.isToggleable && activeChips[item.title] && (
-                    <Text style={[RestaurantScreenStyle.crossIcon]}>×</Text>
-                  )}
-                </TouchableOpacity>
-              );
-            }}
-          />
+                    {item.isToggleable && activeChips[item.title] && (
+                      <Text style={[RestaurantScreenStyle.crossIcon]}>×</Text>
+                    )}
+                  </TouchableOpacity>
+                );
+              }}
+            />
 
-          {/* restaurant foods */}
-          {restaurant.foodCategories
-            .flatMap(category => category.items)
-            .map(food => (
-              <TouchableOpacity
-                key={food.id}
-                style={RestaurantScreenStyle.card}
-                activeOpacity={0.9}
-              >
-                {/* Food Image */}
-                <Image
-                  // source={food.image || require('')}
-                  style={RestaurantScreenStyle.foodimage}
-                />
+            {/* restaurant foods */}
+            {restaurant.foodCategories
+              .flatMap(category => category.items)
+              .map(food => (
+                <TouchableOpacity
+                  key={food.id}
+                  style={RestaurantScreenStyle.card}
+                  activeOpacity={0.9}
+                >
+                  {/* Food Image */}
+                  <Image
+                    // source={food.image || require('')}
+                    style={RestaurantScreenStyle.foodimage}
+                  />
 
-                {/* Content */}
-                <View style={RestaurantScreenStyle.content}>
-                  {/* Top Row */}
-                  <View style={RestaurantScreenStyle.topRow}>
-                    <Text style={RestaurantScreenStyle.veg}>
-                      {food.isVeg ? '🟢 Veg' : '🔴 Non-Veg'}
-                    </Text>
-                    <Text style={RestaurantScreenStyle.rating}>
-                      ⭐ {food.rating}
-                    </Text>
-                  </View>
+                  {/* Content */}
+                  <View style={RestaurantScreenStyle.content}>
+                    {/* Top Row */}
+                    <View style={RestaurantScreenStyle.topRow}>
+                      <Text style={RestaurantScreenStyle.veg}>
+                        {food.isVeg ? '🟢 Veg' : '🔴 Non-Veg'}
+                      </Text>
+                      <Text style={RestaurantScreenStyle.rating}>
+                        ⭐ {food.rating}
+                      </Text>
+                    </View>
 
-                  {/* Food Name */}
-                  <Text style={RestaurantScreenStyle.Foodtitle}>
-                    {food.name}
-                  </Text>
-
-                  {/* Bottom Row */}
-                  <View style={RestaurantScreenStyle.bottomRow}>
-                    <Text style={RestaurantScreenStyle.price}>
-                      ₹{food.price}
+                    {/* Food Name */}
+                    <Text style={RestaurantScreenStyle.Foodtitle}>
+                      {food.name}
                     </Text>
 
-                    {/* Add Button */}
-                    <View style={RestaurantScreenStyle.actionBox}>
-                      {(foodCounts[food.id] || 0) === 0 ? (
-                        <TouchableOpacity
-                          style={RestaurantScreenStyle.addBtn}
-                          onPress={() => handleAddFood(food.id)}
-                        >
-                          <Text style={RestaurantScreenStyle.addText}>ADD</Text>
-                        </TouchableOpacity>
-                      ) : (
-                        <View style={RestaurantScreenStyle.qtyBox}>
+                    {/* Bottom Row */}
+                    <View style={RestaurantScreenStyle.bottomRow}>
+                      <Text style={RestaurantScreenStyle.price}>
+                        ₹{food.price}
+                      </Text>
+
+                      {/* Add Button */}
+                      <View style={RestaurantScreenStyle.actionBox}>
+                        {(foodCounts[food.id] || 0) === 0 ? (
                           <TouchableOpacity
-                            onPress={() => decrementFood(food.id)}
+                            style={RestaurantScreenStyle.addBtn}
+                            onPress={() => handleAddFood(food.id)}
                           >
-                            <Text style={RestaurantScreenStyle.qtyBtn}>−</Text>
+                            <Text style={RestaurantScreenStyle.addText}>
+                              ADD
+                            </Text>
                           </TouchableOpacity>
+                        ) : (
+                          <View style={RestaurantScreenStyle.qtyBox}>
+                            <TouchableOpacity
+                              onPress={() => decrementFood(food.id)}
+                            >
+                              <Text style={RestaurantScreenStyle.qtyBtn}>
+                                −
+                              </Text>
+                            </TouchableOpacity>
 
-                          <Text style={RestaurantScreenStyle.qty}>
-                            {foodCounts[food.id]}
-                          </Text>
+                            <Text style={RestaurantScreenStyle.qty}>
+                              {foodCounts[food.id]}
+                            </Text>
 
-                          <TouchableOpacity
-                            onPress={() => incrementFood(food.id)}
-                          >
-                            <Text style={RestaurantScreenStyle.qtyBtn}>+</Text>
-                          </TouchableOpacity>
-                        </View>
-                      )}
+                            <TouchableOpacity
+                              onPress={() => incrementFood(food.id)}
+                            >
+                              <Text style={RestaurantScreenStyle.qtyBtn}>
+                                +
+                              </Text>
+                            </TouchableOpacity>
+                          </View>
+                        )}
+                      </View>
                     </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-            ))}
+                </TouchableOpacity>
+              ))}
 
-          {/*  */}
-          <View style={{ padding: 16 }}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>
-              About {restaurant.name}
-            </Text>
-            <Text>
-              Rating: {restaurant.rating} ({restaurant.reviews} reviews)
-            </Text>
-            <Text>Delivery: {restaurant.delivery}</Text>
-            <Text>Price Range: {restaurant.price}</Text>
-            <Text>Status: {restaurant.isOpen ? 'Open' : 'Closed'}</Text>
-          </View>
+            {/*  */}
+            <View style={{ padding: 16 }}>
+              <Text
+                style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}
+              >
+                About {restaurant.name}
+              </Text>
+              <Text>
+                Rating: {restaurant.rating} ({restaurant.reviews} reviews)
+              </Text>
+              <Text>Delivery: {restaurant.delivery}</Text>
+              <Text>Price Range: {restaurant.price}</Text>
+              <Text>Status: {restaurant.isOpen ? 'Open' : 'Closed'}</Text>
+            </View>
           </View>
         </ScrollView>
       </View>
 
-      <FoodAddedBox
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        foodCounts={foodCounts}
-        restaurant={restaurant!}
-      />
+      {Object.keys(foodCounts).length > 0 ? (
+        <FoodAddedBox
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          foodCounts={foodCounts}
+          restaurant={restaurant!}
+        />
+      ) : null}
     </>
   );
 };

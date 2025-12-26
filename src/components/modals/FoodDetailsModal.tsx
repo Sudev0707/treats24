@@ -13,6 +13,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../routes/AppRoutes';
 import FoodDetailsModalStyles from '../../styles/components/FoodDetailsModalStyles';
 import colors from '../../theme/colors';
+import Button from '../common/Button';
 
 interface FoodItem {
   id: string;
@@ -56,13 +57,22 @@ const FoodAddedBox: React.FC<FoodAddedBoxProps> = ({
   foodCounts,
   restaurant,
 }) => {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const allFoods = restaurant.foodCategories.flatMap(category => category.items);
-  const totalCount = Object.values(foodCounts).reduce((sum, count) => sum + count, 0);
-  const totalPrice = Object.entries(foodCounts).reduce((sum, [foodId, count]) => {
-    const food = allFoods.find(f => f.id === foodId);
-    return sum + (food ? food.price * count : 0);
-  }, 0);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const allFoods = restaurant.foodCategories.flatMap(
+    category => category.items,
+  );
+  const totalCount = Object.values(foodCounts).reduce(
+    (sum, count) => sum + count,
+    0,
+  );
+  const totalPrice = Object.entries(foodCounts).reduce(
+    (sum, [foodId, count]) => {
+      const food = allFoods.find(f => f.id === foodId);
+      return sum + (food ? food.price * count : 0);
+    },
+    0,
+  );
 
   const handleViewCart = () => {
     onClose(); // Close the modal
@@ -72,22 +82,31 @@ const FoodAddedBox: React.FC<FoodAddedBoxProps> = ({
   return (
     <View style={FoodDetailsModalStyles.popUp}>
       <View style={FoodDetailsModalStyles.box}>
+        <View>
+          <Text style={FoodDetailsModalStyles.price}>
+            Total Price: ${totalPrice.toFixed(2)}
+          </Text>
 
-        {/* total added food price , increase or decreases by adding or removing */}
-        <Text style={FoodDetailsModalStyles.price}>
-          Total Price: ${totalPrice.toFixed(2)}
-        </Text>
+          <Text style={FoodDetailsModalStyles.countText}>
+            {totalCount} items added
+          </Text>
+        </View>
 
-        {/* total added food counts , increase or decreases by adding or removing */}
-        <Text style={FoodDetailsModalStyles.countText}>Total Items: {totalCount}</Text>
-
-        <TouchableOpacity onPress={handleViewCart}
+        {/* <Button
+          title="View Cart"
+          variant="outlined"
+          onPress={handleViewCart}
+          style={{ width: '40%' }}
+          isPhoneValid={true}
+        /> */}
+        <TouchableOpacity
+          onPress={handleViewCart}
           style={{
             backgroundColor: colors.brandPrimary,
             padding: 15,
             borderRadius: 10,
             alignItems: 'center',
-            marginTop: 20,
+            // marginTop: 20,
           }}
         >
           <Text
