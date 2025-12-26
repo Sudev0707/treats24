@@ -185,6 +185,8 @@ const DashboardStyles = StyleSheet.create({
     borderRadius: 999,
     backgroundColor: colors.background,
     marginRight: 8,
+    justifyContent:'center',
+    alignItems:'center'
   },
   
   chipActive: {

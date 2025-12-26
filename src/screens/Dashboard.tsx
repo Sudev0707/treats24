@@ -183,6 +183,9 @@ const Dashboard: React.FC = () => {
                       onPress={() => setSelectedCategory(item.name)}
                       style={[styles.chip, isActive && styles.chipActive]}
                     >
+                      <Image source={item.image} resizeMode='contain' width={9} height={9} style={{width: 40, height: 40}} />
+
+                     
                       <Text
                         style={[
                           styles.chipText,

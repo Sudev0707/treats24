@@ -75,9 +75,10 @@ const FoodAddedBox: React.FC<FoodAddedBoxProps> = ({
   );
 
   const handleViewCart = () => {
-    onClose(); // Close the modal
     navigation.navigate('Cart');
   };
+
+  if (!visible) return null;
 
   return (
     <View style={FoodDetailsModalStyles.popUp}>

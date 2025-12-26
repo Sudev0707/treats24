@@ -1,55 +1,66 @@
 export const CATEGORIES = [
   {
+    id: '0',
+    name: 'All',
+     image: require('../assets/images/foodCategory/pizza.png'),
+  },
+  {
+    id: '00',
+    name: 'Snacks',
+     image: require('../assets/images/foodCategory/pizza.png'),
+  },
+  {
+    id: '000',
+    name: '99 Store',
+    image: require('../assets/images/foodCategory/pizza.png'),
+  },
+  {
     id: '1',
     name: 'Burgers',
-    // image: require('../assets/categories/burgers.png'),
+     image: require('../assets/images/foodCategory/pizza.png'),
   },
   {
     id: '2',
     name: 'Pizza',
-    // image: require('../assets/categories/pizza.png'),
+    image: require('../assets/images/foodCategory/pizza.png'),
   },
   {
     id: '3',
     name: 'Indian',
-    // image: require('../assets/categories/indian.png'),
+     image: require('../assets/images/foodCategory/pizza.png'),
   },
   {
     id: '4',
-    name: 'Desserts',
-    // image: require('../assets/categories/desserts.png'),
+    name: 'South Indian',
+     image: require('../assets/images/foodCategory/pizza.png'),
   },
   {
     id: '5',
-    name: 'Chinese',
-    // image: require('../assets/categories/chinese.png'),
+    name: 'Rolls & Wraps',
+     image: require('../assets/images/foodCategory/pizza.png'),
   },
   {
     id: '6',
-    name: 'South Indian',
-    // image: require('../assets/categories/south_indian.png'),
+    name: '',
+     image: require('../assets/images/foodCategory/pizza.png'),
   },
   {
     id: '7',
-    name: 'Fast Food',
-    // image: require('../assets/categories/fast_food.png'),
+    name: 'Momos',
+     image: require('../assets/images/foodCategory/pizza.png'),
   },
   {
     id: '8',
-    name: 'Healthy',
-    // image: require('../assets/categories/healthy.png'),
-  },
-  {
-    id: '9',
-    name: 'Beverages',
-    // image: require('../assets/categories/beverages.png'),
-  },
-  {
-    id: '10',
     name: 'Ice Cream',
-    // image: require('../assets/categories/ice_cream.png'),
+     image: require('../assets/images/foodCategory/pizza.png'),
+  }, {
+    id: '9',
+    name: 'Bakery',
+    image: require('../assets/images/foodCategory/pizza.png'),
   },
+ 
 ];
+
 
 export const RESTAURANTS = [
   {

@@ -9,8 +9,9 @@ import {
   Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useScrollToHideTabBar } from '../hooks/useScrollToHideTabBar';
+import { useAppSelector } from '../hooks/useAppSelector';
 import colors from '../theme/colors';
 import Header from '../components/common/Header';
 import {
@@ -18,7 +19,6 @@ import {
   selectCartTotal,
 } from '../store/selectors/cartSelectors';
 import { removeItem, updateQuantity } from '../store/slices/cartSlice';
-import { CartItem } from '../store/slices/cartSlice';
 import { cartStyle } from '../styles/screens/CartStyles';
 //
 
@@ -26,8 +26,8 @@ const { height } = Dimensions.get('window');
 
 const Cart: React.FC = () => {
   const scrollProps = useScrollToHideTabBar();
-  const cartItems = useSelector(selectCartItems);
-  const cartTotal = useSelector(selectCartTotal);
+  const cartItems = useAppSelector(selectCartItems);
+  const cartTotal = useAppSelector(selectCartTotal);
   const dispatch = useDispatch();
 
   const handleRemoveItem = (id: string) => {
@@ -67,9 +67,51 @@ const Cart: React.FC = () => {
           showsVerticalScrollIndicator={false}
         >
           <View style={cartStyle.container}>
-            <Text style={cartStyle.emptyText}>No favorites added yet</Text>
-            <Text style={cartStyle.emptyText}>No favorites added yet</Text>
-            <Text style={cartStyle.emptyText}>No favorites added yet</Text>
+            {/* show selected food items */}
+            {cartItems.length === 0 ? (
+              <View style={cartStyle.emptyCart}>
+                <Text style={cartStyle.emptyCartText}>Your cart is empty</Text>
+              </View>
+            ) : (
+              cartItems.map(item => (
+                <View key={item.id} style={cartStyle.cartItem}>
+                  <Image source={item.image} style={cartStyle.itemImage} />
+                  <View style={cartStyle.itemDetails}>
+                    <Text style={cartStyle.itemName}>{item.name}</Text>
+                    <Text style={cartStyle.itemPrice}>₹{item.price}</Text>
+                    <View style={cartStyle.quantityControls}>
+                      <TouchableOpacity
+                        onPress={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                        style={cartStyle.quantityBtn}
+                      >
+                        <Text style={cartStyle.quantityBtnText}>-</Text>
+                      </TouchableOpacity>
+                      <Text style={cartStyle.quantityText}>{item.quantity}</Text>
+                      <TouchableOpacity
+                        onPress={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                        style={cartStyle.quantityBtn}
+                      >
+                        <Text style={cartStyle.quantityBtnText}>+</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                  <TouchableOpacity
+                    onPress={() => handleRemoveItem(item.id)}
+                    style={cartStyle.removeBtn}
+                  >
+                    <Text style={cartStyle.removeBtnText}>Remove</Text>
+                  </TouchableOpacity>
+                </View>
+              ))
+            )}
+            {cartItems.length > 0 && (
+              <View style={cartStyle.totalContainer}>
+                <Text style={cartStyle.totalText}>Total: ₹{cartTotal}</Text>
+                <TouchableOpacity style={cartStyle.checkoutBtn}>
+                  <Text style={cartStyle.checkoutBtnText}>Checkout</Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
         </ScrollView>
       </View>

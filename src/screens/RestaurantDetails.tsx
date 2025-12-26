@@ -1,6 +1,6 @@
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../routes/types';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -27,6 +27,10 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import { featuredRestaurants } from '../data/foodData';
 import FoodAddedBox from '../components/modals/FoodDetailsModal.tsx';
+//
+import { addToCart, removeFromCart } from '../store/slices/cartSlice.ts';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../hooks/useAppSelector';
 
 interface RestaurantItem {
   id: string;
@@ -61,10 +65,22 @@ type Props = {
 
 const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
   const { restaurantId } = route.params;
+  const dispatch = useDispatch();
+  const cartItems = useAppSelector(state => state.cart.items);
   const [foodCounts, setFoodCounts] = useState<{ [key: string]: number }>({});
+  const getQuantity = (foodId: string) => {
+    return cartItems.find(item => item.id === foodId)?.quantity || 0;
+  };
+
   const [activeChips, setActiveChips] = useState<{ [key: string]: boolean }>(
     {},
   );
+  const cart = useAppSelector(state => state.cart);
+const totalCount = useAppSelector(state =>
+  state.cart.items.reduce((sum, item) => sum + item.quantity, 0)
+);
+
+
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedFood, setSelectedFood] = useState<any>(null);
   const [selectedCount, setSelectedCount] = useState(0);
@@ -84,19 +100,47 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
   // ==================
   const restaurant = featuredRestaurants.find(r => r.id === restaurantId);
 
+  // Sync foodCounts with cart items
+  useEffect(() => {
+    const newFoodCounts: { [key: string]: number } = {};
+    cartItems.forEach(item => {
+      newFoodCounts[item.id] = item.quantity;
+    });
+    setFoodCounts(newFoodCounts);
+    setModalVisible(Object.keys(newFoodCounts).length > 0);
+  }, [cartItems]);
+
   // ===============
-  const handleAddFood = (foodId: string) => {
-    const food = restaurant!.foodCategories
-      .flatMap(category => category.items)
-      .find(f => f.id === foodId);
-    if (food) {
-      setSelectedFood(food);
-      setSelectedCount(1);
-      setModalVisible(true);
+  // const handleAddFood = (foodId: string) => {
+  //   const food = restaurant!.foodCategories
+  //     .flatMap(category => category.items)
+  //     .find(f => f.id === foodId);
+  //   if (food) {
+  //     setSelectedFood(food);
+  //     setSelectedCount(1);
+  //     setModalVisible(true);
+  //   }
+  //   setFoodCounts(prev => ({ ...prev, [foodId]: 1 }));
+  // };
+  const handleAddFood = (food: any) => {
+    if (restaurant) {
+      dispatch(
+        addToCart({
+          restaurantId: restaurant.id,
+          restaurantName: restaurant.name,
+          item: {
+            id: food.id,
+            name: food.name,
+            price: food.price,
+            isVeg: food.isVeg,
+            image: food.image,
+          },
+        }),
+      );
     }
-    setFoodCounts(prev => ({ ...prev, [foodId]: 1 }));
   };
 
+  // ===
   const incrementFood = (foodId: string) => {
     setFoodCounts(prev => ({ ...prev, [foodId]: (prev[foodId] || 0) + 1 }));
   };
@@ -334,80 +378,83 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
             {/* restaurant foods */}
             {restaurant.foodCategories
               .flatMap(category => category.items)
-              .map(food => (
-                <TouchableOpacity
-                  key={food.id}
-                  style={RestaurantScreenStyle.card}
-                  activeOpacity={0.9}
-                >
-                  {/* Food Image */}
-                  <Image
-                    // source={food.image || require('')}
-                    style={RestaurantScreenStyle.foodimage}
-                  />
+              .map(food => {
+                const quantity = getQuantity(food.id);
+                return (
+                  <TouchableOpacity
+                    key={food.id}
+                    style={RestaurantScreenStyle.card}
+                    activeOpacity={0.9}
+                  >
+                    {/* Food Image */}
+                    <Image
+                      // source={food.image || require('')}
+                      style={RestaurantScreenStyle.foodimage}
+                    />
 
-                  {/* Content */}
-                  <View style={RestaurantScreenStyle.content}>
-                    {/* Top Row */}
-                    <View style={RestaurantScreenStyle.topRow}>
-                      <Text style={RestaurantScreenStyle.veg}>
-                        {food.isVeg ? '🟢 Veg' : '🔴 Non-Veg'}
-                      </Text>
-                      <Text style={RestaurantScreenStyle.rating}>
-                        ⭐ {food.rating}
-                      </Text>
-                    </View>
+                    {/* Content */}
+                    <View style={RestaurantScreenStyle.content}>
+                      {/* Top Row */}
+                      <View style={RestaurantScreenStyle.topRow}>
+                        <Text style={RestaurantScreenStyle.veg}>
+                          {food.isVeg ? '🟢 Veg' : '🔴 Non-Veg'}
+                        </Text>
+                        <Text style={RestaurantScreenStyle.rating}>
+                          ⭐ {food.rating}
+                        </Text>
+                      </View>
 
-                    {/* Food Name */}
-                    <Text style={RestaurantScreenStyle.Foodtitle}>
-                      {food.name}
-                    </Text>
-
-                    {/* Bottom Row */}
-                    <View style={RestaurantScreenStyle.bottomRow}>
-                      <Text style={RestaurantScreenStyle.price}>
-                        ₹{food.price}
+                      {/* Food Name */}
+                      <Text style={RestaurantScreenStyle.Foodtitle}>
+                        {food.name}
                       </Text>
 
-                      {/* Add Button */}
-                      <View style={RestaurantScreenStyle.actionBox}>
-                        {(foodCounts[food.id] || 0) === 0 ? (
-                          <TouchableOpacity
-                            style={RestaurantScreenStyle.addBtn}
-                            onPress={() => handleAddFood(food.id)}
-                          >
-                            <Text style={RestaurantScreenStyle.addText}>
-                              ADD
-                            </Text>
-                          </TouchableOpacity>
-                        ) : (
-                          <View style={RestaurantScreenStyle.qtyBox}>
+                      {/* Bottom Row */}
+                      <View style={RestaurantScreenStyle.bottomRow}>
+                        <Text style={RestaurantScreenStyle.price}>
+                          ₹{food.price}
+                        </Text>
+
+                        {/* Add Button */}
+                        <View style={RestaurantScreenStyle.actionBox}>
+                          {quantity === 0 ? (
                             <TouchableOpacity
-                              onPress={() => decrementFood(food.id)}
+                              style={RestaurantScreenStyle.addBtn}
+                              onPress={() => handleAddFood(food)}
                             >
-                              <Text style={RestaurantScreenStyle.qtyBtn}>
-                                −
+                              <Text style={RestaurantScreenStyle.addText}>
+                                ADD
                               </Text>
                             </TouchableOpacity>
+                          ) : (
+                            <View style={RestaurantScreenStyle.qtyBox}>
+                              <TouchableOpacity
+                                onPress={() => dispatch(removeFromCart(food.id))}
+                              >
+                                <Text style={RestaurantScreenStyle.qtyBtn}>
+                                  −
+                                </Text>
+                              </TouchableOpacity>
 
-                            <Text style={RestaurantScreenStyle.qty}>
-                              {foodCounts[food.id]}
-                            </Text>
-
-                            <TouchableOpacity
-                              onPress={() => incrementFood(food.id)}
-                            >
-                              <Text style={RestaurantScreenStyle.qtyBtn}>
-                                +
+                              <Text style={RestaurantScreenStyle.qty}>
+                                {quantity}
                               </Text>
-                            </TouchableOpacity>
-                          </View>
-                        )}
+
+                              <TouchableOpacity
+                                onPress={() => handleAddFood(food)}
+                              >
+                                <Text style={RestaurantScreenStyle.qtyBtn}>
+                                  +
+                                </Text>
+                              </TouchableOpacity>
+                            </View>
+                          )}
+                        </View>
                       </View>
                     </View>
-                  </View>
-                </TouchableOpacity>
-              ))}
+                  </TouchableOpacity>
+                );
+              })}
 
             {/*  */}
             <View style={{ padding: 16 }}>
@@ -427,7 +474,7 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
         </ScrollView>
       </View>
 
-      {Object.keys(foodCounts).length > 0 ? (
+      {totalCount > 0 && cart.restaurantId === restaurant.id ? (
         <FoodAddedBox
           visible={modalVisible}
           onClose={() => setModalVisible(false)}
