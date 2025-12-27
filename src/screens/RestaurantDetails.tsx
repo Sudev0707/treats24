@@ -31,6 +31,7 @@ import FoodAddedBox from '../components/modals/FoodDetailsModal.tsx';
 import { addToCart, removeFromCart } from '../store/slices/cartSlice.ts';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../hooks/useAppSelector';
+import SectionHeader from '../components/common/SectionHeader.tsx';
 
 interface RestaurantItem {
   id: string;
@@ -375,6 +376,10 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
             />
 
             {/* restaurant foods */}
+            <View style={{ marginTop: 15 }}>
+              <SectionHeader title="Recommended" />
+            </View>
+
             {restaurant.foodCategories
               .flatMap(category => category.items)
               .map(food => {

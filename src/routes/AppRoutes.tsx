@@ -42,7 +42,11 @@ const AppRoutes = () => {
               name="OTPVerification"
               component={Screens.OTPVerification}
             />
-            <Stack.Screen name="SetLocation" component={Screens.SetLocation} />
+            <Stack.Screen
+              name="SetLocation"
+              component={Screens.SetLocation}
+              options={{ presentation: 'modal' }}
+            />
             <Stack.Screen name="Favorites" component={Screens.Favorites} />
             <Stack.Screen name="Deals" component={Screens.Deals} />
             <Stack.Screen name="Cart" component={Screens.Cart} />

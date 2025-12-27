@@ -23,6 +23,7 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../routes/types';
 import DashboardHeader from '../components/common/DashboardHeader';
 import BannerSlider from '../components/common/BannerSlider';
+import SectionHeader from '../components/common/SectionHeader';
 import colors from '../theme/colors';
 import { getCurrentLocationWithAddress } from '../utils/locationService';
 import { useEffect, useRef, useState } from 'react';
@@ -185,14 +186,7 @@ const Dashboard: React.FC = () => {
               </TouchableOpacity>
             </View> */}
               {/*  */}
-              <View style={styles.sectionHeaderRow}>
-                <Text style={styles.sectionTitle}>
-                  What&apos;s on your mind?
-                </Text>
-                <TouchableOpacity>
-                  <Text style={styles.sectionAction}>See all</Text>
-                </TouchableOpacity>
-              </View>
+              <SectionHeader title="What's on your mind?" />
               <View style={styles.chipsRow}>
                 <FlatList
                   data={CATEGORIES}
@@ -249,18 +243,20 @@ const Dashboard: React.FC = () => {
 
             <View style={{ marginBottom: 20 }}>
               {/*  */}
-              <View style={styles.sectionHeaderRow}>
-                <Text style={styles.sectionTitle}>Top Restaurants</Text>
-                <TouchableOpacity>
-                  <Text style={styles.sectionAction}>See all</Text>
-                </TouchableOpacity>
-              </View>
+              <SectionHeader
+                title="Top Restaurants"
+                actionText="View all"
+                onActionPress={() => ''}
+              />
               <FlatList
                 data={featuredRestaurants}
                 keyExtractor={(item, index) => index.toString()}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ paddingHorizontal: 7 }}
+                contentContainerStyle={{
+                  paddingHorizontal: 7,
+                  paddingVertical: 3,
+                }}
                 renderItem={({ item }: { item: RestaurantItem }) => (
                   <TouchableOpacity
                     style={styles.restaurantCard}
@@ -309,12 +305,7 @@ const Dashboard: React.FC = () => {
             </View>
 
             <View style={{ marginBottom: 20 }}>
-              <View style={styles.sectionHeaderRow}>
-                <Text style={styles.sectionTitle}>Popular near you</Text>
-                <TouchableOpacity>
-                  <Text style={styles.sectionAction}>See all</Text>
-                </TouchableOpacity>
-              </View>
+              <SectionHeader title="Popular near you" />
 
               {topPicks.map(item => (
                 <TouchableOpacity

@@ -146,7 +146,7 @@ export const RestaurantScreenStyle = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#fff',
     borderRadius: 12,
-    marginVertical: 8,
+    marginVertical: 5,
     padding: 10,
     elevation: 3,
     shadowColor: '#000',
