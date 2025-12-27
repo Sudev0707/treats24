@@ -43,7 +43,7 @@ const DashboardHeader: React.FC = () => {
         <View style={DashboardHeaderStyles.mainDashboardHeader}>
           <View style={DashboardHeaderStyles.dashboardHeaderContainer}>
             {/* LEFT — LOCATION */}
-            <TouchableOpacity style={DashboardHeaderStyles.addressWrapper}>
+            <TouchableOpacity style={DashboardHeaderStyles.addressWrapper} onPress={()=> ''}>
               <View style={DashboardHeaderStyles.addressRow}>
                 <Icon
                   name="map-pin"

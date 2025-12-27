@@ -66,7 +66,7 @@ const Cart: React.FC = () => {
         <Header title="Cart" showBackButton={true} />
       </SafeAreaView>
 
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: colors.background }}>
         {cartItems.length === 0 && !loading ? (
           <View style={cartStyle.emptyCart}>
             <Text style={cartStyle.emptyCartText}>Your cart is empty</Text>
@@ -76,8 +76,7 @@ const Cart: React.FC = () => {
             {...scrollProps}
             contentContainerStyle={{
               marginTop: height * 0.12,
-              paddingBottom: 240,
-              flex: 1,
+              paddingBottom: 250,
             }}
             showsVerticalScrollIndicator={false}
           >
@@ -91,7 +90,8 @@ const Cart: React.FC = () => {
                       <>
                         <View key={item.id} style={cartStyle.cartItem}>
                           <View style={cartStyle.foodImageBox}>
-                            <Image resizeMode='contain'
+                            <Image
+                              resizeMode="contain"
                               source={
                                 item.image ||
                                 require('../assets/images/foods/dummy food.png')
@@ -104,44 +104,55 @@ const Cart: React.FC = () => {
                             />
                           </View>
                           <View style={cartStyle.itemDetails}>
-                            <Text style={cartStyle.itemName}>{item.name}</Text>
-                            <Text style={cartStyle.itemPrice}>
-                              ₹{item.price}
-                            </Text>
-                            <View style={cartStyle.quantityControls}>
-                              <TouchableOpacity
-                                onPress={() =>
-                                  handleUpdateQuantity(
-                                    item.id,
-                                    item.quantity - 1,
-                                  )
-                                }
-                                style={cartStyle.quantityBtn}
-                              >
-                                <Text style={cartStyle.quantityBtnText}>-</Text>
-                              </TouchableOpacity>
-                              <Text style={cartStyle.quantityText}>
-                                {item.quantity}
+                            <View style={cartStyle.titleRow}>
+                              <Text style={cartStyle.itemName}>
+                                {item.name}
                               </Text>
-                              <TouchableOpacity
-                                onPress={() =>
-                                  handleUpdateQuantity(
-                                    item.id,
-                                    item.quantity + 1,
-                                  )
-                                }
-                                style={cartStyle.quantityBtn}
+                              {/* <TouchableOpacity
+                                onPress={() => handleRemoveItem(item.id)}
+                                style={cartStyle.removeBtn}
                               >
-                                <Text style={cartStyle.quantityBtnText}>+</Text>
-                              </TouchableOpacity>
+                                <Text style={cartStyle.removeBtnText}>X</Text>
+                              </TouchableOpacity> */}
+                            </View>
+
+                            <View style={cartStyle.priceRow}>
+                              <Text style={cartStyle.itemPrice}>
+                                ₹{item.price}
+                              </Text>
+                              <View style={cartStyle.quantityControls}>
+                                <TouchableOpacity
+                                  onPress={() =>
+                                    handleUpdateQuantity(
+                                      item.id,
+                                      item.quantity - 1,
+                                    )
+                                  }
+                                  style={cartStyle.quantityBtn}
+                                >
+                                  <Text style={cartStyle.quantityBtnText}>
+                                    -
+                                  </Text>
+                                </TouchableOpacity>
+                                <Text style={cartStyle.quantityText}>
+                                  {item.quantity}
+                                </Text>
+                                <TouchableOpacity
+                                  onPress={() =>
+                                    handleUpdateQuantity(
+                                      item.id,
+                                      item.quantity + 1,
+                                    )
+                                  }
+                                  style={cartStyle.quantityBtn}
+                                >
+                                  <Text style={cartStyle.quantityBtnText}>
+                                    +
+                                  </Text>
+                                </TouchableOpacity>
+                              </View>
                             </View>
                           </View>
-                          <TouchableOpacity
-                            onPress={() => handleRemoveItem(item.id)}
-                            style={cartStyle.removeBtn}
-                          >
-                            <Text style={cartStyle.removeBtnText}>X</Text>
-                          </TouchableOpacity>
                         </View>
 
                         {/* Dashed Separator */}
@@ -152,17 +163,19 @@ const Cart: React.FC = () => {
                     ))}
                   </View>
                 </View>
-                {cartItems.length > 0 && (
-                  <View style={cartStyle.totalContainer}>
-                    <Text style={cartStyle.totalText}>Total: ₹{cartTotal}</Text>
-                    <TouchableOpacity style={cartStyle.checkoutBtn}>
-                      <Text style={cartStyle.checkoutBtnText}>Checkout</Text>
-                    </TouchableOpacity>
-                  </View>
-                )}
               </>
             )}
           </ScrollView>
+        )}
+        {cartItems.length > 0 && (
+          <>
+            <View style={cartStyle.totalContainer}>
+              <Text style={cartStyle.totalText}>Total: ₹{cartTotal}</Text>
+              <TouchableOpacity style={cartStyle.checkoutBtn}>
+                <Text style={cartStyle.checkoutBtnText}>Checkout</Text>
+              </TouchableOpacity>
+            </View>
+          </>
         )}
       </View>
     </>

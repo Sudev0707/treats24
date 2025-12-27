@@ -1,10 +1,10 @@
 const fonts = {
   // Families – update these when you add custom fonts
   family: {
-    regular: 'System',
-    medium: 'System',
-    semibold: 'System',
-    bold: 'System',
+    regular: 'ProximaNova-Regular',
+    medium: 'ProximaNova-Medium',
+    semibold: 'ProximaNova-Semibold',
+    bold: 'ProximaNova-Bold',
   },
 
   // Sizes

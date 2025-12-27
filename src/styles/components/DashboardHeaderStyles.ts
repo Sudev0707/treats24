@@ -13,7 +13,8 @@ const DashboardHeaderStyles = StyleSheet.create({
     shadowOpacity: 0.12,
     shadowRadius: 16,
     elevation: 4,
-    zIndex:4
+    zIndex:4,
+    backgroundColor:colors.background
   },
 
   mainDashboardHeader: {

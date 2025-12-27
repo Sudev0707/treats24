@@ -20,14 +20,16 @@ export const cartStyle = StyleSheet.create({
     paddingTop: 20,
     borderRadius: 10,
     // borderWidth: 1,
+    backgroundColor:colors.background
   },
   productContainer: {
-    // borderWidth: 1,s
+    // borderWidth: 1,
     borderRadius: 10,
     backgroundColor: colors.background,
     elevation: 2,
     paddingBottom: 9,
     overflow: 'hidden',
+    padding: 15,
   },
   emptyCart: {
     flex: 1,
@@ -52,17 +54,17 @@ export const cartStyle = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 3,
+    // elevation: 3,
   },
- 
+
   separator: {
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     borderStyle: 'dashed',
     marginVertical: 12,
-    marginHorizontal: 15,
+    marginHorizontal: 10,
   },
-   foodImageBox: {
+  foodImageBox: {
     width: 60,
     height: 60,
     overflow: 'hidden',
@@ -76,7 +78,7 @@ export const cartStyle = StyleSheet.create({
     width: '80%',
     height: '80%',
     borderRadius: 8,
-    // 
+    //
   },
   dummyItemImage: {
     width: '60%',
@@ -92,15 +94,34 @@ export const cartStyle = StyleSheet.create({
     color: colors.textPrimary,
     marginBottom: 5,
   },
+  titleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  priceRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+     marginTop:8
+    // borderWidth: 1,
+  },
   itemPrice: {
     fontSize: 14,
     fontFamily: fonts.family.medium,
     color: colors.brandPrimary,
-    marginBottom: 10,
+   
+    // marginBottom: 10,
+    // borderWidth: 1,
   },
   quantityControls: {
     flexDirection: 'row',
     alignItems: 'center',
+    // borderWidth: 1,
+    borderRadius: 50,
+    padding: 2,
+    backgroundColor: colors.background,
+    // elevation:2
   },
   quantityBtn: {
     width: 30,
@@ -123,35 +144,40 @@ export const cartStyle = StyleSheet.create({
   },
   removeBtn: {
     paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingVertical: 4,
     // backgroundColor: '#ff4444',
     borderRadius: 5,
+    // borderWidth: 1,
+    height: 28,
+    width: 28,
   },
   removeBtnText: {
     color: colors.textBrand,
-    fontSize: 19,
+    fontSize: 12,
     fontFamily: fonts.family.bold,
   },
   totalContainer: {
-    marginTop: 20,
-    paddingTop: 20,
+    // marginTop: 20,
+    // paddingTop: 20,
     borderTopWidth: 1,
     borderTopColor: '#eee',
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    left: 0,
-    padding: 20,
+   
+    paddingVertical: 10,
+    paddingHorizontal:20,
     backgroundColor: colors.brandPrimarySoft,
+    // marginTop: 20,
+    // borderTopLeftRadius: 20,
+    // borderTopRightRadius: 20,
+    borderRadius: 25
   },
   totalText: {
     fontSize: 20,
     fontFamily: fonts.family.bold,
     color: colors.textPrimary,
-    marginBottom: 15,
+    // marginBottom: 15,
   },
   checkoutBtn: {
     backgroundColor: colors.brandPrimary,

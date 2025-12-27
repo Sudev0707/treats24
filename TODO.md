@@ -1,9 +1,21 @@
-# TODO: Complete handleSelectedCategory Function
+# Proxima Nova Font Implementation
 
-- [ ] Add 'SnacksItems: undefined;' to RootStackParamList in foodee/src/routes/types.ts
-- [ ] Update handleSelectedCategory in foodee/src/screens/Dashboard.tsx:
-  - Change if(item.name === '000') to if(item.id === '000')
-  - Add comment // Navigate to SnacksItems for special categories
-  - Add else if(item.id === '00') { navigation.navigate("SnacksItems"); }
-- [ ] Followup: Ensure the SnacksItems screen exists or create it if needed
-- [ ] Followup: Test navigation in the app
+## Completed Tasks
+- [x] Created `react-native.config.js` to specify assets path for fonts
+- [x] Updated `src/theme/fonts.ts` to use Proxima Nova font family names
+- [x] Ran `npx react-native link` to link the fonts
+
+## Remaining Tasks
+- [ ] Download Proxima Nova font files (Regular, Medium, Semibold, Bold variants)
+- [ ] Place font files in `src/assets/fonts/` directory with names:
+  - ProximaNova-Regular.ttf
+  - ProximaNova-Medium.ttf
+  - ProximaNova-Semibold.ttf
+  - ProximaNova-Bold.ttf
+- [ ] Rebuild the app to apply font changes
+- [ ] Test font rendering across different screens
+
+## Notes
+- Font files need to be obtained from a licensed source (e.g., Adobe Fonts, Fontspring, etc.)
+- Ensure font file names match exactly as specified in fonts.ts
+- After adding font files, run `npx react-native link` again or rebuild the app

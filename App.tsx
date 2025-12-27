@@ -12,6 +12,7 @@ import { getDBConnection } from './src/database/db';
 import { createLocationTable } from './src/database/tables';
 import { getCurrentLocationWithAddress } from './src/utils/locationService';
 import { saveLocation } from './src/database/queries';
+import colors from './src/theme/colors';
 
 const App: React.FC = () => {
   const [initializing, setInitializing] = useState(true);
@@ -65,6 +66,6 @@ export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#de8e8eff',
+    backgroundColor: colors.background,
   },
 });

@@ -5,10 +5,16 @@ import fonts from '../../theme/fonts';
 const { width: screenWidth } = Dimensions.get('window');
 
 const DashboardStyles = StyleSheet.create({
+  outerContainer:{
+  flex: 1,
+    backgroundColor: colors.background,
+  },
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundLight,
-    // borderWidth:1
+    backgroundColor: colors.background,
+    // borderWidth:1,
+    top: -20,
+    borderRadius:20
   },
   headerContainer: {
     position: 'absolute',
@@ -92,10 +98,10 @@ const DashboardStyles = StyleSheet.create({
   scrollContent: {
     // flex: 1,
     paddingHorizontal: 16,
-    paddingTop: 15,
+    paddingTop: 35,
     paddingBottom: 24,
     // backgroundColor: colors.backgroundSoft,
-    backgroundColor: colors.backgroundLight,
+    backgroundColor: colors.background,
   },
   headerRow: {
     flexDirection: 'row',

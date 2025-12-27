@@ -97,14 +97,14 @@ const Dashboard: React.FC = () => {
   //
   const handleSelectedCategory = (item: CategoryItem) => {
     console.log('selected item ', item);
-   
-    if(item.id === '00' ){
+
+    if (item.id === '00') {
       // Navigate to SnacksItems for special categories
-      navigation.navigate("SnacksItems", {itemType: item.name})
-    } else if(item.id === '000') {
+      navigation.navigate('SnacksItems', { itemType: item.name });
+    } else if (item.id === '000') {
       // navigation.navigate(" ");
     }
-     setSelectedCategory(item.name);
+    setSelectedCategory(item.name);
   };
   //
   const handleRestaurantPress = useCallback(
@@ -128,7 +128,7 @@ const Dashboard: React.FC = () => {
   const renderItem: ListRenderItem<BannerItem> = ({ item }) => {
     return (
       <TouchableOpacity style={styles.BannerHolder}>
-        <Image source={item.image} style={styles.bannerImage}  />
+        <Image source={item.image} style={styles.bannerImage} />
       </TouchableOpacity>
     );
   };
@@ -158,78 +158,81 @@ const Dashboard: React.FC = () => {
       </>
 
       {/* body */}
-      <View style={styles.container}>
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-          {...scrollProps}
-        >
-          <View>
-            {/* food/ad banner slider*/}
-            <View style={styles.dashboardBanner}>
-              <FlatList
-                ref={sliderRef}
-                data={bannerData}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-                horizontal
-                pagingEnabled
-                showsHorizontalScrollIndicator={false}
-              />
-            </View>
+      <View style={styles.outerContainer}>
+        <View style={styles.container}>
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            showsVerticalScrollIndicator={false}
+            {...scrollProps}
+          >
+            <View>
+              {/* food/ad banner slider*/}
+              <View style={styles.dashboardBanner}>
+                <FlatList
+                  ref={sliderRef}
+                  data={bannerData}
+                  renderItem={renderItem}
+                  keyExtractor={item => item.id}
+                  horizontal
+                  pagingEnabled
+                  showsHorizontalScrollIndicator={false}
+                />
+              </View>
 
-            {/* <View style={styles.dashboardBanner}>
+              {/* <View style={styles.dashboardBanner}>
               <TouchableOpacity style={styles.BannerHolder}>
                 <Image source={require('')} style={styles.bannerImage} />
               </TouchableOpacity>
             </View> */}
-            {/*  */}
-            <View style={styles.sectionHeaderRow}>
-              <Text style={styles.sectionTitle}>What&apos;s on your mind?</Text>
-              <TouchableOpacity>
-                <Text style={styles.sectionAction}>See all</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.chipsRow}>
-              <FlatList
-                data={CATEGORIES}
-                keyExtractor={item => item.id}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                style={{padding:4}}
-                renderItem={({ item }) => {
-                  const isActive = item.name === selectedCategory;
+              {/*  */}
+              <View style={styles.sectionHeaderRow}>
+                <Text style={styles.sectionTitle}>
+                  What&apos;s on your mind?
+                </Text>
+                <TouchableOpacity>
+                  <Text style={styles.sectionAction}>See all</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.chipsRow}>
+                <FlatList
+                  data={CATEGORIES}
+                  keyExtractor={item => item.id}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  style={{ padding: 4 }}
+                  renderItem={({ item }) => {
+                    const isActive = item.name === selectedCategory;
 
-                  return (
-                    <>
-                      <TouchableOpacity
-                      activeOpacity={0.6}
-                        onPress={() => handleSelectedCategory(item)}
-                        style={[styles.chip, isActive && styles.chipActive]}
-                      >
-                        <Image
-                          source={item.image}
-                          resizeMode="contain"
-                          width={9}
-                          height={9}
-                          style={{ width: 40, height: 40 , marginRight:5}}
-                        />
-
-                        <Text
-                          style={[
-                            styles.chipText,
-                            isActive && styles.chipTextActive,
-                          ]}
+                    return (
+                      <>
+                        <TouchableOpacity
+                          activeOpacity={0.6}
+                          onPress={() => handleSelectedCategory(item)}
+                          style={[styles.chip, isActive && styles.chipActive]}
                         >
-                          {item.name}
-                        </Text>
-                      </TouchableOpacity>
-                    </>
-                  );
-                }}
-                ListFooterComponent={() => (
-                  <>
-                    {/* <TouchableOpacity
+                          <Image
+                            source={item.image}
+                            resizeMode="contain"
+                            width={9}
+                            height={9}
+                            style={{ width: 40, height: 40, marginRight: 5 }}
+                          />
+
+                          <Text
+                            style={[
+                              styles.chipText,
+                              isActive && styles.chipTextActive,
+                            ]}
+                          >
+                            {item.name}
+                          </Text>
+                        </TouchableOpacity>
+                      </>
+                    );
+                  }}
+                  ListFooterComponent={() => (
+                    <>
+                      {/* <TouchableOpacity
                     onPress={() => {
                       // navigate or open modal
                       console.log('View All clicked');
@@ -238,92 +241,94 @@ const Dashboard: React.FC = () => {
                   >
                     <Text style={styles.viewAllText}>View All</Text>
                   </TouchableOpacity> */}
-                  </>
+                    </>
+                  )}
+                />
+              </View>
+            </View>
+
+            <View style={{ marginBottom: 20 }}>
+              {/*  */}
+              <View style={styles.sectionHeaderRow}>
+                <Text style={styles.sectionTitle}>Top Restaurants</Text>
+                <TouchableOpacity>
+                  <Text style={styles.sectionAction}>See all</Text>
+                </TouchableOpacity>
+              </View>
+              <FlatList
+                data={featuredRestaurants}
+                keyExtractor={(item, index) => index.toString()}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ paddingHorizontal: 7 }}
+                renderItem={({ item }: { item: RestaurantItem }) => (
+                  <TouchableOpacity
+                    style={styles.restaurantCard}
+                    activeOpacity={0.85}
+                    onPress={() => handleRestaurantPress(item)}
+                  >
+                    <ImageBackground
+                      source={item.image}
+                      style={Styles.image}
+                      imageStyle={Styles.imageRadius}
+                    >
+                      {/* <View style={Styles.extraDark} /> */}
+                      <LinearGradient
+                        colors={[
+                          'rgba(0,0,0,0.0)',
+                          'rgba(0,0,0,0.6)',
+                          'rgba(0,0,0,0.85)',
+                          'rgba(0,0,0,1)',
+                          'rgba(0,0,0,1)',
+                        ]}
+                        locations={[0, 0.35, 0.6, 0.85, 1]}
+                        style={Styles.gradient}
+                      >
+                        <View style={Styles.row}>
+                          <Text style={Styles.title}>{item.name}</Text>
+                          <View style={Styles.ratingBox}>
+                            <Text style={Styles.ratingText}>
+                              {item.rating} ★
+                            </Text>
+                          </View>
+                        </View>
+
+                        <View style={Styles.row}>
+                          <Text style={Styles.placeName}>
+                            Bistupur, Jamshedpur
+                          </Text>
+                          <Text style={Styles.distance}>📍 {item.time}</Text>
+                        </View>
+
+                        <View style={Styles.distanceRow}></View>
+                      </LinearGradient>
+                    </ImageBackground>
+                  </TouchableOpacity>
                 )}
               />
             </View>
-          </View>
 
-          <View style={{ marginBottom: 20 }}>
-            {/*  */}
-            <View style={styles.sectionHeaderRow}>
-              <Text style={styles.sectionTitle}>Top Restaurants</Text>
-              <TouchableOpacity>
-                <Text style={styles.sectionAction}>See all</Text>
-              </TouchableOpacity>
-            </View>
-            <FlatList
-              data={featuredRestaurants}
-              keyExtractor={(item, index) => index.toString()}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ paddingHorizontal: 7 }}
-              renderItem={({ item }: { item: RestaurantItem }) => (
+            <View style={{ marginBottom: 20 }}>
+              <View style={styles.sectionHeaderRow}>
+                <Text style={styles.sectionTitle}>Popular near you</Text>
+                <TouchableOpacity>
+                  <Text style={styles.sectionAction}>See all</Text>
+                </TouchableOpacity>
+              </View>
+
+              {topPicks.map(item => (
                 <TouchableOpacity
-                  style={styles.restaurantCard}
-                  activeOpacity={0.85}
-                  onPress={() => handleRestaurantPress(item)}
+                  key={item.id}
+                  style={Styles.CardContainer}
+                  activeOpacity={4}
                 >
                   <ImageBackground
                     source={item.image}
-                    style={Styles.image}
-                    imageStyle={Styles.imageRadius}
+                    style={Styles.smallImage}
+                    imageStyle={Styles.smallImageRadius}
                   >
-                    {/* <View style={Styles.extraDark} /> */}
-                    <LinearGradient
-                      colors={[
-                        'rgba(0,0,0,0.0)',
-                        'rgba(0,0,0,0.6)',
-                        'rgba(0,0,0,0.85)',
-                        'rgba(0,0,0,1)',
-                        'rgba(0,0,0,1)',
-                      ]}
-                      locations={[0, 0.35, 0.6, 0.85, 1]}
-                      style={Styles.gradient}
-                    >
-                      <View style={Styles.row}>
-                        <Text style={Styles.title}>{item.name}</Text>
-                        <View style={Styles.ratingBox}>
-                          <Text style={Styles.ratingText}>{item.rating} ★</Text>
-                        </View>
-                      </View>
-
-                      <View style={Styles.row}>
-                        <Text style={Styles.placeName}>
-                          Bistupur, Jamshedpur
-                        </Text>
-                        <Text style={Styles.distance}>📍 {item.time}</Text>
-                      </View>
-
-                      <View style={Styles.distanceRow}></View>
-                    </LinearGradient>
-                  </ImageBackground>
-                </TouchableOpacity>
-              )}
-            />
-          </View>
-
-          <View style={{ marginBottom: 20 }}>
-            <View style={styles.sectionHeaderRow}>
-              <Text style={styles.sectionTitle}>Popular near you</Text>
-              <TouchableOpacity>
-                <Text style={styles.sectionAction}>See all</Text>
-              </TouchableOpacity>
-            </View>
-
-            {topPicks.map(item => (
-              <TouchableOpacity
-                key={item.id}
-                style={Styles.CardContainer}
-                activeOpacity={4}
-              >
-                <ImageBackground
-                  source={item.image}
-                  style={Styles.smallImage}
-                  imageStyle={Styles.smallImageRadius}
-                >
-                  {/* BOTTOM GRADIENT */}
-                  {/* <LinearGradient
+                    {/* BOTTOM GRADIENT */}
+                    {/* <LinearGradient
                     colors={[
                       'rgba(255, 255, 255, 0)',
                       'rgba(255, 255, 255, 0.65)',
@@ -335,38 +340,38 @@ const Dashboard: React.FC = () => {
                   >                   
                     
                   </LinearGradient> */}
-                </ImageBackground>
-                <View style={{ paddingHorizontal: 10, paddingBottom: 10 }}>
-                  <View style={Styles.row}>
-                    <Text style={Styles.titleText}>{item.title}</Text>
-                    <View style={Styles.ratingBox}>
-                      <Text style={Styles.ratingText}>{item.rating} ★</Text>
+                  </ImageBackground>
+                  <View style={{ paddingHorizontal: 10, paddingBottom: 10 }}>
+                    <View style={Styles.row}>
+                      <Text style={Styles.titleText}>{item.title}</Text>
+                      <View style={Styles.ratingBox}>
+                        <Text style={Styles.ratingText}>{item.rating} ★</Text>
+                      </View>
                     </View>
+                    <View style={Styles.metaRow}>
+                      <Text style={Styles.metaText}>{item.time}</Text>
+                      <Text style={Styles.dot}>•</Text>
+                      <Text style={Styles.metaText}>{item.distance}</Text>
+                    </View>
+                    <Text style={Styles.offerTexttt}>{item.offer}</Text>
                   </View>
-                  <View style={Styles.metaRow}>
-                    <Text style={Styles.metaText}>{item.time}</Text>
-                    <Text style={Styles.dot}>•</Text>
-                    <Text style={Styles.metaText}>{item.distance}</Text>
-                  </View>
-                  <Text style={Styles.offerTexttt}>{item.offer}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
-
-          <View>
-            <View style={styles.sectionHeaderRow}>
-              <Text style={styles.sectionTitle}>Top Offers</Text>
+                </TouchableOpacity>
+              ))}
             </View>
 
-            {topOffers.map(item => (
-              <View key={item.id} style={Styles.offerCard}>
-                <Text style={Styles.offerText}>{item.offer}</Text>
+            <View>
+              <View style={styles.sectionHeaderRow}>
+                <Text style={styles.sectionTitle}>Top Offers</Text>
               </View>
-            ))}
-          </View>
-        </ScrollView>
-        
+
+              {topOffers.map(item => (
+                <View key={item.id} style={Styles.offerCard}>
+                  <Text style={Styles.offerText}>{item.offer}</Text>
+                </View>
+              ))}
+            </View>
+          </ScrollView>
+        </View>
       </View>
     </>
   );
