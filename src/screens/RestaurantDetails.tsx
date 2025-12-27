@@ -386,10 +386,20 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
                     activeOpacity={0.9}
                   >
                     {/* Food Image */}
-                    <Image
-                      // source={food.image || require('')}
-                      style={RestaurantScreenStyle.foodimage}
-                    />
+                    <View style={RestaurantScreenStyle.foodImageBox}>
+                      <Image
+                        resizeMode="contain"
+                        source={
+                          food.image ||
+                          require('../assets/images/foods/dummy food.png')
+                        }
+                        style={
+                          food.image
+                            ? RestaurantScreenStyle.foodimage
+                            : RestaurantScreenStyle.dummyFoodImage
+                        }
+                      />
+                    </View>
 
                     {/* Content */}
                     <View style={RestaurantScreenStyle.content}>

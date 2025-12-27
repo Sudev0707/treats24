@@ -7,7 +7,7 @@ const { width: screenWidth } = Dimensions.get('window');
 const DashboardStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundLight ,
+    backgroundColor: colors.backgroundLight,
     // borderWidth:1
   },
   headerContainer: {
@@ -32,15 +32,19 @@ const DashboardStyles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 15,
     overflow: 'hidden',
-    marginBottom: 14
+    marginBottom: 14,
   },
   BannerHolder: {
     width: screenWidth,
-    height: 200,
+    height: 180,
+    // borderWidth:1,
+    overflow: 'hidden',
+    borderRadius: 15,
   },
   bannerImage: {
     width: '100%',
     height: '100%',
+    borderRadius: 15,
     resizeMode: 'cover',
   },
   // headerWrapper: {
@@ -180,23 +184,26 @@ const DashboardStyles = StyleSheet.create({
     marginBottom: 20,
   },
   chip: {
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 999,
+    paddingStart: 4,
+    paddingEnd: 8,
+    paddingVertical: 4,
+    borderRadius: 100,
     backgroundColor: colors.background,
     marginRight: 8,
-    justifyContent:'center',
-    alignItems:'center'
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    elevation: 2,
   },
-  
+
   chipActive: {
     backgroundColor: colors.brandPrimary,
     shadowColor: '#ffffffff',
-  shadowOffset: { width: 4, height: 4 },
-  shadowOpacity: 0.8,
-  shadowRadius: 6,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.8,
+    shadowRadius: 6,
 
-  elevation: 2,
+    elevation: 2,
   },
   chipText: {
     fontSize: fonts.size.sm,
@@ -205,12 +212,12 @@ const DashboardStyles = StyleSheet.create({
   },
   chipTextActive: {
     color: colors.textOnBrand,
-     fontWeight: '700',
+    fontWeight: '700',
   },
   restaurantCard: {
-    width: 270,
-    height: 240,
-    marginRight: 14,
+    width: 250,
+    height: 220,
+    marginRight: 10,
     borderRadius: 16,
     backgroundColor: colors.card,
     overflow: 'hidden',
@@ -323,16 +330,15 @@ const DashboardStyles = StyleSheet.create({
   //   color: '#fff',
   // },
   viewAllChip: {
-  backgroundColor: '#eee',
-  borderWidth: 1,
-  borderColor: '#ccc',
-},
+    backgroundColor: '#eee',
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
 
-viewAllText: {
-  fontWeight: '600',
-  color: '#333',
-},
-
+  viewAllText: {
+    fontWeight: '600',
+    color: '#333',
+  },
 });
 
 export default DashboardStyles;

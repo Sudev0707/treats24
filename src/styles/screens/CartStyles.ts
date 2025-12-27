@@ -18,16 +18,16 @@ export const cartStyle = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingTop: 20,
-     borderRadius: 10,
+    borderRadius: 10,
     // borderWidth: 1,
   },
   productContainer: {
     // borderWidth: 1,s
     borderRadius: 10,
     backgroundColor: colors.background,
-    elevation:  2,
-    paddingBottom:9,
-    overflow:'hidden'
+    elevation: 2,
+    paddingBottom: 9,
+    overflow: 'hidden',
   },
   emptyCart: {
     flex: 1,
@@ -46,26 +46,41 @@ export const cartStyle = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: colors.background,
     // borderRadius: 10,
-    padding: 15,
+    // padding: 15,
     // marginBottom: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    // elevation: 3,
+    elevation: 3,
   },
-   separator: {
+ 
+  separator: {
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     borderStyle: 'dashed',
     marginVertical: 12,
-    marginHorizontal:15
+    marginHorizontal: 15,
   },
-  itemImage: {
+   foodImageBox: {
     width: 60,
     height: 60,
-    borderRadius: 8,
+    overflow: 'hidden',
+    borderRadius: 10,
+    backgroundColor: colors.backgroundLight,
+    justifyContent: 'center',
+    alignItems: 'center',
     marginRight: 15,
+  },
+  itemImage: {
+    width: '80%',
+    height: '80%',
+    borderRadius: 8,
+    // 
+  },
+  dummyItemImage: {
+    width: '60%',
+    height: '60%',
   },
   itemDetails: {
     flex: 1,

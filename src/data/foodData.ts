@@ -28,15 +28,15 @@ export const featuredRestaurants = [
             price: 199,
             rating: 4.6,
             isVeg: false,
-            //  image: require('../assets/images/foods/burger.jpg'),
-          },
+             image: require('../assets/images/foodCategory/pizza.png'),
+        },
           {
             id: 'bhf2',
             name: 'Cheese Veg Burger',
             price: 179,
             rating: 4.4,
             isVeg: true,
-            //  image: require('../assets/images/foods/burger.jpg'),
+             image: require('../assets/images/foodCategory/pizza.png'),
           },
           {
             id: 'bhf3',

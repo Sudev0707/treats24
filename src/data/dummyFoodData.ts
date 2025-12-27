@@ -1,16 +1,16 @@
 export const CATEGORIES = [
+  // {
+  //   id: '0',
+  //   name: 'All',
+  //   image: require('../assets/images/foodCategory/pizza.png'),
+  // },
   {
     id: '0',
-    name: 'All',
-    image: require('../assets/images/foodCategory/pizza.png'),
-  },
-  {
-    id: '00',
     name: 'Snacks',
     image: require('../assets/images/foodCategory/pizza.png'),
   },
   {
-    id: '000',
+    id: '00',
     name: '99 Store',
     image: require('../assets/images/foodCategory/pizza.png'),
   },

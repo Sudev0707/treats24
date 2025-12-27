@@ -30,7 +30,7 @@ const Cart: React.FC = () => {
   const cartItems = useAppSelector(selectCartItems);
   const cartTotal = useAppSelector(selectCartTotal);
   const dispatch = useDispatch();
-   const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   console.log('cartItems.length', cartItems.length);
 
@@ -69,9 +69,7 @@ const Cart: React.FC = () => {
       <View style={{ flex: 1 }}>
         {cartItems.length === 0 && !loading ? (
           <View style={cartStyle.emptyCart}>
-            <Text style={cartStyle.emptyCartText}>
-              Your cart is empty
-            </Text>
+            <Text style={cartStyle.emptyCartText}>Your cart is empty</Text>
           </View>
         ) : (
           <ScrollView
@@ -92,14 +90,31 @@ const Cart: React.FC = () => {
                     {cartItems.map((item, index) => (
                       <>
                         <View key={item.id} style={cartStyle.cartItem}>
-                          <Image source={item.image} style={cartStyle.itemImage} />
+                          <View style={cartStyle.foodImageBox}>
+                            <Image resizeMode='contain'
+                              source={
+                                item.image ||
+                                require('../assets/images/foods/dummy food.png')
+                              }
+                              style={
+                                item.image
+                                  ? cartStyle.itemImage
+                                  : cartStyle.dummyItemImage
+                              }
+                            />
+                          </View>
                           <View style={cartStyle.itemDetails}>
                             <Text style={cartStyle.itemName}>{item.name}</Text>
-                            <Text style={cartStyle.itemPrice}>₹{item.price}</Text>
+                            <Text style={cartStyle.itemPrice}>
+                              ₹{item.price}
+                            </Text>
                             <View style={cartStyle.quantityControls}>
                               <TouchableOpacity
                                 onPress={() =>
-                                  handleUpdateQuantity(item.id, item.quantity - 1)
+                                  handleUpdateQuantity(
+                                    item.id,
+                                    item.quantity - 1,
+                                  )
                                 }
                                 style={cartStyle.quantityBtn}
                               >
@@ -110,7 +125,10 @@ const Cart: React.FC = () => {
                               </Text>
                               <TouchableOpacity
                                 onPress={() =>
-                                  handleUpdateQuantity(item.id, item.quantity + 1)
+                                  handleUpdateQuantity(
+                                    item.id,
+                                    item.quantity + 1,
+                                  )
                                 }
                                 style={cartStyle.quantityBtn}
                               >

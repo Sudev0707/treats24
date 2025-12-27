@@ -153,10 +153,25 @@ export const RestaurantScreenStyle = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
   },
-
-  foodimage: {
+  foodImageBox: {
     width: 90,
     height: 90,
+    overflow: 'hidden',
+    borderRadius: 10,
+    backgroundColor: colors.backgroundLight,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  foodimage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 10,
+    backgroundColor: colors.backgroundLight,
+  },
+  dummyFoodImage: {
+    width: '60%', 
+    height: '60%',
+    resizeMode: 'contain',
     borderRadius: 10,
   },
 
@@ -268,8 +283,8 @@ export const RestaurantHeaderStyle = StyleSheet.create({
     // borderWidth: 1,
     padding: 6,
     borderRadius: 50,
-    borderColor:colors.borderLight,
-    backgroundColor:colors.background
+    borderColor: colors.borderLight,
+    backgroundColor: colors.background,
   },
   backBtnIcon: {
     width: 24,

@@ -128,7 +128,7 @@ const Dashboard: React.FC = () => {
   const renderItem: ListRenderItem<BannerItem> = ({ item }) => {
     return (
       <TouchableOpacity style={styles.BannerHolder}>
-        <Image source={item.image} style={styles.bannerImage} />
+        <Image source={item.image} style={styles.bannerImage}  />
       </TouchableOpacity>
     );
   };
@@ -196,12 +196,14 @@ const Dashboard: React.FC = () => {
                 keyExtractor={item => item.id}
                 horizontal
                 showsHorizontalScrollIndicator={false}
+                style={{padding:4}}
                 renderItem={({ item }) => {
                   const isActive = item.name === selectedCategory;
 
                   return (
                     <>
                       <TouchableOpacity
+                      activeOpacity={0.6}
                         onPress={() => handleSelectedCategory(item)}
                         style={[styles.chip, isActive && styles.chipActive]}
                       >
@@ -210,7 +212,7 @@ const Dashboard: React.FC = () => {
                           resizeMode="contain"
                           width={9}
                           height={9}
-                          style={{ width: 40, height: 40 }}
+                          style={{ width: 40, height: 40 , marginRight:5}}
                         />
 
                         <Text
@@ -255,7 +257,7 @@ const Dashboard: React.FC = () => {
               keyExtractor={(item, index) => index.toString()}
               horizontal
               showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ paddingHorizontal: 16 }}
+              contentContainerStyle={{ paddingHorizontal: 7 }}
               renderItem={({ item }: { item: RestaurantItem }) => (
                 <TouchableOpacity
                   style={styles.restaurantCard}
