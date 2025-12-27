@@ -76,10 +76,9 @@ const RestaurantDetailsScreen: React.FC<Props> = ({ route }) => {
     {},
   );
   const cart = useAppSelector(state => state.cart);
-const totalCount = useAppSelector(state =>
-  state.cart.items.reduce((sum, item) => sum + item.quantity, 0)
-);
-
+  const totalCount = useAppSelector(state =>
+    state.cart.items.reduce((sum, item) => sum + item.quantity, 0),
+  );
 
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedFood, setSelectedFood] = useState<any>(null);
@@ -429,7 +428,9 @@ const totalCount = useAppSelector(state =>
                           ) : (
                             <View style={RestaurantScreenStyle.qtyBox}>
                               <TouchableOpacity
-                                onPress={() => dispatch(removeFromCart(food.id))}
+                                onPress={() =>
+                                  dispatch(removeFromCart(food.id))
+                                }
                               >
                                 <Text style={RestaurantScreenStyle.qtyBtn}>
                                   −

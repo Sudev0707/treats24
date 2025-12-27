@@ -322,6 +322,17 @@ const DashboardStyles = StyleSheet.create({
   //   fontWeight: 'bold',
   //   color: '#fff',
   // },
+  viewAllChip: {
+  backgroundColor: '#eee',
+  borderWidth: 1,
+  borderColor: '#ccc',
+},
+
+viewAllText: {
+  fontWeight: '600',
+  color: '#333',
+},
+
 });
 
 export default DashboardStyles;

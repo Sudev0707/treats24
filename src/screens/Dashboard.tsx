@@ -53,6 +53,12 @@ interface BannerItem {
   image: ImageSourcePropType;
 }
 
+interface CategoryItem {
+  id: string;
+  name: string;
+  image: ImageSourcePropType;
+}
+
 interface RestaurantItem {
   id: string;
   name: string;
@@ -86,8 +92,20 @@ const Dashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [location, setLocation] = useState<LocationType | null>(null);
   const sliderRef = useRef<FlatList<BannerItem>>(null);
-  const [selectedCategory, setSelectedCategory] = useState('Burgers');
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
+  //
+  const handleSelectedCategory = (item: CategoryItem) => {
+    console.log('selected item ', item);
+   
+    if(item.id === '00' ){
+      // Navigate to SnacksItems for special categories
+      navigation.navigate("SnacksItems", {itemType: item.name})
+    } else if(item.id === '000') {
+      // navigation.navigate(" ");
+    }
+     setSelectedCategory(item.name);
+  };
   //
   const handleRestaurantPress = useCallback(
     (item: RestaurantItem) => {
@@ -168,6 +186,9 @@ const Dashboard: React.FC = () => {
             {/*  */}
             <View style={styles.sectionHeaderRow}>
               <Text style={styles.sectionTitle}>What&apos;s on your mind?</Text>
+              <TouchableOpacity>
+                <Text style={styles.sectionAction}>See all</Text>
+              </TouchableOpacity>
             </View>
             <View style={styles.chipsRow}>
               <FlatList
@@ -179,24 +200,44 @@ const Dashboard: React.FC = () => {
                   const isActive = item.name === selectedCategory;
 
                   return (
-                    <TouchableOpacity
-                      onPress={() => setSelectedCategory(item.name)}
-                      style={[styles.chip, isActive && styles.chipActive]}
-                    >
-                      <Image source={item.image} resizeMode='contain' width={9} height={9} style={{width: 40, height: 40}} />
-
-                     
-                      <Text
-                        style={[
-                          styles.chipText,
-                          isActive && styles.chipTextActive,
-                        ]}
+                    <>
+                      <TouchableOpacity
+                        onPress={() => handleSelectedCategory(item)}
+                        style={[styles.chip, isActive && styles.chipActive]}
                       >
-                        {item.name}
-                      </Text>
-                    </TouchableOpacity>
+                        <Image
+                          source={item.image}
+                          resizeMode="contain"
+                          width={9}
+                          height={9}
+                          style={{ width: 40, height: 40 }}
+                        />
+
+                        <Text
+                          style={[
+                            styles.chipText,
+                            isActive && styles.chipTextActive,
+                          ]}
+                        >
+                          {item.name}
+                        </Text>
+                      </TouchableOpacity>
+                    </>
                   );
                 }}
+                ListFooterComponent={() => (
+                  <>
+                    {/* <TouchableOpacity
+                    onPress={() => {
+                      // navigate or open modal
+                      console.log('View All clicked');
+                    }}
+                    style={[styles.chip, styles.viewAllChip]}
+                  >
+                    <Text style={styles.viewAllText}>View All</Text>
+                  </TouchableOpacity> */}
+                  </>
+                )}
               />
             </View>
           </View>
@@ -229,7 +270,6 @@ const Dashboard: React.FC = () => {
                     {/* <View style={Styles.extraDark} /> */}
                     <LinearGradient
                       colors={[
-                      
                         'rgba(0,0,0,0.0)',
                         'rgba(0,0,0,0.6)',
                         'rgba(0,0,0,0.85)',

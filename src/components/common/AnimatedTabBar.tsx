@@ -10,6 +10,7 @@ const AnimatedTabBar: React.FC<BottomTabBarProps> = (props) => {
   const translateY = React.useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
 
+  
   useEffect(() => {
     Animated.spring(translateY, {
       toValue: isVisible ? 0 : 100,

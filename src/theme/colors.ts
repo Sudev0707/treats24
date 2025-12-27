@@ -19,6 +19,7 @@ const colors = {
   // Text
   // textPrimary:'#F97316',
   textPrimary: '#111827',
+  textBrand: '#d21919ff',
   textSecondary: '#6B7280',
   // textSecondary: '#F97316',
   textMuted: '#9CA3AF',
@@ -41,7 +42,10 @@ const colors = {
   //
   darkBlack: '#000000ff',
   borderLight: '#dededeff',
-  borderPrimary: '',
+  // borderPrimary: '',
+
+  // textPrimary
+  skeleton: '#e0e0e0',
 };
 
 export default colors;

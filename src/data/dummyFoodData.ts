@@ -2,12 +2,12 @@ export const CATEGORIES = [
   {
     id: '0',
     name: 'All',
-     image: require('../assets/images/foodCategory/pizza.png'),
+    image: require('../assets/images/foodCategory/pizza.png'),
   },
   {
     id: '00',
     name: 'Snacks',
-     image: require('../assets/images/foodCategory/pizza.png'),
+    image: require('../assets/images/foodCategory/pizza.png'),
   },
   {
     id: '000',
@@ -17,7 +17,7 @@ export const CATEGORIES = [
   {
     id: '1',
     name: 'Burgers',
-     image: require('../assets/images/foodCategory/pizza.png'),
+    image: require('../assets/images/foodCategory/pizza.png'),
   },
   {
     id: '2',
@@ -27,40 +27,39 @@ export const CATEGORIES = [
   {
     id: '3',
     name: 'Indian',
-     image: require('../assets/images/foodCategory/pizza.png'),
+    image: require('../assets/images/foodCategory/pizza.png'),
   },
   {
     id: '4',
     name: 'South Indian',
-     image: require('../assets/images/foodCategory/pizza.png'),
+    image: require('../assets/images/foodCategory/pizza.png'),
   },
   {
     id: '5',
     name: 'Rolls & Wraps',
-     image: require('../assets/images/foodCategory/pizza.png'),
+    image: require('../assets/images/foodCategory/pizza.png'),
   },
   {
     id: '6',
     name: '',
-     image: require('../assets/images/foodCategory/pizza.png'),
+    image: require('../assets/images/foodCategory/pizza.png'),
   },
   {
     id: '7',
     name: 'Momos',
-     image: require('../assets/images/foodCategory/pizza.png'),
+    image: require('../assets/images/foodCategory/pizza.png'),
   },
   {
     id: '8',
     name: 'Ice Cream',
-     image: require('../assets/images/foodCategory/pizza.png'),
-  }, {
+    image: require('../assets/images/foodCategory/pizza.png'),
+  },
+  {
     id: '9',
     name: 'Bakery',
     image: require('../assets/images/foodCategory/pizza.png'),
   },
- 
 ];
-
 
 export const RESTAURANTS = [
   {
@@ -85,7 +84,6 @@ export const RESTAURANTS = [
     offer: 'Buy 1 Get 1',
   },
 ];
-
 
 export const topPicks = [
   {
@@ -143,7 +141,6 @@ export const topPicks = [
     offer: '30% OFF • Festival',
   },
 ];
-
 
 export const topOffers = [
   { id: '1', offer: '50% OFF up to ₹100' },
