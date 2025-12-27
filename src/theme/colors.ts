@@ -1,12 +1,12 @@
 const colors = {
-  // Brand
+  // Brand --------------
   brandPrimary: '#d21919ff',
   brandSecondary: '#F97316',
   // brandPrimarySoft: '#FEF3C7',
   brandPrimarySoft: '#ffefefff',
   brandDark: '#0F172A',
 
-  // Backgrounds
+  // Backgrounds -----
   backgroundPrimary: '#0F172A',
   backgroundLight: 'rgba(246, 247, 255, 1)',
   background: '#FFFFFF',
@@ -16,7 +16,7 @@ const colors = {
   muted: '#F3F4F6',
   mutedBackground: '#fff2f2ff',
 
-  // Text
+  // Text ------------------
   // textPrimary:'#F97316',
   textPrimary: '#111827',
   textBrand: '#d21919ff',
