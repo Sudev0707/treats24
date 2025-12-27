@@ -33,7 +33,7 @@ const AppRoutes = () => {
       <TabBarProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="MainTabs"
+            initialRouteName="SplashBrand"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen name="SplashBrand" component={Screens.SplashBrand} />
